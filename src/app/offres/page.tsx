@@ -1,5 +1,6 @@
 import { OfferCards } from "@/components/OfferCards";
 import { getCurrentUser } from "@/lib/auth";
+import { LAUNCH_PROMO } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Offres & tarifs — Vert La Planète" };
@@ -35,6 +36,25 @@ export default async function OffresPage() {
 
       <div style={{ background: "#fff" }}>
         <div className="section">
+          {LAUNCH_PROMO.active ? (
+            <div
+              className="eco-band"
+              style={{ marginBottom: 28, borderColor: "var(--l)" }}
+            >
+              <div className="eco-ico" aria-hidden>
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 2l2.9 6.26L21 9.27l-4.5 4.38L17.8 20 12 16.9 6.2 20l1.3-6.35L3 9.27l6.1-1.01L12 2z" />
+                </svg>
+              </div>
+              <div>
+                <div className="eco-h">
+                  {LAUNCH_PROMO.badge} — {LAUNCH_PROMO.title}
+                </div>
+                <div className="eco-s">{LAUNCH_PROMO.detail}</div>
+              </div>
+              <div className="eco-vrf">Lancement 🌱</div>
+            </div>
+          ) : null}
           <OfferCards currentOffer={user ? user.offer : null} />
           <p style={{ fontSize: 12, color: "var(--sd)", fontWeight: 300, marginTop: 24, textAlign: "center" }}>
             Paiement sécurisé par Stripe · TVA non applicable, art. 293 B du CGI · Résiliation en

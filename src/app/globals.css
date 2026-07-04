@@ -1274,3 +1274,10 @@ footer{background:#fff;border-top:.5px solid rgba(0,0,0,.07);padding:48px 52px 3
   --serif: var(--font-serif), "Fraunces", Georgia, serif;
   --sans: var(--font-sans), "DM Sans", system-ui, sans-serif;
 }
+/* ── ACCESSIBILITÉ ── */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:200;background:var(--f);color:#fff;padding:10px 18px;border-radius:0 0 10px 0;font-size:13px;font-weight:500}
+.skip-link:focus{left:0}
+:focus-visible{outline:2px solid var(--l);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}

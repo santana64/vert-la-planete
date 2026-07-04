@@ -5,6 +5,10 @@ import { LeafMark } from "@/components/Logo";
 import { getCurrentUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
+export const metadata = {
+  title: "Connexion",
+  robots: { index: false, follow: false }
+};
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 

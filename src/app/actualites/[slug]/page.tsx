@@ -1,9 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/format";
 import { getArticleBySlug } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await getArticleBySlug(slug).catch(() => null);
+  if (!article) return { title: "Article introuvable" };
+  return {
+    title: article.title,
+    description: article.excerpt,
+    openGraph: { title: article.title, description: article.excerpt, type: "article" }
+  };
+}
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -12,8 +28,22 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   const paragraphs = article.body.split(/\n\n+/).filter(Boolean);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    author: { "@type": "Organization", name: article.author },
+    datePublished: new Date(article.publishedAt).toISOString(),
+    inLanguage: "fr-FR"
+  };
+
   return (
     <div className="page active">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="fiche-bc">
         <Link href="/">Accueil</Link>
         <span className="bc-s">/</span>

@@ -5,6 +5,10 @@ import { OFFERS } from "@/lib/constants";
 import { formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
+export const metadata = {
+  title: "Mon compte",
+  robots: { index: false, follow: false }
+};
 
 export default async function ComptePage() {
   const user = await requireUser();

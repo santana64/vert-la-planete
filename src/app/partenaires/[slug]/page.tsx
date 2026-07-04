@@ -1,9 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatPrice } from "@/lib/format";
 import { getSellerBySlug, getSellerProducts, getSellerReviews } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const seller = await getSellerBySlug(slug).catch(() => null);
+  if (!seller) return { title: "Partenaire introuvable" };
+  return {
+    title: `${seller.name} · ${seller.category} à ${seller.city}`,
+    description: seller.tagline,
+    openGraph: { title: seller.name, description: seller.tagline }
+  };
+}
 
 const AXES = ["Local", "Bio", "Circuit court", "Emballage", "Biodiversité"];
 
@@ -22,8 +38,35 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
       ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
       : null;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: seller.name,
+    description: seller.tagline,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: seller.city,
+      addressRegion: seller.region,
+      addressCountry: "FR"
+    },
+    ...(seller.websiteUrl ? { url: seller.websiteUrl } : {}),
+    ...(avgRating
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: avgRating,
+            reviewCount: reviews.length
+          }
+        }
+      : {})
+  };
+
   return (
     <div className="page active">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="fiche-bc">
         <Link href="/">Accueil</Link>
         <span className="bc-s">/</span>

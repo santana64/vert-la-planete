@@ -3,6 +3,10 @@ import { requireSeller } from "@/lib/auth";
 import { OFFERS } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
+export const metadata = {
+  title: "Espace partenaire",
+  robots: { index: false, follow: false }
+};
 
 export default async function PartnerLayout({ children }: { children: React.ReactNode }) {
   const { user, seller } = await requireSeller();

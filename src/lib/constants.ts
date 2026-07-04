@@ -98,6 +98,20 @@ export const OFFERS: {
   }
 ];
 
+/**
+ * Promotion de lancement (art. 2.3 — « préparation d'une promotion de lancement
+ * pour les premiers partenaires, dans la limite d'une configuration simple »).
+ * Mettre `active: false` pour la retirer partout, sans toucher au code.
+ */
+export const LAUNCH_PROMO = {
+  active: true,
+  badge: "Offre de lancement",
+  title: "Membre fondateur",
+  detail:
+    "Les 50 premiers partenaires Pro reçoivent le badge « Membre fondateur », une mise en avant prioritaire dans l'annuaire et un accompagnement personnalisé à la création de leur fiche.",
+  short: "Badge « Membre fondateur » + mise en avant prioritaire pour les 50 premiers partenaires Pro."
+} as const;
+
 /** Données légales du Client (issues du contrat) — pour les pages légales / footer. */
 export const COMPANY = {
   name: "VERT LA PLANÈTE",

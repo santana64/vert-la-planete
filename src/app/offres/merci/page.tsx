@@ -3,7 +3,10 @@ import { confirmCheckoutSession } from "@/app/actions/subscription";
 import { OFFERS } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Merci — Vert La Planète" };
+export const metadata = {
+  title: "Merci — Vert La Planète",
+  robots: { index: false, follow: false }
+};
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 

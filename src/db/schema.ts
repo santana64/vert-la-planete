@@ -118,6 +118,17 @@ export const jobs = pgTable("jobs", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
 });
 
+// ── Messages de contact (formulaire public, art. 2.3) ────────────────────────
+export const contactMessages = pgTable("contact_messages", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  email: text("email").notNull(),
+  profile: text("profile").notNull(), // Acheteur, Producteur/artisan, Marque, Presse…
+  message: text("message").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+});
+
 // ── Relations ─────────────────────────────────────────────────────────────────
 export const usersRelations = relations(users, ({ one }) => ({
   seller: one(sellers, { fields: [users.id], references: [sellers.userId] })
@@ -143,4 +154,5 @@ export type Product = typeof products.$inferSelect;
 export type Review = typeof reviews.$inferSelect;
 export type Article = typeof articles.$inferSelect;
 export type Job = typeof jobs.$inferSelect;
+export type ContactMessage = typeof contactMessages.$inferSelect;
 export type Offer = (typeof offerType.enumValues)[number];

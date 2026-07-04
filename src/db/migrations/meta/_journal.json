@@ -8,6 +8,13 @@
       "when": 1781796008253,
       "tag": "0000_remarkable_major_mapleleaf",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1783184408832,
+      "tag": "0001_fancy_lucky_pierre",
+      "breakpoints": true
     }
   ]
 }

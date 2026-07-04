@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { HeroMap } from "@/components/HeroMap";
 import { OfferCards } from "@/components/OfferCards";
+import { LAUNCH_PROMO } from "@/lib/constants";
 import { formatDate } from "@/lib/format";
 import {
   getFeaturedSellers,
@@ -166,6 +167,12 @@ export default async function HomePage() {
               Comparer les offres →
             </Link>
           </div>
+          {LAUNCH_PROMO.active ? (
+            <p style={{ fontSize: 13, color: "var(--s)", fontWeight: 500, margin: "0 0 20px", display: "flex", alignItems: "center", gap: 8 }}>
+              <span className="badge badge-amber">{LAUNCH_PROMO.badge}</span>
+              {LAUNCH_PROMO.short}
+            </p>
+          ) : null}
           <OfferCards currentOffer={null} />
         </div>
       </div>

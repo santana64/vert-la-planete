@@ -3,6 +3,10 @@ import { CreateSellerForm } from "@/components/CreateSellerForm";
 import { getCurrentUser, getSellerForUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
+export const metadata = {
+  title: "Créer ma boutique",
+  robots: { index: false, follow: false }
+};
 
 export default async function CreatePartnerPage() {
   const user = await getCurrentUser();
