@@ -27,14 +27,14 @@ export default function OpengraphImage() {
               width: 84,
               height: 84,
               borderRadius: 20,
-              background: "#3daa62",
+              background: "#1a7671",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 48
+              fontSize: 46
             }}
           >
-            🌿
+            🌍
           </div>
           <div style={{ fontSize: 40, color: "#bde5cd" }}>vertlaplanete</div>
         </div>

@@ -14,6 +14,7 @@ import {
 } from "@/lib/auth";
 import { GRADIENTS } from "@/lib/constants";
 import { slugify } from "@/lib/format";
+import { checkRateLimit, resetRateLimit } from "@/lib/rate-limit";
 
 export type AuthState = { error?: string };
 
@@ -46,6 +47,12 @@ export async function registerAction(_prev: AuthState, formData: FormData): Prom
     return { error: parsed.error.issues[0]?.message ?? "Formulaire invalide" };
   }
   const { name, email, password, role } = parsed.data;
+
+  // 3 créations / 15 min par adresse — limite les inscriptions automatisées.
+  const limit = checkRateLimit(`register:${email}`, 3, 15 * 60 * 1000);
+  if (!limit.allowed) {
+    return { error: "Trop de tentatives. Réessayez dans quelques minutes." };
+  }
 
   const [existing] = await db.select({ id: users.id }).from(users).where(eq(users.email, email)).limit(1);
   if (existing) return { error: "Un compte existe déjà avec cette adresse." };
@@ -96,11 +103,20 @@ export async function loginAction(_prev: AuthState, formData: FormData): Promise
   }
   const { email, password } = parsed.data;
 
+  // 5 tentatives / 10 min par adresse — anti brute-force.
+  const limit = checkRateLimit(`login:${email}`, 5, 10 * 60 * 1000);
+  if (!limit.allowed) {
+    return {
+      error: `Trop de tentatives. Réessayez dans ${Math.ceil(limit.retryAfterSec / 60)} min.`
+    };
+  }
+
   const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
   if (!user || !(await verifyPassword(password, user.passwordHash))) {
     return { error: "E-mail ou mot de passe incorrect." };
   }
 
+  resetRateLimit(`login:${email}`);
   await createSession(user.id);
 
   const next = formData.get("next");

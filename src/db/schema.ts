@@ -7,6 +7,7 @@ import {
   real,
   text,
   timestamp,
+  uniqueIndex,
   uuid
 } from "drizzle-orm/pg-core";
 
@@ -79,16 +80,22 @@ export const products = pgTable("products", {
 });
 
 // ── Avis (sur un partenaire) ──────────────────────────────────────────────────
-export const reviews = pgTable("reviews", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  sellerId: uuid("seller_id")
-    .notNull()
-    .references(() => sellers.id, { onDelete: "cascade" }),
-  authorName: text("author_name").notNull(),
-  rating: integer("rating").notNull(),
-  body: text("body").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
-});
+export const reviews = pgTable(
+  "reviews",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    sellerId: uuid("seller_id")
+      .notNull()
+      .references(() => sellers.id, { onDelete: "cascade" }),
+    // Auteur connecté (null pour les avis importés/seed) — 1 avis par membre et par partenaire.
+    userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
+    authorName: text("author_name").notNull(),
+    rating: integer("rating").notNull(),
+    body: text("body").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+  },
+  (t) => [uniqueIndex("reviews_seller_user_uq").on(t.sellerId, t.userId)]
+);
 
 // ── Actualités / Blog (article 2.2) ───────────────────────────────────────────
 export const articles = pgTable("articles", {

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ReviewForm } from "@/components/ReviewForm";
+import { getCurrentUser } from "@/lib/auth";
 import { formatPrice } from "@/lib/format";
 import { getSellerBySlug, getSellerProducts, getSellerReviews } from "@/lib/queries";
 
@@ -28,9 +30,10 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
   const seller = await getSellerBySlug(slug);
   if (!seller) notFound();
 
-  const [products, reviews] = await Promise.all([
+  const [products, reviews, user] = await Promise.all([
     getSellerProducts(seller.id),
-    getSellerReviews(seller.id)
+    getSellerReviews(seller.id),
+    getCurrentUser()
   ]);
 
   const avgRating =
@@ -178,13 +181,13 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
           </div>
         </div>
 
-        {reviews.length > 0 ? (
-          <div style={{ padding: "32px 0", borderBottom: ".5px solid rgba(0,0,0,.07)" }}>
-            <div className="col-h">
-              Avis de la communauté{avgRating ? ` · ⭐ ${avgRating} sur ${reviews.length} avis` : ""}
-            </div>
+        <div style={{ padding: "32px 0", borderBottom: ".5px solid rgba(0,0,0,.07)" }}>
+          <div className="col-h">
+            Avis de la communauté{avgRating ? ` · ⭐ ${avgRating} sur ${reviews.length} avis` : ""}
+          </div>
+          {reviews.length > 0 ? (
             <div className="rev-grid">
-              {reviews.slice(0, 4).map((r) => (
+              {reviews.slice(0, 6).map((r) => (
                 <div key={r.id} className="rev-card">
                   <div className="rev-stars">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</div>
                   <div className="rev-txt">{r.body}</div>
@@ -192,8 +195,17 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
                 </div>
               ))}
             </div>
-          </div>
-        ) : null}
+          ) : (
+            <p style={{ color: "var(--pb)", fontWeight: 300, fontSize: 14 }}>
+              Aucun avis pour le moment — soyez le premier à partager votre expérience.
+            </p>
+          )}
+          <ReviewForm
+            sellerId={seller.id}
+            isLoggedIn={Boolean(user)}
+            isOwner={Boolean(user && seller.userId === user.id)}
+          />
+        </div>
 
         <div style={{ padding: "32px 0", borderBottom: ".5px solid rgba(0,0,0,.07)" }}>
           <div className="col-h">Produits du partenaire</div>
