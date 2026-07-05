@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { BottomNav } from "@/components/BottomNav";
 import { getCurrentUser } from "@/lib/auth";
 import { COMPANY } from "@/lib/constants";
+import { getSiteUrl } from "@/lib/site-url";
 
 const serif = Fraunces({
   subsets: ["latin"],
@@ -22,7 +23,7 @@ const sans = DM_Sans({
   weight: ["300", "400", "500"]
 });
 
-const siteUrl = process.env.APP_URL ?? "http://localhost:3000";
+const siteUrl = getSiteUrl();
 const siteDescription =
   "L'annuaire des producteurs, artisans et marques engagés : partenaires écologiques, locaux et vérifiés, au plus près de chez vous.";
 

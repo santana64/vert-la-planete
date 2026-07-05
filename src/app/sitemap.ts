@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 import { listArticles, listJobs, listSellers } from "@/lib/queries";
+import { getSiteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
 
-const base = process.env.APP_URL ?? "http://localhost:3000";
+const base = getSiteUrl();
 
 const STATIC_ROUTES = [
   "",

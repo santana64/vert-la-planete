@@ -6,6 +6,7 @@ import { db } from "@/db";
 import { sellers, users } from "@/db/schema";
 import { getCurrentUser, getSellerForUser } from "@/lib/auth";
 import { OFFERS, type OfferKey } from "@/lib/constants";
+import { getSiteUrl } from "@/lib/site-url";
 import { ensurePriceId, getStripe, isStripeConfigured } from "@/lib/stripe";
 
 export type SubscriptionState = { url?: string; error?: string };
@@ -45,7 +46,7 @@ export async function startSubscriptionAction(offerKey: OfferKey): Promise<Subsc
   }
 
   const priceId = await ensurePriceId(offer!.stripeLookupKey!);
-  const base = process.env.APP_URL ?? "http://localhost:3000";
+  const base = getSiteUrl();
 
   const session = await stripe.checkout.sessions.create({
     mode: "subscription",
