@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ReviewForm } from "@/components/ReviewForm";
+import { SellerMiniMap } from "@/components/map/SellerMiniMap";
 import { getCurrentUser } from "@/lib/auth";
 import { formatPrice } from "@/lib/format";
 import { getSellerBySlug, getSellerProducts, getSellerReviews } from "@/lib/queries";
@@ -23,7 +24,13 @@ export async function generateMetadata({
   };
 }
 
-const AXES = ["Local", "Bio", "Circuit court", "Emballage", "Biodiversité"];
+/** Critères d'engagement affichés qualitativement (pas de faux chiffres). */
+const CRITERES = [
+  "Activité locale et ancrée dans son territoire",
+  "Démarche écologique déclarée et vérifiée par nos soins",
+  "Transparence sur l'origine et la fabrication",
+  "Réduction des emballages et des déchets"
+];
 
 export default async function PartenairePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -120,21 +127,16 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
           <div className="score-section">
             <div className="score-big">
               <div className="score-val">{seller.ecoScore}</div>
-              <div className="score-max">/ 100</div>
+              <div className="score-max">Score éco / 100</div>
             </div>
-            <div className="score-axes">
-              {AXES.map((axis, i) => {
-                const pct = Math.max(40, Math.min(100, seller.ecoScore + (i % 2 === 0 ? 4 : -6)));
-                return (
-                  <div key={axis} className="score-axis">
-                    <span className="score-axis-lbl">{axis}</span>
-                    <div className="score-bar-bg">
-                      <div className="score-bar-fill" style={{ width: `${pct}%` }} />
-                    </div>
-                    <span className="score-axis-val">{Math.round(pct / 10)}</span>
-                  </div>
-                );
-              })}
+            <div className="score-axes" style={{ gap: 10 }}>
+              <div className="col-h" style={{ marginBottom: 0 }}>Critères d&apos;engagement</div>
+              {CRITERES.map((critere) => (
+                <div key={critere} style={{ display: "flex", gap: 9, alignItems: "flex-start", fontSize: 13, color: "var(--st)", fontWeight: 300 }}>
+                  <span style={{ color: "var(--s)", fontWeight: 500 }}>✓</span>
+                  {critere}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -231,21 +233,25 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
           )}
         </div>
 
-        <div style={{ padding: "32px 0", borderBottom: ".5px solid rgba(0,0,0,.07)" }}>
-          <div className="col-h">Localisation</div>
-          <div className="map-mini">
-            <div className="mm-grid" />
-            <div className="mm-road" style={{ top: "48%", height: 2, left: 0, right: 0 }} />
-            <div className="mm-road" style={{ left: "48%", width: 2, top: 0, bottom: 0 }} />
-            <div className="mm-pin" style={{ top: `${seller.mapY}%`, left: `${seller.mapX}%` }}>
-              <div className="mm-pin-c" />
-              <div className="mm-pin-r" />
+        {seller.lat !== 0 || seller.lng !== 0 ? (
+          <div style={{ padding: "32px 0", borderBottom: ".5px solid rgba(0,0,0,.07)" }}>
+            <div className="col-h">Localisation</div>
+            <SellerMiniMap
+              point={{
+                id: seller.id,
+                kind: "partenaire",
+                name: seller.name,
+                detail: seller.category,
+                city: seller.city,
+                lat: seller.lat,
+                lng: seller.lng
+              }}
+            />
+            <div style={{ fontSize: 13, color: "var(--pb)", marginTop: 10, fontWeight: 300 }}>
+              {seller.city}, {seller.region}
             </div>
           </div>
-          <div style={{ fontSize: 13, color: "var(--pb)", marginTop: 10, fontWeight: 300 }}>
-            {seller.city}, {seller.region}
-          </div>
-        </div>
+        ) : null}
 
         <div className="fiche-cta">
           {seller.websiteUrl ? (

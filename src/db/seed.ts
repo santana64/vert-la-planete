@@ -1,9 +1,10 @@
 import "../lib/load-env";
 import bcrypt from "bcryptjs";
 import { db } from "./index";
-import { articles, jobs, products, reviews, sellers, users } from "./schema";
+import { articles, contactMessages, ecoPlaces, jobs, products, reviews, sellers, users } from "./schema";
 import { GRADIENTS, type OfferKey } from "../lib/constants";
 import { slugify } from "../lib/format";
+import { CITY_COORDS } from "../lib/geo";
 
 type SeedSeller = {
   email: string;
@@ -283,9 +284,54 @@ const JOBS = [
   }
 ];
 
+const ECO_PLACES = [
+  {
+    kind: "ramassage" as const,
+    name: "Ramassage des berges de Loire",
+    description:
+      "Rassemblement citoyen mensuel pour nettoyer les berges. Gants et sacs fournis, ouvert à tous — familles bienvenues.",
+    city: "Tours",
+    schedule: "Chaque 1er samedi du mois, 10h",
+    lat: 47.399,
+    lng: 0.689
+  },
+  {
+    kind: "ramassage" as const,
+    name: "Clean walk du parc de la Tête d'Or",
+    description:
+      "Marche de ramassage conviviale autour du parc et des quais du Rhône. Matériel prêté sur place.",
+    city: "Lyon",
+    schedule: "Chaque 3e dimanche, 9h30",
+    lat: 45.777,
+    lng: 4.855
+  },
+  {
+    kind: "dechetterie" as const,
+    name: "Déchetterie — exemple à remplacer",
+    description:
+      "Point de collecte et de tri : encombrants, déchets verts, gravats, D3E. Accès gratuit pour les particuliers (données d'exemple à remplacer par le recensement officiel).",
+    city: "Paris",
+    schedule: "Lun-Sam 9h30-19h, Dim 9h30-13h",
+    lat: 48.832,
+    lng: 2.276
+  },
+  {
+    kind: "centre" as const,
+    name: "Maison de l'environnement — exemple",
+    description:
+      "Centre pédagogique dédié à l'écologie : expositions, ateliers compost et biodiversité, accompagnement des initiatives locales (donnée d'exemple).",
+    city: "Nantes",
+    schedule: "Mar-Sam 10h-18h",
+    lat: 47.212,
+    lng: -1.564
+  }
+];
+
 async function main() {
   console.log("🌱 Seeding Vert La Planète (conforme contrat)…");
 
+  await db.delete(ecoPlaces);
+  await db.delete(contactMessages);
   await db.delete(reviews);
   await db.delete(products);
   await db.delete(sellers);
@@ -337,6 +383,8 @@ async function main() {
         gradient: s.gradient,
         mapX: s.mapX,
         mapY: s.mapY,
+        lat: CITY_COORDS[s.city]?.lat ?? 0,
+        lng: CITY_COORDS[s.city]?.lng ?? 0,
         websiteUrl: s.websiteUrl ?? null
       })
       .returning();
@@ -373,6 +421,9 @@ async function main() {
   }
   for (const j of JOBS) {
     await db.insert(jobs).values({ slug: slugify(j.title), ...j });
+  }
+  for (const p of ECO_PLACES) {
+    await db.insert(ecoPlaces).values(p);
   }
 
   console.log(

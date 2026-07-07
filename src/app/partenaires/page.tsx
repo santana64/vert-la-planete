@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { CarteExplorer, type CarteSeller } from "@/components/CarteExplorer";
+import { CarteInteractive } from "@/components/map/CarteInteractive";
+import type { MapPoint } from "@/components/map/LeafletMap";
+import { getCurrentUser } from "@/lib/auth";
 import { CATEGORIES, REGIONS } from "@/lib/constants";
-import { listSellers } from "@/lib/queries";
+import { listEcoPlaces, listSellers } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Boutiques partenaires — Vert La Planète" };
@@ -28,21 +30,42 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
   const sp = await searchParams;
   const current = { q: str(sp.q), category: str(sp.category), region: str(sp.region) };
 
-  const [sellers, allSellers] = await Promise.all([listSellers(current), listSellers()]);
+  const [sellers, allSellers, places, user] = await Promise.all([
+    listSellers(current),
+    listSellers(),
+    listEcoPlaces(),
+    getCurrentUser()
+  ]);
 
-  const mapped: CarteSeller[] = allSellers.map((s) => ({
-    id: s.id,
-    slug: s.slug,
-    name: s.name,
-    category: s.category,
-    city: s.city,
-    region: s.region,
-    tagline: s.tagline,
-    gradient: s.gradient,
-    mapX: s.mapX,
-    mapY: s.mapY,
-    verified: s.verified
-  }));
+  const proSellers = sellers.filter((s) => s.offer !== "gratuit");
+  const otherSellers = sellers.filter((s) => s.offer === "gratuit");
+
+  const points: MapPoint[] = [
+    ...allSellers.map(
+      (s): MapPoint => ({
+        id: `s-${s.id}`,
+        kind: "partenaire",
+        name: s.name,
+        detail: s.category,
+        city: s.city,
+        lat: s.lat,
+        lng: s.lng,
+        href: `/partenaires/${s.slug}`
+      })
+    ),
+    ...places.map(
+      (p): MapPoint => ({
+        id: `p-${p.id}`,
+        kind: p.kind,
+        name: p.name,
+        detail: p.description.slice(0, 80),
+        city: p.city,
+        lat: p.lat,
+        lng: p.lng,
+        schedule: p.schedule
+      })
+    )
+  ];
 
   return (
     <div className="page active">
@@ -70,6 +93,39 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
           </form>
         </div>
       </div>
+
+      {/* PARTENAIRES PRO — mise en avant exclusive */}
+      {proSellers.length > 0 ? (
+        <div className="section-alt">
+          <div className="section" style={{ paddingBottom: 40 }}>
+            <div className="sec-head">
+              <div>
+                <div className="kicker">Sélection Pro</div>
+                <div className="h2">
+                  Nos partenaires <em>Pro</em>
+                </div>
+              </div>
+              <Link className="see-all" href="/offres">
+                Rejoindre la sélection →
+              </Link>
+            </div>
+            <div className="pchips-grid">
+              {proSellers.map((seller) => (
+                <Link key={seller.id} href={`/partenaires/${seller.slug}`} className="pchip">
+                  <div className="pchip-logo" style={{ background: seller.gradient, color: "#fff" }}>
+                    {seller.logoInitials}
+                  </div>
+                  <div className="pchip-name">{seller.name}</div>
+                  <div className="pchip-cat">
+                    {seller.category} · {seller.city}
+                  </div>
+                  <span className="badge badge-amber">★ Partenaire Pro</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <div className="explorer-body">
         <aside className="filters-panel">
@@ -106,6 +162,9 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
             <span className="results-count">
               <strong>{sellers.length}</strong> partenaire{sellers.length > 1 ? "s" : ""}
             </span>
+            <a href="#carte" className="see-all">
+              Voir sur la carte ↓
+            </a>
           </div>
 
           {sellers.length === 0 ? (
@@ -114,7 +173,7 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
             </p>
           ) : (
             <div className="results-list">
-              {sellers.map((seller) => (
+              {(proSellers.length > 0 ? otherSellers : sellers).map((seller) => (
                 <Link key={seller.id} href={`/partenaires/${seller.slug}`} className="rcard">
                   <div className="rcard-thumb" style={{ background: seller.gradient }} />
                   <div className="rcard-body">
@@ -126,7 +185,6 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
                     <div className="rcard-tags">
                       <span className="rtag">{seller.category}</span>
                       <span className="rtag">{seller.region}</span>
-                      {seller.offer !== "gratuit" ? <span className="rtag">Pro ✓</span> : null}
                     </div>
                   </div>
                   <div className="rcard-act">
@@ -139,15 +197,20 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
         </div>
       </div>
 
-      <div className="section-alt">
-        <div className="section" style={{ paddingBottom: 24 }}>
-          <div className="kicker">Cartographie</div>
-          <div className="h2">
-            Les partenaires <em>près de chez vous</em>
+      {/* CARTE INTERACTIVE */}
+      <div style={{ background: "#fff" }}>
+        <div className="section">
+          <div className="kicker">Cartographie de France</div>
+          <div className="h2" style={{ marginBottom: 6 }}>
+            Agir <em>près de chez vous</em>
           </div>
+          <p style={{ fontSize: 14, color: "var(--pb)", fontWeight: 300, marginBottom: 24, maxWidth: 620 }}>
+            Partenaires engagés, groupes de ramassage de déchets, déchetteries et centres
+            écologiques — une carte collaborative enrichie par la communauté.
+          </p>
+          <CarteInteractive points={points} isLoggedIn={Boolean(user)} />
         </div>
       </div>
-      <CarteExplorer sellers={mapped} />
     </div>
   );
 }

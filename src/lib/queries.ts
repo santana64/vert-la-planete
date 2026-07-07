@@ -3,11 +3,13 @@ import { and, desc, eq, ilike, or, sql } from "drizzle-orm";
 import { db } from "@/db";
 import {
   articles,
+  ecoPlaces,
   jobs,
   products,
   reviews,
   sellers,
   type Article,
+  type EcoPlace,
   type Job,
   type Product,
   type Seller
@@ -104,6 +106,11 @@ export async function listJobs(kind?: string): Promise<Job[]> {
 export async function getJobBySlug(slug: string): Promise<Job | null> {
   const [job] = await db.select().from(jobs).where(eq(jobs.slug, slug)).limit(1);
   return job ?? null;
+}
+
+// ── Lieux écologiques (carte) ──────────────────────────────────────────────────
+export async function listEcoPlaces(): Promise<EcoPlace[]> {
+  return db.select().from(ecoPlaces).orderBy(desc(ecoPlaces.createdAt));
 }
 
 // ── Statistiques (accueil) ───────────────────────────────────────────────────────

@@ -20,6 +20,8 @@ import {
 export const userRole = pgEnum("user_role", ["membre", "partenaire"]);
 // Offres partenaires (article 2.3 du contrat).
 export const offerType = pgEnum("offer_type", ["gratuit", "pro_mensuel", "pro_annuel"]);
+// Lieux écologiques communautaires affichés sur la carte.
+export const placeKind = pgEnum("place_kind", ["ramassage", "dechetterie", "centre"]);
 
 // ── Comptes ─────────────────────────────────────────────────────────────────
 export const users = pgTable("users", {
@@ -57,6 +59,9 @@ export const sellers = pgTable("sellers", {
   gradient: text("gradient").notNull(),
   mapX: real("map_x").notNull().default(50),
   mapY: real("map_y").notNull().default(50),
+  // Coordonnées réelles (carte interactive Leaflet/OSM). 0 = non positionné.
+  lat: real("lat").notNull().default(0),
+  lng: real("lng").notNull().default(0),
   websiteUrl: text("website_url"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
 });
@@ -125,6 +130,22 @@ export const jobs = pgTable("jobs", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
 });
 
+// ── Lieux écologiques (carte communautaire) ───────────────────────────────────
+// Groupes de ramassage de déchets, déchetteries recensées, centres écologiques.
+export const ecoPlaces = pgTable("eco_places", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  kind: placeKind("kind").notNull(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  city: text("city").notNull(),
+  lat: real("lat").notNull(),
+  lng: real("lng").notNull(),
+  // Info pratique libre : date de rassemblement, horaires d'ouverture…
+  schedule: text("schedule"),
+  createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+});
+
 // ── Messages de contact (formulaire public, art. 2.3) ────────────────────────
 export const contactMessages = pgTable("contact_messages", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -162,4 +183,6 @@ export type Review = typeof reviews.$inferSelect;
 export type Article = typeof articles.$inferSelect;
 export type Job = typeof jobs.$inferSelect;
 export type ContactMessage = typeof contactMessages.$inferSelect;
+export type EcoPlace = typeof ecoPlaces.$inferSelect;
+export type PlaceKind = (typeof placeKind.enumValues)[number];
 export type Offer = (typeof offerType.enumValues)[number];

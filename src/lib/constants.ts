@@ -53,12 +53,12 @@ export const OFFERS: {
     interval: null,
     stripeLookupKey: null,
     highlight: false,
-    tagline: "Pour rejoindre l'annuaire et tester la plateforme.",
+    tagline: "Pour référencer votre activité et être trouvé près de chez vous.",
     features: [
-      "Fiche partenaire dans l'annuaire",
-      `Jusqu'à ${FREE_PRODUCT_LIMIT} produits`,
-      "Présence sur la carte",
-      "Formulaire de contact"
+      "Votre fiche boutique (présentation, avis, localisation)",
+      "Visible dans l'annuaire et sur la carte de France",
+      `Jusqu'à ${FREE_PRODUCT_LIMIT} produits présentés sur votre fiche`,
+      "Les visiteurs vous contactent directement"
     ]
   },
   {
@@ -70,13 +70,13 @@ export const OFFERS: {
     interval: "month",
     stripeLookupKey: "vlp_pro_mensuel",
     highlight: true,
-    tagline: "Pour développer votre visibilité, sans engagement.",
+    tagline: "Pour être vu en premier et présenter tout votre catalogue.",
     features: [
-      "Produits illimités",
-      "Mise en avant dans l'annuaire",
-      "Badge « Partenaire Pro »",
-      "Boutique partenaire complète",
-      "Priorité de référencement"
+      "Tout le contenu de l'offre Gratuite",
+      "Produits illimités sur votre fiche",
+      "Affiché EN PREMIER : section « Partenaires Pro » en haut de l'annuaire",
+      "Badge « ★ Partenaire Pro » sur votre fiche et vos apparitions",
+      "Sans engagement — résiliable à tout moment"
     ]
   },
   {
@@ -88,12 +88,12 @@ export const OFFERS: {
     interval: "year",
     stripeLookupKey: "vlp_pro_annuel",
     highlight: false,
-    tagline: "Le meilleur tarif : 2 mois offerts.",
+    tagline: "Les mêmes avantages Pro, au meilleur prix.",
     features: [
-      "Tous les avantages Pro",
-      "≈ 2 mois offerts vs mensuel",
-      "Facturation annuelle",
-      "Engagement annuel"
+      "Identique à l'offre Pro Mensuelle",
+      "9,90 €/mois au lieu de 14,90 € (2 mois offerts)",
+      "Une seule facture par an",
+      "Idéal si vous êtes déjà convaincu"
     ]
   }
 ];
@@ -121,7 +121,9 @@ export const COMPANY = {
   ape: "70.21Z — Conseil en relations publiques et communication",
   address: "225 rue Evariste Galois, 77350 Le Mée-sur-Seine",
   representative: "Quentin Cuzon",
-  email: "contact@vertlaplanete.fr",
+  email: "contact@vertlaplanete.com",
+  domain: "https://vertlaplanete.com",
+  domainLabel: "vertlaplanete.com",
   host: {
     name: "Hostinger International Ltd.",
     address: "61 Lordou Vironos Street, 6023 Larnaca, Chypre",

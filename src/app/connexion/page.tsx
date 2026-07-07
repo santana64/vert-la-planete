@@ -32,7 +32,7 @@ export default async function ConnexionPage({ searchParams }: { searchParams: Se
           <LeafMark size={32} />
           <span>Vert La Planète</span>
         </div>
-        <div className="auth-h">Bon retour 👋</div>
+        <div className="auth-h">Content de te revoir ! 👋🏻</div>
         <p className="auth-sub">
           Connectez-vous pour accéder à votre compte et à votre espace partenaire.
         </p>

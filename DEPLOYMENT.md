@@ -52,10 +52,27 @@ Puis **Deploy**.
 > Les Produits/Prix Stripe (14,90 €/mois, 118,80 €/an) sont créés automatiquement au premier
 > paiement (idempotent par `lookup_key`).
 
-## 6. Domaine personnalisé (optionnel)
+## 6. Domaine personnalisé — vertlaplanete.com (Hostinger)
 
-Vercel → Settings → Domains → ajouter le domaine du client (ex. `vertlaplanete.fr`) et suivre
-les instructions DNS. Mettre à jour `APP_URL` en conséquence puis redéployer.
+1. Vercel → Settings → **Domains** → Add → `vertlaplanete.com` (et `www.vertlaplanete.com`).
+2. Vercel affiche les enregistrements DNS à créer. Chez **Hostinger** (hPanel → Domaines →
+   vertlaplanete.com → DNS) :
+   - Enregistrement **A** : `@` → `76.76.21.21`
+   - Enregistrement **CNAME** : `www` → `cname.vercel-dns.com`
+   (⚠️ le site WordPress actuel sur ce domaine sera remplacé — sauvegarder avant si besoin.)
+3. Attendre la propagation (minutes → quelques heures). Vercel émet le certificat HTTPS seul.
+4. Mettre `APP_URL=https://vertlaplanete.com` dans Vercel puis redéployer.
+
+## 7. Transfert des messages de contact par e-mail (optionnel)
+
+Les messages du formulaire sont toujours enregistrés en base. Pour les recevoir aussi par
+e-mail : créer une clé sur https://resend.com (gratuit, 100 e-mails/jour) puis ajouter sur
+Vercel :
+
+| Nom                | Valeur                                   |
+| ------------------ | ---------------------------------------- |
+| `RESEND_API_KEY`   | `re_...`                                 |
+| `CONTACT_EMAIL_TO` | l'adresse qui reçoit (ex. Gmail du client) |
 
 ## Notes
 

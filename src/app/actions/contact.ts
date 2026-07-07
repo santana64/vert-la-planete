@@ -3,8 +3,42 @@
 import { z } from "zod";
 import { db } from "@/db";
 import { contactMessages } from "@/db/schema";
+import { COMPANY } from "@/lib/constants";
 
 export type ContactState = { ok?: boolean; error?: string };
+
+/**
+ * Transfert du message vers la boîte mail (Resend, sans SDK).
+ * S'active dès que RESEND_API_KEY est défini ; la cible est CONTACT_EMAIL_TO
+ * (défaut : adresse de contact de la société). L'enregistrement en base reste
+ * la source de vérité — un échec d'e-mail ne fait pas échouer l'envoi.
+ */
+async function forwardByEmail(data: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  profile: string;
+  message: string;
+}): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return;
+  const to = process.env.CONTACT_EMAIL_TO ?? COMPANY.email;
+  try {
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: "Vert La Planète <onboarding@resend.dev>",
+        to: [to],
+        reply_to: data.email,
+        subject: `[Contact] ${data.firstName} ${data.lastName} — ${data.profile}`,
+        text: `De : ${data.firstName} ${data.lastName} <${data.email}>\nProfil : ${data.profile}\n\n${data.message}`
+      })
+    });
+  } catch {
+    // L'e-mail est un confort ; le message est déjà en base.
+  }
+}
 
 const schema = z.object({
   firstName: z.string().trim().min(2, "Prénom requis"),
@@ -35,5 +69,6 @@ export async function sendContactAction(
   }
 
   await db.insert(contactMessages).values(parsed.data);
+  await forwardByEmail(parsed.data);
   return { ok: true };
 }

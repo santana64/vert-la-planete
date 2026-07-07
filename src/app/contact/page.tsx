@@ -1,4 +1,5 @@
 import { ContactForm } from "@/components/ContactForm";
+import { COMPANY } from "@/lib/constants";
 
 export const metadata = { title: "Contact — Vert La Planète" };
 
@@ -23,13 +24,20 @@ export default function ContactPage() {
                 <div className="contact-item-val">Paris, France</div>
               </div>
             </div>
-            <div className="contact-item">
+            <a className="contact-item" href={`mailto:${COMPANY.email}`} style={{ cursor: "pointer" }}>
               <div className="contact-item-icon">✉️</div>
               <div>
-                <div className="contact-item-lbl">E-mail</div>
-                <div className="contact-item-val">bonjour@vertlaplanete.fr</div>
+                <div className="contact-item-lbl">Écrivez-nous directement</div>
+                <div className="contact-item-val">{COMPANY.email} →</div>
               </div>
-            </div>
+            </a>
+            <a className="contact-item" href={COMPANY.domain} target="_blank" rel="noreferrer" style={{ cursor: "pointer" }}>
+              <div className="contact-item-icon">🌍</div>
+              <div>
+                <div className="contact-item-lbl">Site officiel</div>
+                <div className="contact-item-val">{COMPANY.domainLabel} ↗</div>
+              </div>
+            </a>
             <div className="contact-item">
               <div className="contact-item-icon">🌱</div>
               <div>

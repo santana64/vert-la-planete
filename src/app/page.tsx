@@ -1,23 +1,62 @@
 import Link from "next/link";
-import { HeroMap } from "@/components/HeroMap";
+import { HomeMap } from "@/components/map/HomeMap";
+import type { MapPoint } from "@/components/map/LeafletMap";
 import { OfferCards } from "@/components/OfferCards";
 import { LAUNCH_PROMO } from "@/lib/constants";
 import { formatDate } from "@/lib/format";
 import {
   getFeaturedSellers,
   getMarketplaceStats,
-  listArticles
+  listArticles,
+  listEcoPlaces,
+  listSellers
 } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
+const ENGAGEMENTS = [
+  { icon: "🌱", title: "Site éco-conçu", desc: "Code sobre, pages légères, zéro script superflu" },
+  { icon: "🚫", title: "Zéro newsletter imposée", desc: "Pas de spam, pas d'e-mails non sollicités" },
+  { icon: "🔒", title: "Zéro tracking publicitaire", desc: "Aucun traceur, aucune revente de données" },
+  { icon: "📍", title: "Circuits courts", desc: "Des acteurs locaux et vérifiés, près de chez vous" }
+];
+
 export default async function HomePage() {
-  const [sellers, stats, articles] = await Promise.all([
+  const [sellers, stats, articles, allSellers, places] = await Promise.all([
     getFeaturedSellers(4),
     getMarketplaceStats(),
-    listArticles()
+    listArticles(),
+    listSellers(),
+    listEcoPlaces()
   ]);
   const latestArticles = articles.slice(0, 3);
+
+  const points: MapPoint[] = [
+    ...allSellers.map(
+      (s): MapPoint => ({
+        id: `s-${s.id}`,
+        kind: "partenaire",
+        name: s.name,
+        detail: s.category,
+        city: s.city,
+        lat: s.lat,
+        lng: s.lng,
+        href: `/partenaires/${s.slug}`
+      })
+    ),
+    ...places.map(
+      (p): MapPoint => ({
+        id: `p-${p.id}`,
+        kind: p.kind,
+        name: p.name,
+        detail: p.description.slice(0, 80),
+        city: p.city,
+        lat: p.lat,
+        lng: p.lng,
+        schedule: p.schedule
+      })
+    )
+  ];
 
   return (
     <div className="page active">
@@ -28,7 +67,7 @@ export default async function HomePage() {
           <div>
             <div className="hero-eyebrow">
               <span className="hero-eyebrow-dot" />
-              <span>Annuaire écologique & local</span>
+              <span>Réseau écologique & local</span>
             </div>
             <h1 className="hero-h1">
               Le réseau des acteurs
@@ -36,11 +75,11 @@ export default async function HomePage() {
               de la <em>transition écologique</em>
             </h1>
             <p className="hero-p">
-              Découvrez près de chez vous les producteurs, artisans et marques engagés. Référencez
-              votre activité, partagez vos produits et rejoignez une communauté qui consomme
-              autrement.
+              Trouvez près de chez vous les producteurs, artisans, déchetteries, centres
+              écologiques et groupes de ramassage de déchets. Un site éco-conçu, sans newsletter
+              ni tracking.
             </p>
-            <div className="hero-disclaimer">🌿 Circuits courts · Partenaires vérifiés · Éco-conçu</div>
+            <div className="hero-disclaimer">🌿 Éco-conçu · 🚫 Pas de newsletter · 🔒 Pas de tracking</div>
             <div className="hero-btns">
               <Link className="btn-cta" href="/partenaires">
                 Explorer les partenaires →
@@ -55,8 +94,8 @@ export default async function HomePage() {
                 <div className="stat-lbl">Partenaires engagés</div>
               </div>
               <div className="stat-item">
-                <div className="stat-val">{stats.products}</div>
-                <div className="stat-lbl">Produits référencés</div>
+                <div className="stat-val">{points.length - stats.sellers}</div>
+                <div className="stat-lbl">Lieux écologiques</div>
               </div>
               <div className="stat-item">
                 <div className="stat-val">{stats.regions}</div>
@@ -64,21 +103,32 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
-          <HeroMap actorCount={stats.sellers} />
+          <HomeMap points={points} actorCount={points.length} />
         </div>
       </section>
 
-      {/* COMMENT ÇA MARCHE */}
+      {/* ENGAGEMENTS */}
       <div style={{ background: "#fff" }}>
+        <div className="section" style={{ paddingTop: 52, paddingBottom: 52 }}>
+          <div className="audience-grid" style={{ gridTemplateColumns: "repeat(4,1fr)", marginTop: 0 }}>
+            {ENGAGEMENTS.map((e) => (
+              <div key={e.title} className="audience-card">
+                <div className="audience-icon">{e.icon}</div>
+                <div className="audience-h">{e.title}</div>
+                <div className="audience-p">{e.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* COMMENT ÇA MARCHE */}
+      <div className="section-alt">
         <div className="section">
           <div className="kicker">Comment ça marche</div>
           <div className="h2">
             Agir ensemble, <em>localement</em>
           </div>
-          <p style={{ fontSize: 15, color: "var(--pb)", marginTop: 6, fontWeight: 300, maxWidth: 560 }}>
-            Une plateforme pour rapprocher citoyens et acteurs écologiques de leur région, en toute
-            transparence.
-          </p>
           <div className="steps-grid">
             <div className="step">
               <div className="step-n">01</div>
@@ -90,8 +140,8 @@ export default async function HomePage() {
               </div>
               <div className="step-h">Découvrir</div>
               <div className="step-p">
-                Explorez l&apos;annuaire et la carte pour trouver des partenaires engagés près de
-                chez vous.
+                Explorez la carte de France : partenaires engagés, déchetteries, centres
+                écologiques et ramassages près de chez vous.
               </div>
             </div>
             <div className="step">
@@ -102,10 +152,10 @@ export default async function HomePage() {
                   <circle cx="9" cy="7" r="4" />
                 </svg>
               </div>
-              <div className="step-h">Se connecter</div>
+              <div className="step-h">Participer</div>
               <div className="step-p">
-                Consultez les fiches, les produits et les démarches écologiques de chaque
-                partenaire.
+                Rejoignez un groupe de ramassage, proposez un lieu, laissez un avis — la carte
+                est enrichie par la communauté.
               </div>
             </div>
             <div className="step">
@@ -117,7 +167,8 @@ export default async function HomePage() {
               </div>
               <div className="step-h">Soutenir</div>
               <div className="step-p">
-                Contactez les partenaires en direct et soutenez une économie locale et durable.
+                Contactez les partenaires en direct et soutenez une économie locale, durable et
+                vérifiée.
               </div>
             </div>
           </div>
@@ -125,7 +176,7 @@ export default async function HomePage() {
       </div>
 
       {/* PARTENAIRES */}
-      <div className="section-alt">
+      <div style={{ background: "#fff" }}>
         <div className="section">
           <div className="sec-head">
             <div>
@@ -141,12 +192,16 @@ export default async function HomePage() {
           <div className="pchips-grid">
             {sellers.map((seller) => (
               <Link key={seller.id} href={`/partenaires/${seller.slug}`} className="pchip">
-                <div className="pchip-logo">{seller.logoInitials}</div>
+                <div className="pchip-logo" style={{ background: seller.gradient, color: "#fff" }}>
+                  {seller.logoInitials}
+                </div>
                 <div className="pchip-name">{seller.name}</div>
                 <div className="pchip-cat">{seller.category}</div>
-                <span className="badge badge-eco">
-                  {seller.offer !== "gratuit" ? "Partenaire Pro" : seller.region}
-                </span>
+                {seller.offer !== "gratuit" ? (
+                  <span className="badge badge-amber">★ Partenaire Pro</span>
+                ) : (
+                  <span className="badge badge-eco">{seller.region}</span>
+                )}
               </Link>
             ))}
           </div>
@@ -154,7 +209,7 @@ export default async function HomePage() {
       </div>
 
       {/* OFFRES */}
-      <div style={{ background: "#fff" }}>
+      <div className="section-alt">
         <div className="section">
           <div className="sec-head">
             <div>
@@ -168,7 +223,7 @@ export default async function HomePage() {
             </Link>
           </div>
           {LAUNCH_PROMO.active ? (
-            <p style={{ fontSize: 13, color: "var(--s)", fontWeight: 500, margin: "0 0 20px", display: "flex", alignItems: "center", gap: 8 }}>
+            <p style={{ fontSize: 13, color: "var(--s)", fontWeight: 500, margin: "0 0 20px", display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
               <span className="badge badge-amber">{LAUNCH_PROMO.badge}</span>
               {LAUNCH_PROMO.short}
             </p>
@@ -179,7 +234,7 @@ export default async function HomePage() {
 
       {/* ACTUALITÉS */}
       {latestArticles.length > 0 ? (
-        <div className="section-alt">
+        <div style={{ background: "#fff" }}>
           <div className="section">
             <div className="sec-head">
               <div>

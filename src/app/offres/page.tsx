@@ -56,6 +56,42 @@ export default async function OffresPage() {
             </div>
           ) : null}
           <OfferCards currentOffer={user ? user.offer : null} />
+
+          {/* Comparatif détaillé */}
+          <div className="table-card" style={{ marginTop: 40, maxWidth: 860, marginLeft: "auto", marginRight: "auto" }}>
+            <div className="table-card-hd">
+              <span className="table-card-title">Ce que chaque offre comprend, en détail</span>
+            </div>
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Ce que vous obtenez</th>
+                  <th style={{ textAlign: "center" }}>Gratuit</th>
+                  <th style={{ textAlign: "center" }}>Pro Mensuel</th>
+                  <th style={{ textAlign: "center" }}>Pro Annuel</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Fiche boutique complète (présentation, avis, contact)", "✓", "✓", "✓"],
+                  ["Visible dans l'annuaire et sur la carte de France", "✓", "✓", "✓"],
+                  ["Produits présentés sur votre fiche", "3 max", "Illimités", "Illimités"],
+                  ["Affiché en premier (section « Partenaires Pro »)", "—", "✓", "✓"],
+                  ["Badge « ★ Partenaire Pro »", "—", "✓", "✓"],
+                  ["Prix", "0 €", "14,90 €/mois", "118,80 €/an (≈ 9,90 €/mois)"],
+                  ["Engagement", "Aucun", "Aucun — résiliable à tout moment", "12 mois"]
+                ].map(([label, a, b, c]) => (
+                  <tr key={label}>
+                    <td>{label}</td>
+                    <td style={{ textAlign: "center", color: a === "—" ? "var(--sd)" : "var(--s)", fontWeight: 500 }}>{a}</td>
+                    <td style={{ textAlign: "center", color: b === "—" ? "var(--sd)" : "var(--s)", fontWeight: 500 }}>{b}</td>
+                    <td style={{ textAlign: "center", color: c === "—" ? "var(--sd)" : "var(--s)", fontWeight: 500 }}>{c}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
           <p style={{ fontSize: 12, color: "var(--sd)", fontWeight: 300, marginTop: 24, textAlign: "center" }}>
             Paiement sécurisé par Stripe · TVA non applicable, art. 293 B du CGI · Résiliation en
             ligne.
