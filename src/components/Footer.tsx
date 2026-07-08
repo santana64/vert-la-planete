@@ -21,6 +21,9 @@ export function Footer() {
               <a href={COMPANY.domain} target="_blank" rel="noreferrer" style={{ fontSize: 13, color: "var(--s)", fontWeight: 500 }}>
                 🌍 {COMPANY.domainLabel} ↗
               </a>
+              <a href={COMPANY.whatsappUrl} target="_blank" rel="noreferrer" style={{ fontSize: 13, color: "var(--s)", fontWeight: 500 }}>
+                💬 WhatsApp : {COMPANY.phone}
+              </a>
               <a href={`mailto:${COMPANY.email}`} style={{ fontSize: 13, color: "var(--s)", fontWeight: 500 }}>
                 ✉️ {COMPANY.email}
               </a>

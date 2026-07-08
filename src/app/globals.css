@@ -1281,3 +1281,33 @@ footer{background:#fff;border-top:.5px solid rgba(0,0,0,.07);padding:48px 52px 3
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
 }
+
+/* ── CONTACT — cartes d'action directes ── */
+.contact-cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:44px}
+@media(max-width:700px){.contact-cta-grid{grid-template-columns:1fr}}
+.contact-cta{position:relative;display:flex;flex-direction:column;gap:14px;padding:30px 28px;border-radius:20px;overflow:hidden;transition:all .28s var(--e1);border:.5px solid rgba(0,0,0,.07);box-shadow:var(--sh-sm)}
+.contact-cta:hover{transform:translateY(-5px);box-shadow:var(--sh-lg)}
+.contact-cta::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;transform:scaleX(0);transition:transform .3s var(--e1);transform-origin:left}
+.contact-cta:hover::after{transform:scaleX(1)}
+.contact-cta.wa{background:linear-gradient(135deg,#e9f9ef 0%,#f6fdf8 60%,#fff 100%)}
+.contact-cta.wa::after{background:linear-gradient(to right,#25d366,#128c7e)}
+.contact-cta.em{background:linear-gradient(135deg,var(--fo) 0%,var(--pp) 60%,#fff 100%)}
+.contact-cta.em::after{background:linear-gradient(to right,var(--l),var(--fn))}
+.contact-cta-ico{width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-sm)}
+.contact-cta.wa .contact-cta-ico{background:#25d366}
+.contact-cta.em .contact-cta-ico{background:var(--f)}
+.contact-cta-ico svg{width:26px;height:26px;fill:#fff}
+.contact-cta-kicker{font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase}
+.contact-cta.wa .contact-cta-kicker{color:#128c7e}
+.contact-cta.em .contact-cta-kicker{color:var(--s)}
+.contact-cta-h{font-family:var(--serif);font-size:22px;color:var(--f);font-weight:300;letter-spacing:-.01em;line-height:1.2}
+.contact-cta-p{font-size:13px;color:var(--pb);font-weight:300;line-height:1.6;flex:1}
+.contact-cta-val{font-size:15px;font-weight:500;color:var(--f);letter-spacing:.01em}
+.contact-cta-btn{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;padding:12px 22px;border-radius:11px;color:#fff;transition:all .2s var(--e1)}
+.contact-cta.wa .contact-cta-btn{background:#25d366}
+.contact-cta.wa .contact-cta-btn:hover{background:#1ebe5b;box-shadow:0 6px 18px rgba(37,211,102,.35)}
+.contact-cta.em .contact-cta-btn{background:var(--f)}
+.contact-cta.em .contact-cta-btn:hover{background:var(--m);box-shadow:0 6px 18px rgba(9,31,18,.25)}
+.contact-cta-note{font-size:11px;color:var(--sd);font-weight:300;display:flex;align-items:center;gap:6px}
+.contact-cta-dot{width:7px;height:7px;border-radius:50%;background:#25d366;animation:pulse 2.2s ease-in-out infinite}
+.contact-cta-btn svg{width:16px;height:16px;fill:#fff;flex-shrink:0}

@@ -121,7 +121,10 @@ export const COMPANY = {
   ape: "70.21Z — Conseil en relations publiques et communication",
   address: "225 rue Evariste Galois, 77350 Le Mée-sur-Seine",
   representative: "Quentin Cuzon",
-  email: "contact@vertlaplanete.com",
+  email: "appli.eco@outlook.fr",
+  phone: "+33 7 86 28 88 45",
+  whatsappUrl:
+    "https://wa.me/33786288845?text=Bonjour%20Vert%20La%20Plan%C3%A8te%20%F0%9F%8C%B1%2C%20je%20vous%20contacte%20au%20sujet%20de%20...",
   domain: "https://vertlaplanete.com",
   domainLabel: "vertlaplanete.com",
   host: {
