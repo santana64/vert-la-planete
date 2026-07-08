@@ -40,7 +40,7 @@ afterAll(async () => {
 describe("inscription + connexion (bout en bout)", () => {
   it("crée un compte membre puis redirige", async () => {
     await expectRedirect(
-      registerAction({}, fd({ name: "Vitest Membre", email: EMAIL, password: "motdepasse123", role: "membre" }))
+      registerAction({}, fd({ name: "Vitest Membre", email: EMAIL, password: "motdepasse123", confirmPassword: "motdepasse123", role: "membre" }))
     );
     const [row] = await db.select().from(users).where(eq(users.email, EMAIL));
     expect(row).toBeTruthy();
@@ -51,7 +51,7 @@ describe("inscription + connexion (bout en bout)", () => {
   it("refuse un doublon d'e-mail", async () => {
     const res = await registerAction(
       {},
-      fd({ name: "Doublon", email: EMAIL, password: "motdepasse123", role: "membre" })
+      fd({ name: "Doublon", email: EMAIL, password: "motdepasse123", confirmPassword: "motdepasse123", role: "membre" })
     );
     expect(res.error).toContain("existe déjà");
   });

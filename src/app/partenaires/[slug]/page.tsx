@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import { ReviewForm } from "@/components/ReviewForm";
 import { SellerMiniMap } from "@/components/map/SellerMiniMap";
 import { getCurrentUser } from "@/lib/auth";
 import { formatPrice } from "@/lib/format";
-import { getSellerBySlug, getSellerProducts, getSellerReviews } from "@/lib/queries";
+import {
+  getSellerBySlug,
+  getSellerProducts,
+  getSellerReviews,
+  isFavoriteSeller
+} from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -42,6 +48,7 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
     getSellerReviews(seller.id),
     getCurrentUser()
   ]);
+  const favorited = user ? await isFavoriteSeller(user.id, seller.id) : false;
 
   const avgRating =
     reviews.length > 0
@@ -107,6 +114,9 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
                 {seller.offer !== "gratuit" ? (
                   <span className="fiche-det">✓ Partenaire Pro</span>
                 ) : null}
+              </div>
+              <div style={{ marginTop: 12 }}>
+                <FavoriteButton sellerId={seller.id} initial={favorited} isLoggedIn={Boolean(user)} />
               </div>
             </div>
           </div>

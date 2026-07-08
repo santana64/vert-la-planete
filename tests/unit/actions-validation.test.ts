@@ -14,13 +14,21 @@ function fd(entries: Record<string, string>): FormData {
 
 describe("registerAction — validation", () => {
   it("rejette un e-mail invalide", async () => {
-    const res = await registerAction({}, fd({ name: "Test", email: "pas-un-email", password: "12345678" }));
+    const res = await registerAction({}, fd({ name: "Test", email: "pas-un-email", password: "12345678", confirmPassword: "12345678" }));
     expect(res.error).toBeTruthy();
   });
 
   it("rejette un mot de passe trop court", async () => {
-    const res = await registerAction({}, fd({ name: "Test", email: "a@b.fr", password: "court" }));
+    const res = await registerAction({}, fd({ name: "Test", email: "a@b.fr", password: "court", confirmPassword: "court" }));
     expect(res.error).toContain("8 caractères");
+  });
+
+  it("rejette deux mots de passe différents (confirmation 2x)", async () => {
+    const res = await registerAction(
+      {},
+      fd({ name: "Test", email: "a@b.fr", password: "motdepasse123", confirmPassword: "autre-mdp-456" })
+    );
+    expect(res.error).toContain("ne correspondent pas");
   });
 });
 

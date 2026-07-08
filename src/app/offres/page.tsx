@@ -5,8 +5,11 @@ import { LAUNCH_PROMO } from "@/lib/constants";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Offres & tarifs — Vert La Planète" };
 
-export default async function OffresPage() {
-  const user = await getCurrentUser();
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+export default async function OffresPage({ searchParams }: { searchParams: SearchParams }) {
+  const [user, sp] = await Promise.all([getCurrentUser(), searchParams]);
+  const justRegistered = sp.bienvenue === "1";
 
   return (
     <div className="page active">
@@ -36,6 +39,19 @@ export default async function OffresPage() {
 
       <div style={{ background: "#fff" }}>
         <div className="section">
+          {justRegistered ? (
+            <div className="eco-band" style={{ marginBottom: 20, borderColor: "var(--l)", background: "var(--fo)" }} role="status">
+              <div style={{ fontSize: 26 }}>🎉</div>
+              <div>
+                <div className="eco-h">Votre compte partenaire est créé !</div>
+                <div className="eco-s">
+                  Dernière étape : choisissez votre offre ci-dessous pour activer votre visibilité
+                  — l&apos;offre Gratuite suffit pour démarrer.
+                </div>
+              </div>
+              <div className="eco-vrf">Étape 2/2</div>
+            </div>
+          ) : null}
           {LAUNCH_PROMO.active ? (
             <div
               className="eco-band"

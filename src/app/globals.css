@@ -1311,3 +1311,12 @@ footer{background:#fff;border-top:.5px solid rgba(0,0,0,.07);padding:48px 52px 3
 .contact-cta-note{font-size:11px;color:var(--sd);font-weight:300;display:flex;align-items:center;gap:6px}
 .contact-cta-dot{width:7px;height:7px;border-radius:50%;background:#25d366;animation:pulse 2.2s ease-in-out infinite}
 .contact-cta-btn svg{width:16px;height:16px;fill:#fff;flex-shrink:0}
+
+/* ── BOUTONS VERTS (retour client : retirer les boutons noirs) ── */
+.btn-primary,.form-submit,.btn-add,.btn-visit,.btn-cart,.search-btn,.sb-preview-btn,.btn-modal-submit{background:var(--s)}
+.btn-primary:hover,.form-submit:hover,.btn-add:hover,.btn-visit:hover,.btn-cart:hover,.search-btn:hover,.sb-preview-btn:hover,.btn-modal-submit:hover{background:var(--fn)}
+.btn-primary:hover,.form-submit:hover{box-shadow:0 4px 16px rgba(26,82,48,.28)}
+.btn-cta{background:var(--l);color:#fff}
+.btn-cta:hover{background:var(--fn);box-shadow:0 6px 20px rgba(61,170,98,.35)}
+.contact-cta.em .contact-cta-ico,.contact-cta.em .contact-cta-btn{background:var(--s)}
+.contact-cta.em .contact-cta-btn:hover{background:var(--fn);box-shadow:0 6px 18px rgba(26,82,48,.3)}

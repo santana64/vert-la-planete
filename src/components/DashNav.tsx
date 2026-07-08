@@ -18,7 +18,7 @@ export function DashNav({
   const pathname = usePathname();
 
   const items = [
-    { href: "/espace-partenaire", label: "Vue d'ensemble", exact: true },
+    { href: "/espace-partenaire", label: "Notifications", exact: true },
     { href: "/espace-partenaire/produits", label: "Mes produits", exact: false },
     { href: "/espace-partenaire/profil", label: "Ma fiche", exact: false }
   ];

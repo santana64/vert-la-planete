@@ -1,87 +1,76 @@
 import Link from "next/link";
 import { requireSeller } from "@/lib/auth";
 import { FREE_PRODUCT_LIMIT, OFFERS } from "@/lib/constants";
-import { getSellerProductCount } from "@/lib/queries";
+import { formatDate } from "@/lib/format";
+import { getPartnerNotifications, getSellerProductCount } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 
-export default async function PartnerHomePage() {
+export default async function PartnerNotificationsPage() {
   const { seller } = await requireSeller();
-  const productCount = await getSellerProductCount(seller.id);
+  const [notifications, productCount] = await Promise.all([
+    getPartnerNotifications(seller),
+    getSellerProductCount(seller.id)
+  ]);
   const offer = OFFERS.find((o) => o.key === seller.offer);
   const isFree = seller.offer === "gratuit";
-  const remaining = Math.max(0, FREE_PRODUCT_LIMIT - productCount);
 
   return (
     <>
       <div className="dash-page-hd">
         <div>
-          <div className="dash-page-title">Bonjour, {seller.name}</div>
-          <div className="dash-page-date">Votre espace partenaire</div>
+          <div className="dash-page-title">Notifications</div>
+          <div className="dash-page-date">
+            {notifications.length} notification{notifications.length > 1 ? "s" : ""}
+          </div>
         </div>
         <Link href="/espace-partenaire/produits/nouveau" className="btn-add">
           + Ajouter un produit
         </Link>
       </div>
 
-      <div className="kpi-grid" style={{ gridTemplateColumns: "repeat(3,1fr)" }}>
-        <div className="kpi-card">
-          <div className="kpi-lbl">Offre</div>
-          <div className="kpi-val" style={{ fontSize: 22 }}>{offer?.name ?? "Gratuit"}</div>
-          <div className="kpi-trend">
-            <Link href="/offres" style={{ color: "var(--s)" }}>
-              {isFree ? "Passer à Pro →" : "Gérer mon offre →"}
-            </Link>
+      {/* NOTIFICATIONS */}
+      <div className="activity-card" style={{ marginBottom: 20 }}>
+        {notifications.map((n) => (
+          <div key={n.id} className="af-item" style={{ padding: "12px 0" }}>
+            <span style={{ fontSize: 18, flexShrink: 0 }}>{n.icon}</span>
+            <div style={{ flex: 1 }}>
+              <div className="af-txt" style={{ fontWeight: 500, color: "var(--f)" }}>{n.title}</div>
+              <div className="af-txt">{n.body}</div>
+              <div className="af-time">{formatDate(n.date)}</div>
+            </div>
           </div>
-        </div>
-        <div className="kpi-card">
-          <div className="kpi-lbl">Produits publiés</div>
-          <div className="kpi-val">{productCount}</div>
-          <div className="kpi-trend">{isFree ? `${remaining} restant(s) en gratuit` : "Illimité"}</div>
-        </div>
-        <div className="kpi-card">
-          <div className="kpi-lbl">Statut de la fiche</div>
-          <div className="kpi-val" style={{ fontSize: 22 }}>
-            {seller.verified ? "Vérifiée" : "En cours"}
-          </div>
-          <div className="kpi-trend">
-            <Link href={`/partenaires/${seller.slug}`} style={{ color: "var(--s)" }}>
-              Voir ma vitrine →
-            </Link>
-          </div>
-        </div>
+        ))}
       </div>
 
-      {isFree ? (
-        <div
-          className="chart-card"
-          style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}
-        >
-          <div>
-            <div className="chart-card-title">Passez à l&apos;offre Pro</div>
-            <p style={{ fontSize: 13, color: "var(--pb)", fontWeight: 300, marginTop: 4 }}>
-              Produits illimités, mise en avant dans l&apos;annuaire et badge « Partenaire Pro ».
-            </p>
-          </div>
-          <Link href="/offres" className="btn-cta">
-            Découvrir les offres →
-          </Link>
-        </div>
-      ) : null}
-
+      {/* RACCOURCIS + VUE D'ENSEMBLE INTÉGRÉE */}
       <div className="table-card">
         <div className="table-card-hd">
-          <span className="table-card-title">Raccourcis</span>
+          <span className="table-card-title">Raccourcis & vue d&apos;ensemble</span>
+          <Link href={`/partenaires/${seller.slug}`} className="table-card-link">
+            Ma vitrine publique ↗
+          </Link>
         </div>
-        <div style={{ padding: 18, display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <Link href="/espace-partenaire/produits" className="btn-sm-outline">
-            Gérer mes produits
+        <div style={{ padding: "16px 20px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
+          <Link href="/offres" className="mini-cal-card" style={{ display: "block" }}>
+            <div className="kpi-lbl">Mon offre</div>
+            <div className="kpi-val" style={{ fontSize: 20 }}>{offer?.name ?? "Gratuit"}</div>
+            <div className="kpi-trend">{isFree ? "Passer à Pro →" : "Gérer →"}</div>
           </Link>
-          <Link href="/espace-partenaire/profil" className="btn-sm-outline">
-            Modifier ma fiche
+          <Link href="/espace-partenaire/produits" className="mini-cal-card" style={{ display: "block" }}>
+            <div className="kpi-lbl">Mes produits</div>
+            <div className="kpi-val" style={{ fontSize: 20 }}>{productCount}</div>
+            <div className="kpi-trend">{isFree ? `${Math.max(0, FREE_PRODUCT_LIMIT - productCount)} restant(s) en gratuit` : "Illimité (Pro)"}</div>
           </Link>
-          <Link href={`/partenaires/${seller.slug}`} className="btn-sm-outline">
-            Voir ma page publique
+          <Link href="/espace-partenaire/profil" className="mini-cal-card" style={{ display: "block" }}>
+            <div className="kpi-lbl">Ma fiche</div>
+            <div className="kpi-val" style={{ fontSize: 20 }}>{seller.verified ? "Vérifiée ✓" : "En cours"}</div>
+            <div className="kpi-trend">Modifier →</div>
+          </Link>
+          <Link href="/compte" className="mini-cal-card" style={{ display: "block" }}>
+            <div className="kpi-lbl">Mon compte</div>
+            <div className="kpi-val" style={{ fontSize: 20 }}>Avantages</div>
+            <div className="kpi-trend">Factures & paiement →</div>
           </Link>
         </div>
       </div>

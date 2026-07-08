@@ -35,6 +35,8 @@ export const users = pgTable("users", {
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   subscriptionStatus: text("subscription_status"),
+  // Photo de profil : data-URL compressée côté client (≤ ~60 Ko), pas de stockage objet requis.
+  avatarUrl: text("avatar_url"),
   location: text("location"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
 });
@@ -130,6 +132,22 @@ export const jobs = pgTable("jobs", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
 });
 
+// ── Favoris (membre → partenaire) ─────────────────────────────────────────────
+export const favorites = pgTable(
+  "favorites",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    sellerId: uuid("seller_id")
+      .notNull()
+      .references(() => sellers.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+  },
+  (t) => [uniqueIndex("favorites_user_seller_uq").on(t.userId, t.sellerId)]
+);
+
 // ── Lieux écologiques (carte communautaire) ───────────────────────────────────
 // Groupes de ramassage de déchets, déchetteries recensées, centres écologiques.
 export const ecoPlaces = pgTable("eco_places", {
@@ -185,4 +203,5 @@ export type Job = typeof jobs.$inferSelect;
 export type ContactMessage = typeof contactMessages.$inferSelect;
 export type EcoPlace = typeof ecoPlaces.$inferSelect;
 export type PlaceKind = (typeof placeKind.enumValues)[number];
+export type Favorite = typeof favorites.$inferSelect;
 export type Offer = (typeof offerType.enumValues)[number];

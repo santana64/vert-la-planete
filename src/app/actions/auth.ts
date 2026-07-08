@@ -18,12 +18,18 @@ import { checkRateLimit, resetRateLimit } from "@/lib/rate-limit";
 
 export type AuthState = { error?: string };
 
-const registerSchema = z.object({
-  name: z.string().trim().min(2, "Nom trop court"),
-  email: z.string().trim().toLowerCase().email("Adresse e-mail invalide"),
-  password: z.string().min(8, "Minimum 8 caractères"),
-  role: z.enum(["membre", "partenaire"]).default("membre")
-});
+const registerSchema = z
+  .object({
+    name: z.string().trim().min(2, "Nom trop court"),
+    email: z.string().trim().toLowerCase().email("Adresse e-mail invalide"),
+    password: z.string().min(8, "Minimum 8 caractères"),
+    confirmPassword: z.string(),
+    role: z.enum(["membre", "partenaire"]).default("membre")
+  })
+  .refine((d) => d.password === d.confirmPassword, {
+    message: "Les deux mots de passe ne correspondent pas",
+    path: ["confirmPassword"]
+  });
 
 async function uniqueSellerSlug(base: string): Promise<string> {
   const root = slugify(base) || "partenaire";
@@ -41,6 +47,7 @@ export async function registerAction(_prev: AuthState, formData: FormData): Prom
     name: formData.get("name"),
     email: formData.get("email"),
     password: formData.get("password"),
+    confirmPassword: formData.get("confirmPassword") ?? "",
     role: formData.get("role") ?? "membre"
   });
   if (!parsed.success) {
@@ -85,7 +92,8 @@ export async function registerAction(_prev: AuthState, formData: FormData): Prom
   }
 
   await createSession(user.id);
-  redirect(role === "partenaire" ? "/espace-partenaire" : "/compte");
+  // Partenaire : accès direct aux offres juste après la création du compte.
+  redirect(role === "partenaire" ? "/offres?bienvenue=1" : "/compte");
 }
 
 const loginSchema = z.object({
@@ -117,7 +125,7 @@ export async function loginAction(_prev: AuthState, formData: FormData): Promise
   }
 
   resetRateLimit(`login:${email}`);
-  await createSession(user.id);
+  await createSession(user.id, formData.get("remember") === "on");
 
   const next = formData.get("next");
   const dest =

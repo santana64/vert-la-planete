@@ -22,7 +22,7 @@ afterAll(async () => {
 describe("proposer un lieu (bout en bout)", () => {
   it("crée le compte de session", async () => {
     try {
-      await registerAction({}, fd({ name: "Vitest Lieux", email: EMAIL, password: "motdepasse123", role: "membre" }));
+      await registerAction({}, fd({ name: "Vitest Lieux", email: EMAIL, password: "motdepasse123", confirmPassword: "motdepasse123", role: "membre" }));
     } catch (err) {
       expect((err as { digest?: string }).digest ?? "").toContain("NEXT_REDIRECT");
     }

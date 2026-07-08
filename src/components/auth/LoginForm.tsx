@@ -20,6 +20,13 @@ export function LoginForm({ next }: { next?: string }) {
         <input className="form-in" type="password" name="password" placeholder="••••••••" required />
       </div>
 
+      <label
+        style={{ display: "flex", alignItems: "center", gap: 9, cursor: "pointer", marginBottom: 6, fontSize: 13, color: "var(--st)" }}
+      >
+        <input type="checkbox" name="remember" defaultChecked style={{ accentColor: "var(--s)", width: 16, height: 16 }} />
+        Se souvenir de moi
+      </label>
+
       {state.error ? <p className="field-error">{state.error}</p> : null}
 
       <SubmitButton className="form-submit" pendingLabel="Connexion…">

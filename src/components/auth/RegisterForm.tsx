@@ -48,6 +48,18 @@ export function RegisterForm({ initialRole = "membre" }: { initialRole?: "membre
           type="password"
           name="password"
           placeholder="8 caractères minimum"
+          autoComplete="new-password"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label className="form-lbl">Confirmez le mot de passe</label>
+        <input
+          className="form-in"
+          type="password"
+          name="confirmPassword"
+          placeholder="Retapez le même mot de passe"
+          autoComplete="new-password"
           required
         />
       </div>

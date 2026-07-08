@@ -26,7 +26,7 @@ export async function verifyPassword(plain: string, hash: string): Promise<boole
   return bcrypt.compare(plain, hash);
 }
 
-export async function createSession(userId: string): Promise<void> {
+export async function createSession(userId: string, remember = true): Promise<void> {
   const token = await new SignJWT({ sub: userId })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -39,7 +39,9 @@ export async function createSession(userId: string): Promise<void> {
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: SESSION_DAYS * 24 * 60 * 60
+    // « Se souvenir de moi » : cookie 30 jours ; sinon cookie de session
+    // (supprimé à la fermeture du navigateur).
+    ...(remember ? { maxAge: SESSION_DAYS * 24 * 60 * 60 } : {})
   });
 }
 

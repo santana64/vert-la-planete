@@ -4,6 +4,7 @@ import { db } from "@/db";
 import {
   articles,
   ecoPlaces,
+  favorites,
   jobs,
   products,
   reviews,
@@ -111,6 +112,88 @@ export async function getJobBySlug(slug: string): Promise<Job | null> {
 // ── Lieux écologiques (carte) ──────────────────────────────────────────────────
 export async function listEcoPlaces(): Promise<EcoPlace[]> {
   return db.select().from(ecoPlaces).orderBy(desc(ecoPlaces.createdAt));
+}
+
+// ── Compte : favoris & publications ───────────────────────────────────────────
+export async function getUserFavoriteSellers(userId: string): Promise<Seller[]> {
+  return db
+    .select({ seller: sellers })
+    .from(favorites)
+    .innerJoin(sellers, eq(favorites.sellerId, sellers.id))
+    .where(eq(favorites.userId, userId))
+    .orderBy(desc(favorites.createdAt))
+    .then((rows) => rows.map((r) => r.seller));
+}
+
+export async function isFavoriteSeller(userId: string, sellerId: string): Promise<boolean> {
+  const [row] = await db
+    .select({ id: favorites.id })
+    .from(favorites)
+    .where(and(eq(favorites.userId, userId), eq(favorites.sellerId, sellerId)))
+    .limit(1);
+  return Boolean(row);
+}
+
+export type UserPublications = {
+  places: EcoPlace[];
+  reviews: { id: string; rating: number; body: string; createdAt: Date; sellerName: string; sellerSlug: string }[];
+};
+
+export async function getUserPublications(userId: string): Promise<UserPublications> {
+  const [places, userReviews] = await Promise.all([
+    db.select().from(ecoPlaces).where(eq(ecoPlaces.createdBy, userId)).orderBy(desc(ecoPlaces.createdAt)),
+    db
+      .select({
+        id: reviews.id,
+        rating: reviews.rating,
+        body: reviews.body,
+        createdAt: reviews.createdAt,
+        sellerName: sellers.name,
+        sellerSlug: sellers.slug
+      })
+      .from(reviews)
+      .innerJoin(sellers, eq(reviews.sellerId, sellers.id))
+      .where(eq(reviews.userId, userId))
+      .orderBy(desc(reviews.createdAt))
+  ]);
+  return { places, reviews: userReviews };
+}
+
+// ── Notifications partenaire (dérivées des données réelles) ───────────────────
+export type PartnerNotification = {
+  id: string;
+  icon: string;
+  title: string;
+  body: string;
+  date: Date;
+};
+
+export async function getPartnerNotifications(seller: Seller): Promise<PartnerNotification[]> {
+  const sellerReviews = await getSellerReviews(seller.id);
+  const notifications: PartnerNotification[] = sellerReviews.map((r) => ({
+    id: `review-${r.id}`,
+    icon: "⭐",
+    title: `Nouvel avis ${"★".repeat(r.rating)}`,
+    body: `« ${r.body.slice(0, 120)}${r.body.length > 120 ? "…" : ""} » — ${r.authorName}`,
+    date: r.createdAt
+  }));
+  if (seller.verified) {
+    notifications.push({
+      id: "verified",
+      icon: "✅",
+      title: "Fiche vérifiée",
+      body: "Votre démarche écologique a été vérifiée par l'équipe — le badge « Vérifié » est affiché sur votre fiche.",
+      date: seller.createdAt
+    });
+  }
+  notifications.push({
+    id: "welcome",
+    icon: "🌱",
+    title: "Bienvenue sur Vert La Planète !",
+    body: "Votre boutique est en ligne. Complétez votre fiche et ajoutez vos produits pour gagner en visibilité.",
+    date: seller.createdAt
+  });
+  return notifications.sort((a, b) => b.date.getTime() - a.date.getTime());
 }
 
 // ── Statistiques (accueil) ───────────────────────────────────────────────────────
