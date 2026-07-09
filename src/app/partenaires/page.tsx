@@ -172,7 +172,7 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
               Aucun partenaire ne correspond à votre recherche.
             </p>
           ) : (
-            <div className="results-list">
+            <div className="results-list two-col">
               {(proSellers.length > 0 ? otherSellers : sellers).map((seller) => (
                 <Link key={seller.id} href={`/partenaires/${seller.slug}`} className="rcard">
                   <div className="rcard-thumb" style={{ background: seller.gradient }} />

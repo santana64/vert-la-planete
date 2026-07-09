@@ -38,7 +38,7 @@ export default async function EmploisPage({ searchParams }: { searchParams: Sear
         {jobs.length === 0 ? (
           <p style={{ color: "var(--pb)", fontWeight: 300 }}>Aucune offre pour le moment.</p>
         ) : (
-          <div className="results-list">
+          <div className="results-list two-col">
             {jobs.map((job) => (
               <Link key={job.id} href={`/emplois/${job.slug}`} className="rcard">
                 <div
