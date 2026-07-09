@@ -5,6 +5,7 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 import { ReviewForm } from "@/components/ReviewForm";
 import { SellerMiniMap } from "@/components/map/SellerMiniMap";
 import { getCurrentUser } from "@/lib/auth";
+import { sellerToPoint } from "@/lib/map-points";
 import { formatPrice } from "@/lib/format";
 import {
   getSellerBySlug,
@@ -246,17 +247,7 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
         {seller.lat !== 0 || seller.lng !== 0 ? (
           <div style={{ padding: "32px 0", borderBottom: ".5px solid rgba(0,0,0,.07)" }}>
             <div className="col-h">Localisation</div>
-            <SellerMiniMap
-              point={{
-                id: seller.id,
-                kind: "partenaire",
-                name: seller.name,
-                detail: seller.category,
-                city: seller.city,
-                lat: seller.lat,
-                lng: seller.lng
-              }}
-            />
+            <SellerMiniMap point={sellerToPoint(seller)} />
             <div style={{ fontSize: 13, color: "var(--pb)", marginTop: 10, fontWeight: 300 }}>
               {seller.city}, {seller.region}
             </div>

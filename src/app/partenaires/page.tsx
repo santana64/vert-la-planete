@@ -1,30 +1,19 @@
 import Link from "next/link";
 import { CarteInteractive } from "@/components/map/CarteInteractive";
-import type { MapPoint } from "@/components/map/LeafletMap";
+import { PartnerChip, SectionHead } from "@/components/cards";
 import { getCurrentUser } from "@/lib/auth";
 import { CATEGORIES, REGIONS } from "@/lib/constants";
+import { buildMapPoints } from "@/lib/map-points";
 import { listEcoPlaces, listSellers } from "@/lib/queries";
+import { buildFilterHref, str } from "@/lib/search-params";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Boutiques partenaires — Vert La Planète" };
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-function str(value: string | string[] | undefined): string | undefined {
-  return typeof value === "string" && value.length > 0 ? value : undefined;
-}
-
-function buildHref(current: Record<string, string | undefined>, changes: Record<string, string | null>) {
-  const sp = new URLSearchParams();
-  const merged = { ...current };
-  for (const [k, v] of Object.entries(changes)) {
-    if (v === null) delete merged[k];
-    else merged[k] = v;
-  }
-  for (const [k, v] of Object.entries(merged)) if (v) sp.set(k, v);
-  const qs = sp.toString();
-  return `/partenaires${qs ? `?${qs}` : ""}`;
-}
+const buildHref = (current: Record<string, string | undefined>, changes: Record<string, string | null>) =>
+  buildFilterHref("/partenaires", current, changes);
 
 export default async function PartenairesPage({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
@@ -40,32 +29,7 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
   const proSellers = sellers.filter((s) => s.offer !== "gratuit");
   const otherSellers = sellers.filter((s) => s.offer === "gratuit");
 
-  const points: MapPoint[] = [
-    ...allSellers.map(
-      (s): MapPoint => ({
-        id: `s-${s.id}`,
-        kind: "partenaire",
-        name: s.name,
-        detail: s.category,
-        city: s.city,
-        lat: s.lat,
-        lng: s.lng,
-        href: `/partenaires/${s.slug}`
-      })
-    ),
-    ...places.map(
-      (p): MapPoint => ({
-        id: `p-${p.id}`,
-        kind: p.kind,
-        name: p.name,
-        detail: p.description.slice(0, 80),
-        city: p.city,
-        lat: p.lat,
-        lng: p.lng,
-        schedule: p.schedule
-      })
-    )
-  ];
+  const points = buildMapPoints(allSellers, places);
 
   return (
     <div className="page active">
@@ -98,29 +62,16 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
       {proSellers.length > 0 ? (
         <div className="section-alt">
           <div className="section" style={{ paddingBottom: 40 }}>
-            <div className="sec-head">
-              <div>
-                <div className="kicker">Sélection Pro</div>
-                <div className="h2">
-                  Nos partenaires <em>Pro</em>
-                </div>
-              </div>
-              <Link className="see-all" href="/offres">
-                Rejoindre la sélection →
-              </Link>
-            </div>
+            <SectionHead
+              kicker="Sélection Pro"
+              title="Nos partenaires"
+              em="Pro"
+              href="/offres"
+              linkLabel="Rejoindre la sélection →"
+            />
             <div className="pchips-grid">
               {proSellers.map((seller) => (
-                <Link key={seller.id} href={`/partenaires/${seller.slug}`} className="pchip">
-                  <div className="pchip-logo" style={{ background: seller.gradient, color: "#fff" }}>
-                    {seller.logoInitials}
-                  </div>
-                  <div className="pchip-name">{seller.name}</div>
-                  <div className="pchip-cat">
-                    {seller.category} · {seller.city}
-                  </div>
-                  <span className="badge badge-amber">★ Partenaire Pro</span>
-                </Link>
+                <PartnerChip key={seller.id} seller={seller} />
               ))}
             </div>
           </div>

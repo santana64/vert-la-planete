@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { CountUp } from "@/components/CountUp";
 import { HomeMap } from "@/components/map/HomeMap";
-import type { MapPoint } from "@/components/map/LeafletMap";
 import { OfferCards } from "@/components/OfferCards";
-import { LAUNCH_PROMO } from "@/lib/constants";
-import { formatDate } from "@/lib/format";
+import { ArticleCard, PartnerChip, SectionHead } from "@/components/cards";
+import { ENGAGEMENTS, ENGAGEMENTS_SHORT, LAUNCH_PROMO } from "@/lib/constants";
+import { buildMapPoints } from "@/lib/map-points";
 import {
   getFeaturedSellers,
   getMarketplaceStats,
@@ -14,13 +15,6 @@ import {
 
 export const dynamic = "force-dynamic";
 
-const ENGAGEMENTS = [
-  { icon: "🌱", title: "Site éco-conçu", desc: "Code sobre, pages légères, zéro script superflu" },
-  { icon: "🚫", title: "Zéro newsletter imposée", desc: "Pas de spam, pas d'e-mails non sollicités" },
-  { icon: "🔒", title: "Zéro tracking publicitaire", desc: "Aucun traceur, aucune revente de données" },
-  { icon: "📍", title: "Circuits courts", desc: "Des acteurs locaux et vérifiés, près de chez vous" }
-];
-
 export default async function HomePage() {
   const [sellers, stats, articles, allSellers, places] = await Promise.all([
     getFeaturedSellers(4),
@@ -30,33 +24,7 @@ export default async function HomePage() {
     listEcoPlaces()
   ]);
   const latestArticles = articles.slice(0, 3);
-
-  const points: MapPoint[] = [
-    ...allSellers.map(
-      (s): MapPoint => ({
-        id: `s-${s.id}`,
-        kind: "partenaire",
-        name: s.name,
-        detail: s.category,
-        city: s.city,
-        lat: s.lat,
-        lng: s.lng,
-        href: `/partenaires/${s.slug}`
-      })
-    ),
-    ...places.map(
-      (p): MapPoint => ({
-        id: `p-${p.id}`,
-        kind: p.kind,
-        name: p.name,
-        detail: p.description.slice(0, 80),
-        city: p.city,
-        lat: p.lat,
-        lng: p.lng,
-        schedule: p.schedule
-      })
-    )
-  ];
+  const points = buildMapPoints(allSellers, places);
 
   return (
     <div className="page active">
@@ -79,7 +47,7 @@ export default async function HomePage() {
               écologiques et groupes de ramassage de déchets. Un site éco-conçu, sans newsletter
               ni tracking.
             </p>
-            <div className="hero-disclaimer">🌿 Éco-conçu · 🚫 Pas de newsletter · 🔒 Pas de tracking</div>
+            <div className="hero-disclaimer">{ENGAGEMENTS_SHORT}</div>
             <div className="hero-btns">
               <Link className="btn-cta" href="/partenaires">
                 Explorer les partenaires →
@@ -90,15 +58,21 @@ export default async function HomePage() {
             </div>
             <div className="hero-stats">
               <div className="stat-item">
-                <div className="stat-val">{stats.sellers}</div>
+                <div className="stat-val">
+                  <CountUp value={stats.sellers} />
+                </div>
                 <div className="stat-lbl">Partenaires engagés</div>
               </div>
               <div className="stat-item">
-                <div className="stat-val">{points.length - stats.sellers}</div>
+                <div className="stat-val">
+                  <CountUp value={points.length - stats.sellers} />
+                </div>
                 <div className="stat-lbl">Lieux écologiques</div>
               </div>
               <div className="stat-item">
-                <div className="stat-val">{stats.regions}</div>
+                <div className="stat-val">
+                  <CountUp value={stats.regions} />
+                </div>
                 <div className="stat-lbl">Régions couvertes</div>
               </div>
             </div>
@@ -125,10 +99,7 @@ export default async function HomePage() {
       {/* COMMENT ÇA MARCHE */}
       <div className="section-alt">
         <div className="section">
-          <div className="kicker">Comment ça marche</div>
-          <div className="h2">
-            Agir ensemble, <em>localement</em>
-          </div>
+          <SectionHead kicker="Comment ça marche" title="Agir ensemble," em="localement" />
           <div className="steps-grid">
             <div className="step">
               <div className="step-n">01</div>
@@ -178,31 +149,16 @@ export default async function HomePage() {
       {/* PARTENAIRES */}
       <div style={{ background: "#fff" }}>
         <div className="section">
-          <div className="sec-head">
-            <div>
-              <div className="kicker">Boutiques partenaires</div>
-              <div className="h2">
-                Des acteurs <em>engagés</em>
-              </div>
-            </div>
-            <Link className="see-all" href="/partenaires">
-              Voir tous les partenaires →
-            </Link>
-          </div>
+          <SectionHead
+            kicker="Boutiques partenaires"
+            title="Des acteurs"
+            em="engagés"
+            href="/partenaires"
+            linkLabel="Voir tous les partenaires →"
+          />
           <div className="pchips-grid">
             {sellers.map((seller) => (
-              <Link key={seller.id} href={`/partenaires/${seller.slug}`} className="pchip">
-                <div className="pchip-logo" style={{ background: seller.gradient, color: "#fff" }}>
-                  {seller.logoInitials}
-                </div>
-                <div className="pchip-name">{seller.name}</div>
-                <div className="pchip-cat">{seller.category}</div>
-                {seller.offer !== "gratuit" ? (
-                  <span className="badge badge-amber">★ Partenaire Pro</span>
-                ) : (
-                  <span className="badge badge-eco">{seller.region}</span>
-                )}
-              </Link>
+              <PartnerChip key={seller.id} seller={seller} />
             ))}
           </div>
         </div>
@@ -211,17 +167,13 @@ export default async function HomePage() {
       {/* OFFRES */}
       <div className="section-alt">
         <div className="section">
-          <div className="sec-head">
-            <div>
-              <div className="kicker">Nos offres</div>
-              <div className="h2">
-                Référencez votre <em>activité</em>
-              </div>
-            </div>
-            <Link className="see-all" href="/offres">
-              Comparer les offres →
-            </Link>
-          </div>
+          <SectionHead
+            kicker="Nos offres"
+            title="Référencez votre"
+            em="activité"
+            href="/offres"
+            linkLabel="Comparer les offres →"
+          />
           {LAUNCH_PROMO.active ? (
             <p style={{ fontSize: 13, color: "var(--s)", fontWeight: 500, margin: "0 0 20px", display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
               <span className="badge badge-amber">{LAUNCH_PROMO.badge}</span>
@@ -236,30 +188,16 @@ export default async function HomePage() {
       {latestArticles.length > 0 ? (
         <div style={{ background: "#fff" }}>
           <div className="section">
-            <div className="sec-head">
-              <div>
-                <div className="kicker">Actualités</div>
-                <div className="h2">
-                  Contenus & <em>initiatives</em>
-                </div>
-              </div>
-              <Link className="see-all" href="/actualites">
-                Voir tout le fil →
-              </Link>
-            </div>
+            <SectionHead
+              kicker="Actualités"
+              title="Contenus &"
+              em="initiatives"
+              href="/actualites"
+              linkLabel="Voir tout le fil →"
+            />
             <div className="articles-grid">
               {latestArticles.map((a) => (
-                <Link key={a.id} href={`/actualites/${a.slug}`} className="art-card">
-                  <div className="art-img" style={{ background: a.gradient }} />
-                  <div className="art-body">
-                    <span className="badge badge-eco">{a.category}</span>
-                    <div className="art-title">{a.title}</div>
-                    <div className="art-meta">
-                      {a.readMinutes} min · {formatDate(a.publishedAt)}
-                    </div>
-                    <span className="art-read">Lire →</span>
-                  </div>
-                </Link>
+                <ArticleCard key={a.id} article={a} />
               ))}
             </div>
           </div>

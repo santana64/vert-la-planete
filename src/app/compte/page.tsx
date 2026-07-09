@@ -5,18 +5,13 @@ import { BillingPortalButton } from "@/components/BillingPortalButton";
 import { getSellerForUser, requireUser } from "@/lib/auth";
 import { OFFERS } from "@/lib/constants";
 import { formatDate } from "@/lib/format";
+import { kindLabel } from "@/lib/places";
 import { getUserFavoriteSellers, getUserPublications } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
   title: "Mon compte",
   robots: { index: false, follow: false }
-};
-
-const KIND_LABEL: Record<string, string> = {
-  ramassage: "🤝 Groupe de ramassage",
-  dechetterie: "♻️ Déchetterie",
-  centre: "🌱 Centre écologique"
 };
 
 export default async function ComptePage() {
@@ -202,7 +197,7 @@ export default async function ComptePage() {
             {publications.places.map((p) => (
               <div key={p.id} className="rev-card">
                 <div style={{ fontSize: 12, color: "var(--s)", fontWeight: 500, marginBottom: 6 }}>
-                  {KIND_LABEL[p.kind] ?? p.kind} · {p.city}
+                  {kindLabel(p.kind)} · {p.city}
                 </div>
                 <div className="rev-txt" style={{ fontWeight: 500, color: "var(--f)" }}>{p.name}</div>
                 <div className="rev-auth">

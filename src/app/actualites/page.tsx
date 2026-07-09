@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { formatDate } from "@/lib/format";
+import { ArticleCard } from "@/components/cards";
 import { listArticles } from "@/lib/queries";
+import { str } from "@/lib/search-params";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Actualités — Vert La Planète" };
@@ -9,7 +10,7 @@ type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 export default async function ActualitesPage({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
-  const category = typeof sp.category === "string" ? sp.category : undefined;
+  const category = str(sp.category);
 
   const all = await listArticles();
   const categories = [...new Set(all.map((a) => a.category))];
@@ -49,17 +50,7 @@ export default async function ActualitesPage({ searchParams }: { searchParams: S
         ) : (
           <div className="articles-grid">
             {articles.map((a) => (
-              <Link key={a.id} href={`/actualites/${a.slug}`} className="art-card">
-                <div className="art-img" style={{ height: 120, background: a.gradient }} />
-                <div className="art-body">
-                  <span className="badge badge-eco">{a.category}</span>
-                  <div className="art-title">{a.title}</div>
-                  <div className="art-meta">
-                    {a.readMinutes} min · {a.author} · {formatDate(a.publishedAt)}
-                  </div>
-                  <span className="art-read">Lire →</span>
-                </div>
-              </Link>
+              <ArticleCard key={a.id} article={a} tall />
             ))}
           </div>
         )}

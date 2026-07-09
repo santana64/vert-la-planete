@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LeafMark } from "@/components/Logo";
-import { COMPANY } from "@/lib/constants";
+import { COMPANY, ENGAGEMENTS_SHORT } from "@/lib/constants";
 
 export function Footer() {
   return (
@@ -16,7 +16,7 @@ export function Footer() {
               Le réseau des acteurs de la transition écologique : partenaires engagés,
               déchetteries, centres écologiques et ramassages de déchets — partout en France.
             </p>
-            <p className="footer-mention">🌱 Éco-conçu · 🚫 Pas de newsletter · 🔒 Pas de tracking</p>
+            <p className="footer-mention">{ENGAGEMENTS_SHORT}</p>
             <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 6 }}>
               <a href={COMPANY.domain} target="_blank" rel="noreferrer" style={{ fontSize: 13, color: "var(--s)", fontWeight: 500 }}>
                 🌍 {COMPANY.domainLabel} ↗

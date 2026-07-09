@@ -5,6 +5,7 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { BottomNav } from "@/components/BottomNav";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { getCurrentUser } from "@/lib/auth";
 import { COMPANY } from "@/lib/constants";
 import { getSiteUrl } from "@/lib/site-url";
@@ -96,6 +97,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <main id="contenu">{children}</main>
         <Footer />
         <BottomNav />
+        <ScrollReveal />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

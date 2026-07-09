@@ -2,28 +2,7 @@
 
 import { CircleMarker, MapContainer, Popup, TileLayer } from "react-leaflet";
 import { FRANCE_CENTER } from "@/lib/geo";
-
-export type MapPoint = {
-  id: string;
-  kind: "partenaire" | "ramassage" | "dechetterie" | "centre";
-  name: string;
-  detail: string;
-  city: string;
-  lat: number;
-  lng: number;
-  href?: string;
-  schedule?: string | null;
-};
-
-export const KIND_META: Record<
-  MapPoint["kind"],
-  { label: string; color: string; icon: string }
-> = {
-  partenaire: { label: "Partenaires", color: "#1a5230", icon: "🛍️" },
-  ramassage: { label: "Ramassage de déchets", color: "#3daa62", icon: "🤝" },
-  dechetterie: { label: "Déchetteries", color: "#a85e0a", icon: "♻️" },
-  centre: { label: "Centres écologiques", color: "#2e6b8a", icon: "🌱" }
-};
+import { KIND_META, type MapPoint } from "@/lib/places";
 
 export default function LeafletMap({
   points,

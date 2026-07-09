@@ -1,17 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { loginAction, registerAction } from "@/app/actions/auth";
 import { sendContactAction } from "@/app/actions/contact";
+import { fd } from "../helpers";
 
 /**
  * Chemins de VALIDATION des Server Actions — aucun accès base nécessaire
  * (le parsing échoue avant toute requête, grâce au client DB paresseux).
  */
-function fd(entries: Record<string, string>): FormData {
-  const f = new FormData();
-  for (const [k, v] of Object.entries(entries)) f.set(k, v);
-  return f;
-}
-
 describe("registerAction — validation", () => {
   it("rejette un e-mail invalide", async () => {
     const res = await registerAction({}, fd({ name: "Test", email: "pas-un-email", password: "12345678", confirmPassword: "12345678" }));

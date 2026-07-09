@@ -26,6 +26,17 @@ export const REGIONS = [
   "Hauts-de-France"
 ] as const;
 
+/** Engagements de la plateforme — affichés sur l'accueil, le footer, à-propos. */
+export const ENGAGEMENTS = [
+  { icon: "🌱", title: "Site éco-conçu", desc: "Code sobre, pages légères, zéro script superflu" },
+  { icon: "🚫", title: "Zéro newsletter imposée", desc: "Pas de spam, pas d'e-mails non sollicités" },
+  { icon: "🔒", title: "Zéro tracking publicitaire", desc: "Aucun traceur, aucune revente de données" },
+  { icon: "📍", title: "Circuits courts", desc: "Des acteurs locaux et vérifiés, près de chez vous" }
+] as const;
+
+/** Version courte des engagements (hero, footer). */
+export const ENGAGEMENTS_SHORT = "🌿 Éco-conçu · 🚫 Pas de newsletter · 🔒 Pas de tracking";
+
 /** Offre gratuite : nombre maximum de produits publiables (accès restreint, art. 2.3). */
 export const FREE_PRODUCT_LIMIT = 3;
 

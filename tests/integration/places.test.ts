@@ -4,14 +4,9 @@ import { registerAction } from "@/app/actions/auth";
 import { createEcoPlaceAction } from "@/app/actions/places";
 import { db } from "@/db";
 import { ecoPlaces, users } from "@/db/schema";
+import { fd } from "../helpers";
 
 const EMAIL = `vitest-places-${Date.now()}@test.local`;
-
-function fd(entries: Record<string, string>): FormData {
-  const f = new FormData();
-  for (const [k, v] of Object.entries(entries)) f.set(k, v);
-  return f;
-}
 
 afterAll(async () => {
   const [u] = await db.select({ id: users.id }).from(users).where(eq(users.email, EMAIL));

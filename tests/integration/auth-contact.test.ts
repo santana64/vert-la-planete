@@ -5,6 +5,7 @@ import { sendContactAction } from "@/app/actions/contact";
 import { addReviewAction } from "@/app/actions/reviews";
 import { db } from "@/db";
 import { contactMessages, reviews, sellers, users } from "@/db/schema";
+import { fd } from "../helpers";
 
 /**
  * Tests d'intégration — exigent une base locale joignable (docker vlp-pg).
@@ -13,12 +14,6 @@ import { contactMessages, reviews, sellers, users } from "@/db/schema";
  */
 const EMAIL = `vitest-${Date.now()}@test.local`;
 const CONTACT_EMAIL = `vitest-contact-${Date.now()}@test.local`;
-
-function fd(entries: Record<string, string>): FormData {
-  const f = new FormData();
-  for (const [k, v] of Object.entries(entries)) f.set(k, v);
-  return f;
-}
 
 async function expectRedirect(promise: Promise<unknown>): Promise<void> {
   try {
