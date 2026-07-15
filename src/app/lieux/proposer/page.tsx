@@ -17,7 +17,7 @@ export default async function ProposerLieuPage() {
       <div className="auth-container" style={{ maxWidth: 620 }}>
         <div className="auth-h">Proposer un lieu 📍</div>
         <p className="auth-sub">
-          Groupe de ramassage de déchets, déchetterie, centre écologique — enrichissez la carte
+          Événement groupé, point de collecte, initiative urbaine — enrichissez la carte
           communautaire pour toute la France.
         </p>
         <EcoPlaceForm />

@@ -12,9 +12,9 @@ const LocationPicker = dynamic(() => import("@/components/map/LocationPicker"), 
 });
 
 const KINDS = [
-  { value: "ramassage", icon: "🤝", label: "Groupe de ramassage de déchets", desc: "Rassemblement citoyen pour nettoyer un lieu" },
-  { value: "dechetterie", icon: "♻️", label: "Déchetterie", desc: "Point de collecte et de tri recensé" },
-  { value: "centre", icon: "🌱", label: "Centre écologique", desc: "Centre pour l'écologie et l'environnement" }
+  { value: "ramassage", icon: "🤝", label: "Événement groupé", desc: "Ramassage de déchets, clean walk, atelier collectif…" },
+  { value: "dechetterie", icon: "♻️", label: "Point de collecte", desc: "Déchetterie, borne de tri, compost partagé…" },
+  { value: "centre", icon: "🌱", label: "Initiative urbaine", desc: "Jardin partagé, centre écologique, ferme urbaine…" }
 ] as const;
 
 export function EcoPlaceForm() {

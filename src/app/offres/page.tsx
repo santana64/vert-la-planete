@@ -90,10 +90,11 @@ export default async function OffresPage({ searchParams }: { searchParams: Searc
               <tbody>
                 {[
                   ["Fiche boutique complète (présentation, avis, contact)", "✓", "✓", "✓"],
-                  ["Visible dans l'annuaire et sur la carte de France", "✓", "✓", "✓"],
+                  ["Visible dans l'annuaire des partenaires", "✓", "✓", "✓"],
+                  ["Localisation sur la carte de France interactive", "—", "✓", "✓"],
                   ["Produits présentés sur votre fiche", "3 max", "Illimités", "Illimités"],
                   ["Affiché en premier (section « Partenaires Pro »)", "—", "✓", "✓"],
-                  ["Badge « ★ Partenaire Pro »", "—", "✓", "✓"],
+                  ["Badge « ★ Partenaire Pro » (marqueur doré pour les premiers)", "—", "✓", "✓"],
                   ["Prix", "0 €", "14,90 €/mois", "118,80 €/an (≈ 9,90 €/mois)"],
                   ["Engagement", "Aucun", "Aucun — résiliable à tout moment", "12 mois"]
                 ].map(([label, a, b, c]) => (

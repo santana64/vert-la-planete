@@ -2,7 +2,7 @@
 
 import { CircleMarker, MapContainer, Popup, TileLayer } from "react-leaflet";
 import { FRANCE_CENTER } from "@/lib/geo";
-import { KIND_META, type MapPoint } from "@/lib/places";
+import { FOUNDER_META, KIND_META, type MapPoint } from "@/lib/places";
 
 export default function LeafletMap({
   points,
@@ -32,21 +32,24 @@ export default function LeafletMap({
         .filter((p) => p.lat !== 0 || p.lng !== 0)
         .map((p) => {
           const meta = KIND_META[p.kind];
+          // Membre fondateur : marqueur doré, plus grand, liseré appuyé.
+          const fillColor = p.founder ? FOUNDER_META.color : meta.color;
           return (
             <CircleMarker
               key={p.id}
               center={[p.lat, p.lng]}
-              radius={9}
+              radius={p.founder ? 12 : 9}
               pathOptions={{
                 color: "#ffffff",
-                weight: 2,
-                fillColor: meta.color,
+                weight: p.founder ? 3 : 2,
+                fillColor,
                 fillOpacity: 0.95
               }}
             >
               <Popup>
                 <div style={{ fontFamily: "var(--sans)", minWidth: 180 }}>
-                  <div style={{ fontSize: 11, color: meta.color, fontWeight: 600, marginBottom: 2 }}>
+                  <div style={{ fontSize: 11, color: fillColor, fontWeight: 600, marginBottom: 2 }}>
+                    {p.founder ? `${FOUNDER_META.icon} Membre fondateur · ` : null}
                     {meta.icon} {meta.label}
                   </div>
                   <div style={{ fontSize: 14, fontWeight: 600, color: "#091f12" }}>{p.name}</div>

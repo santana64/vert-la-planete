@@ -40,6 +40,9 @@ export const ENGAGEMENTS_SHORT = "🌿 Éco-conçu · 🚫 Pas de newsletter · 
 /** Offre gratuite : nombre maximum de produits publiables (accès restreint, art. 2.3). */
 export const FREE_PRODUCT_LIMIT = 3;
 
+/** Membres fondateurs : les N premiers abonnés Pro (marqueur doré sur la carte). */
+export const FOUNDERS_LIMIT = 50;
+
 export type OfferKey = "gratuit" | "pro_mensuel" | "pro_annuel";
 
 /** Les 3 offres partenaires définies au contrat (art. 2.3). */
@@ -66,8 +69,8 @@ export const OFFERS: {
     highlight: false,
     tagline: "Pour référencer votre activité et être trouvé près de chez vous.",
     features: [
-      "Votre fiche boutique (présentation, avis, localisation)",
-      "Visible dans l'annuaire et sur la carte de France",
+      "Votre fiche boutique (présentation, avis, contact)",
+      "Visible dans l'annuaire des partenaires",
       `Jusqu'à ${FREE_PRODUCT_LIMIT} produits présentés sur votre fiche`,
       "Les visiteurs vous contactent directement"
     ]
@@ -85,8 +88,9 @@ export const OFFERS: {
     features: [
       "Tout le contenu de l'offre Gratuite",
       "Produits illimités sur votre fiche",
+      "Localisation sur la carte de France interactive",
       "Affiché EN PREMIER : section « Partenaires Pro » en haut de l'annuaire",
-      "Badge « ★ Partenaire Pro » sur votre fiche et vos apparitions",
+      "Badge « ★ Partenaire Pro » — marqueur doré pour les premiers abonnés",
       "Sans engagement — résiliable à tout moment"
     ]
   },

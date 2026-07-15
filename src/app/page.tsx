@@ -43,9 +43,8 @@ export default async function HomePage() {
               de la <em>transition écologique</em>
             </h1>
             <p className="hero-p">
-              Trouvez près de chez vous les producteurs, artisans, déchetteries, centres
-              écologiques et groupes de ramassage de déchets. Un site éco-conçu, sans newsletter
-              ni tracking.
+              Trouvez près de chez vous les partenaires engagés, points de collecte, initiatives
+              urbaines et événements groupés. Un site éco-conçu, sans newsletter ni tracking.
             </p>
             <div className="hero-disclaimer">{ENGAGEMENTS_SHORT}</div>
             <div className="hero-btns">
@@ -111,8 +110,8 @@ export default async function HomePage() {
               </div>
               <div className="step-h">Découvrir</div>
               <div className="step-p">
-                Explorez la carte de France : partenaires engagés, déchetteries, centres
-                écologiques et ramassages près de chez vous.
+                Explorez la carte de France : partenaires Pro, points de collecte, initiatives
+                urbaines et événements groupés près de chez vous.
               </div>
             </div>
             <div className="step">

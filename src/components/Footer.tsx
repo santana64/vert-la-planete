@@ -14,7 +14,7 @@ export function Footer() {
             </div>
             <p className="footer-desc">
               Le réseau des acteurs de la transition écologique : partenaires engagés,
-              déchetteries, centres écologiques et ramassages de déchets — partout en France.
+              points de collecte, initiatives urbaines et événements groupés — partout en France.
             </p>
             <p className="footer-mention">{ENGAGEMENTS_SHORT}</p>
             <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 6 }}>

@@ -156,8 +156,8 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
             Agir <em>près de chez vous</em>
           </div>
           <p style={{ fontSize: 14, color: "var(--pb)", fontWeight: 300, marginBottom: 24, maxWidth: 620 }}>
-            Partenaires engagés, groupes de ramassage de déchets, déchetteries et centres
-            écologiques — une carte collaborative enrichie par la communauté.
+            Partenaires Pro, points de collecte, initiatives urbaines et événements groupés —
+            une carte collaborative enrichie par la communauté.
           </p>
           <CarteInteractive points={points} isLoggedIn={Boolean(user)} />
         </div>

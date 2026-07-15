@@ -3,19 +3,19 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { KIND_META, type MapPoint } from "@/lib/places";
+import { FOUNDER_META, KIND_META, type MapPoint } from "@/lib/places";
 
 const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
   ssr: false,
   loading: () => <div className="skel-hero" style={{ height: 480, marginBottom: 0 }} />
 });
 
+// Filtres dérivés de la source de vérité (lib/places) — aucun libellé dupliqué.
 const FILTERS: { key: "tous" | MapPoint["kind"]; label: string; color?: string }[] = [
   { key: "tous", label: "Tous" },
-  { key: "partenaire", label: "🛍️ Partenaires", color: KIND_META.partenaire.color },
-  { key: "ramassage", label: "🤝 Ramassage de déchets", color: KIND_META.ramassage.color },
-  { key: "dechetterie", label: "♻️ Déchetteries", color: KIND_META.dechetterie.color },
-  { key: "centre", label: "🌱 Centres écologiques", color: KIND_META.centre.color }
+  ...(Object.entries(KIND_META) as [MapPoint["kind"], (typeof KIND_META)[MapPoint["kind"]]][]).map(
+    ([key, meta]) => ({ key, label: `${meta.icon} ${meta.label}`, color: meta.color })
+  )
 ];
 
 export function CarteInteractive({
@@ -71,6 +71,10 @@ export function CarteInteractive({
             {f.label.replace(/^\S+\s/, "")}
           </span>
         ))}
+        <span className="carte-leg-item" style={{ fontSize: 12 }}>
+          <span className="carte-leg-dot" style={{ background: FOUNDER_META.color }} />
+          {FOUNDER_META.icon} {FOUNDER_META.label}
+        </span>
         <span style={{ fontSize: 11, color: "var(--sd)", marginLeft: "auto" }}>
           Carte © OpenStreetMap — sans tracking ni clé propriétaire
         </span>
