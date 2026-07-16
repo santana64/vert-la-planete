@@ -5,7 +5,13 @@ import { useState, useTransition } from "react";
 import { startSubscriptionAction } from "@/app/actions/subscription";
 import { OFFERS, type OfferKey } from "@/lib/constants";
 
-export function OfferCards({ currentOffer }: { currentOffer: OfferKey | null }) {
+export function OfferCards({
+  currentOffer,
+  showFeatures = true
+}: {
+  currentOffer: OfferKey | null;
+  showFeatures?: boolean;
+}) {
   const [pending, startTransition] = useTransition();
   const [loadingKey, setLoadingKey] = useState<OfferKey | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -65,14 +71,18 @@ export function OfferCards({ currentOffer }: { currentOffer: OfferKey | null }) 
                 {offer.tagline}
               </p>
 
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8, margin: "12px 0", flex: 1 }}>
-                {offer.features.map((f) => (
-                  <li key={f} style={{ fontSize: 12.5, color: "var(--st)", fontWeight: 300, display: "flex", gap: 8 }}>
-                    <span style={{ color: "var(--s)" }}>✓</span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
+              {showFeatures ? (
+                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8, margin: "12px 0", flex: 1 }}>
+                  {offer.features.map((f) => (
+                    <li key={f} style={{ fontSize: 12.5, color: "var(--st)", fontWeight: 300, display: "flex", gap: 8 }}>
+                      <span style={{ color: "var(--s)" }}>✓</span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div style={{ flex: 1, minHeight: 8 }} />
+              )}
 
               {offer.key === "gratuit" ? (
                 isCurrent ? (

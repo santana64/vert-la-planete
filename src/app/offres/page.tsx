@@ -71,9 +71,11 @@ export default async function OffresPage({ searchParams }: { searchParams: Searc
               <div className="eco-vrf">Lancement 🌱</div>
             </div>
           ) : null}
-          <OfferCards currentOffer={user ? user.offer : null} />
+          {/* Cartes compactes (prix + accroche + souscription) — le détail des
+              avantages est porté par le tableau comparatif ci-dessous, pas répété. */}
+          <OfferCards currentOffer={user ? user.offer : null} showFeatures={false} />
 
-          {/* Comparatif détaillé */}
+          {/* Comparatif détaillé — la source unique des avantages par offre */}
           <div className="table-card" style={{ marginTop: 40, maxWidth: 860, marginLeft: "auto", marginRight: "auto" }}>
             <div className="table-card-hd">
               <span className="table-card-title">Ce que chaque offre comprend, en détail</span>
