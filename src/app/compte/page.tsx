@@ -115,29 +115,24 @@ export default async function ComptePage() {
           </div>
         </div>
 
-        {/* TRANSACTIONS / FACTURES / MOYEN DE PAIEMENT */}
+        {/* PAIEMENTS — factures + moyen de paiement dans un même portail sécurisé */}
         <div className="kicker">Paiements</div>
         <div className="h2" style={{ fontSize: 26, marginBottom: 20 }}>
-          Mes transactions & <em>factures</em>
+          Factures & <em>moyen de paiement</em>
         </div>
-        <div className="dash-2col" style={{ marginBottom: 40 }}>
-          <div className="mini-cal-card">
-            <div className="activity-title">🧾 Mes achats, transactions et factures</div>
-            <p style={{ fontSize: 13, color: "var(--pb)", fontWeight: 300, lineHeight: 1.7, marginBottom: 14 }}>
+        <div
+          className="mini-cal-card"
+          style={{ marginBottom: 40, display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}
+        >
+          <div style={{ flex: "1 1 320px" }}>
+            <div className="activity-title">🧾 Portail de facturation sécurisé</div>
+            <p style={{ fontSize: 13, color: "var(--pb)", fontWeight: 300, lineHeight: 1.7, marginTop: 4 }}>
               {user.stripeSubscriptionId
-                ? "Retrouvez l'historique complet de vos paiements et téléchargez vos factures."
-                : "Aucune transaction pour le moment — vos factures d'abonnement apparaîtront ici."}
+                ? "Téléchargez vos factures, mettez à jour votre carte ou résiliez — le tout via Stripe, rien n'est stocké sur nos serveurs."
+                : "Vos factures et votre moyen de paiement apparaîtront ici dès votre première souscription Pro. Paiement 100 % géré par Stripe."}
             </p>
-            <BillingPortalButton label="Voir mes factures →" />
           </div>
-          <div className="mini-cal-card">
-            <div className="activity-title">💳 Mon moyen de paiement</div>
-            <p style={{ fontSize: 13, color: "var(--pb)", fontWeight: 300, lineHeight: 1.7, marginBottom: 14 }}>
-              Ajoutez ou remplacez votre carte en toute sécurité — géré par Stripe, rien n&apos;est
-              stocké sur nos serveurs.
-            </p>
-            <BillingPortalButton label="Gérer mon moyen de paiement →" />
-          </div>
+          <BillingPortalButton label="Ouvrir le portail →" />
         </div>
 
         {/* MES FAVORIS */}

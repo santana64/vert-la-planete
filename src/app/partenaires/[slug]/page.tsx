@@ -154,44 +154,9 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
       </div>
 
       <div className="fiche-body">
-        <div className="fiche-grid">
-          <div className="fcol">
-            <div className="col-h">Présentation</div>
-            <p className="fiche-desc">{seller.description}</p>
-          </div>
-          <div className="fcol">
-            <div className="col-h">Informations</div>
-            <table className="info-table">
-              <tbody>
-                <tr className="info-row">
-                  <td className="info-lbl">Catégorie</td>
-                  <td className="info-val">{seller.category}</td>
-                </tr>
-                <tr className="info-row">
-                  <td className="info-lbl">Localisation</td>
-                  <td className="info-val">{seller.city}</td>
-                </tr>
-                <tr className="info-row">
-                  <td className="info-lbl">Région</td>
-                  <td className="info-val">{seller.region}</td>
-                </tr>
-                <tr className="info-row">
-                  <td className="info-lbl">Score écologique</td>
-                  <td className="info-val">{seller.ecoScore} / 100</td>
-                </tr>
-                {seller.websiteUrl ? (
-                  <tr className="info-row">
-                    <td className="info-lbl">Site web</td>
-                    <td className="info-val link">
-                      <a href={seller.websiteUrl} target="_blank" rel="noreferrer">
-                        Visiter ↗
-                      </a>
-                    </td>
-                  </tr>
-                ) : null}
-              </tbody>
-            </table>
-          </div>
+        <div style={{ padding: "32px 0", borderBottom: ".5px solid rgba(0,0,0,.07)" }}>
+          <div className="col-h">Présentation</div>
+          <p className="fiche-desc" style={{ maxWidth: 720 }}>{seller.description}</p>
         </div>
 
         <div style={{ padding: "32px 0", borderBottom: ".5px solid rgba(0,0,0,.07)" }}>

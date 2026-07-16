@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { CountUp } from "@/components/CountUp";
 import { HomeMap } from "@/components/map/HomeMap";
-import { OfferCards } from "@/components/OfferCards";
-import { ArticleCard, PartnerChip, SectionHead } from "@/components/cards";
-import { ENGAGEMENTS, ENGAGEMENTS_SHORT, LAUNCH_PROMO } from "@/lib/constants";
+import { ArticleCard, OffersTeaser, PartnerChip, SectionHead } from "@/components/cards";
+import { ENGAGEMENTS, LAUNCH_PROMO } from "@/lib/constants";
 import { buildMapPoints } from "@/lib/map-points";
 import {
   getFeaturedSellers,
@@ -42,17 +41,16 @@ export default async function HomePage() {
               <br />
               de la <em>transition écologique</em>
             </h1>
-            <p className="hero-p">
-              Trouvez près de chez vous les partenaires engagés, points de collecte, initiatives
-              urbaines et événements groupés. Un site éco-conçu, sans newsletter ni tracking.
+            <p className="hero-p" style={{ marginBottom: 32 }}>
+              La carte de France des acteurs engagés : trouvez qui agit près de chez vous,
+              participez aux initiatives de la communauté et soutenez l&apos;économie locale.
             </p>
-            <div className="hero-disclaimer">{ENGAGEMENTS_SHORT}</div>
             <div className="hero-btns">
               <Link className="btn-cta" href="/partenaires">
-                Explorer les partenaires →
+                Explorer la carte →
               </Link>
-              <Link className="btn-outline" href="/devenir-partenaire">
-                Devenir partenaire
+              <Link className="btn-outline" href="/lieux/proposer">
+                ＋ Proposer un lieu
               </Link>
             </div>
             <div className="hero-stats">
@@ -110,8 +108,8 @@ export default async function HomePage() {
               </div>
               <div className="step-h">Découvrir</div>
               <div className="step-p">
-                Explorez la carte de France : partenaires Pro, points de collecte, initiatives
-                urbaines et événements groupés près de chez vous.
+                Parcourez l&apos;annuaire et la carte interactive pour repérer les acteurs
+                écologiques autour de vous, filtrés par type de lieu.
               </div>
             </div>
             <div className="step">
@@ -179,7 +177,7 @@ export default async function HomePage() {
               {LAUNCH_PROMO.short}
             </p>
           ) : null}
-          <OfferCards currentOffer={null} />
+          <OffersTeaser />
         </div>
       </div>
 
