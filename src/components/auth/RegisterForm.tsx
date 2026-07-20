@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { registerAction, type AuthState } from "@/app/actions/auth";
+import { PasswordInput } from "@/components/PasswordInput";
 import { SubmitButton } from "@/components/SubmitButton";
 
 export function RegisterForm({ initialRole = "membre" }: { initialRole?: "membre" | "partenaire" }) {
@@ -43,27 +44,11 @@ export function RegisterForm({ initialRole = "membre" }: { initialRole?: "membre
       </div>
       <div className="form-group">
         <label className="form-lbl" htmlFor="reg-password">Mot de passe</label>
-        <input
-          id="reg-password"
-          className="form-in"
-          type="password"
-          name="password"
-          placeholder="8 caractères minimum"
-          autoComplete="new-password"
-          required
-        />
+        <PasswordInput id="reg-password" name="password" placeholder="8 caractères minimum" autoComplete="new-password" required />
       </div>
       <div className="form-group">
         <label className="form-lbl" htmlFor="reg-confirm">Confirmez le mot de passe</label>
-        <input
-          id="reg-confirm"
-          className="form-in"
-          type="password"
-          name="confirmPassword"
-          placeholder="Retapez le même mot de passe"
-          autoComplete="new-password"
-          required
-        />
+        <PasswordInput id="reg-confirm" name="confirmPassword" placeholder="Retapez le même mot de passe" autoComplete="new-password" required />
       </div>
 
       {state.error ? <p className="field-error">{state.error}</p> : null}

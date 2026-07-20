@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { loginAction, type AuthState } from "@/app/actions/auth";
+import { PasswordInput } from "@/components/PasswordInput";
 import { SubmitButton } from "@/components/SubmitButton";
 
 export function LoginForm({ next }: { next?: string }) {
@@ -17,7 +18,7 @@ export function LoginForm({ next }: { next?: string }) {
       </div>
       <div className="form-group">
         <label className="form-lbl" htmlFor="login-password">Mot de passe</label>
-        <input id="login-password" className="form-in" type="password" name="password" autoComplete="current-password" placeholder="••••••••" required />
+        <PasswordInput id="login-password" name="password" autoComplete="current-password" placeholder="••••••••" required />
       </div>
 
       <label
