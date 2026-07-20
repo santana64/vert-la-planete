@@ -6,6 +6,7 @@ import { ReviewForm } from "@/components/ReviewForm";
 import { SellerMiniMap } from "@/components/map/SellerMiniMap";
 import { getCurrentUser } from "@/lib/auth";
 import { sellerToPoint } from "@/lib/map-points";
+import { jsonLd } from "@/lib/jsonld";
 import { formatPrice } from "@/lib/format";
 import {
   getSellerBySlug,
@@ -56,7 +57,7 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
       ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
       : null;
 
-  const jsonLd = {
+  const structuredData = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: seller.name,
@@ -83,7 +84,7 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
     <div className="page active">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }}
       />
       <div className="fiche-bc">
         <Link href="/">Accueil</Link>

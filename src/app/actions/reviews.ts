@@ -7,6 +7,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { reviews, sellers } from "@/db/schema";
 import { getCurrentUser } from "@/lib/auth";
+import { isUniqueViolation } from "@/lib/db-errors";
 
 export type ReviewState = { ok?: boolean; error?: string };
 
@@ -52,13 +53,21 @@ export async function addReviewAction(
     return { error: "Vous avez déjà laissé un avis pour ce partenaire." };
   }
 
-  await db.insert(reviews).values({
-    sellerId,
-    userId: user.id,
-    authorName: `${user.name} · Membre Vert La Planète`,
-    rating,
-    body
-  });
+  try {
+    await db.insert(reviews).values({
+      sellerId,
+      userId: user.id,
+      authorName: `${user.name} · Membre Vert La Planète`,
+      rating,
+      body
+    });
+  } catch (err) {
+    // Double-soumission concurrente : l'index unique (seller, user) a tranché.
+    if (isUniqueViolation(err)) {
+      return { error: "Vous avez déjà laissé un avis pour ce partenaire." };
+    }
+    throw err;
+  }
 
   revalidatePath(`/partenaires/${seller.slug}`);
   return { ok: true };

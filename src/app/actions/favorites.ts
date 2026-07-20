@@ -7,6 +7,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { favorites, sellers } from "@/db/schema";
 import { getCurrentUser } from "@/lib/auth";
+import { isUniqueViolation } from "@/lib/db-errors";
 
 export type FavoriteState = { favorited?: boolean; error?: string };
 
@@ -39,7 +40,12 @@ export async function toggleFavoriteAction(
     await db.delete(favorites).where(eq(favorites.id, existing.id));
     favorited = false;
   } else {
-    await db.insert(favorites).values({ userId: user.id, sellerId });
+    try {
+      await db.insert(favorites).values({ userId: user.id, sellerId });
+    } catch (err) {
+      // Double-clic concurrent : déjà en favori (index unique) — état idempotent.
+      if (!isUniqueViolation(err)) throw err;
+    }
     favorited = true;
   }
 

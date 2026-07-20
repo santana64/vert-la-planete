@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/format";
 import { getArticleBySlug } from "@/lib/queries";
+import { jsonLd } from "@/lib/jsonld";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +29,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   const paragraphs = article.body.split(/\n\n+/).filter(Boolean);
 
-  const jsonLd = {
+  const structuredData = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: article.title,
@@ -42,7 +43,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     <div className="page active">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }}
       />
       <div className="fiche-bc">
         <Link href="/">Accueil</Link>

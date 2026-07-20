@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import {
   boolean,
+  index,
   integer,
   pgEnum,
   pgTable,
@@ -69,22 +70,27 @@ export const sellers = pgTable("sellers", {
 });
 
 // ── Produits (vitrine de la boutique partenaire, sans gestion de stock) ────────
-export const products = pgTable("products", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  sellerId: uuid("seller_id")
-    .notNull()
-    .references(() => sellers.id, { onDelete: "cascade" }),
-  slug: text("slug").notNull().unique(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  priceCents: integer("price_cents").notNull(),
-  unit: text("unit"),
-  category: text("category").notNull(),
-  badge: text("badge"),
-  gradient: text("gradient").notNull(),
-  isNew: boolean("is_new").notNull().default(false),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
-});
+export const products = pgTable(
+  "products",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    sellerId: uuid("seller_id")
+      .notNull()
+      .references(() => sellers.id, { onDelete: "cascade" }),
+    slug: text("slug").notNull().unique(),
+    name: text("name").notNull(),
+    description: text("description").notNull(),
+    priceCents: integer("price_cents").notNull(),
+    unit: text("unit"),
+    category: text("category").notNull(),
+    badge: text("badge"),
+    gradient: text("gradient").notNull(),
+    isNew: boolean("is_new").notNull().default(false),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+  },
+  // Requêtes fréquentes filtrées par vendeur (fiche + espace partenaire).
+  (t) => [index("products_seller_id_idx").on(t.sellerId)]
+);
 
 // ── Avis (sur un partenaire) ──────────────────────────────────────────────────
 export const reviews = pgTable(
@@ -150,19 +156,24 @@ export const favorites = pgTable(
 
 // ── Lieux écologiques (carte communautaire) ───────────────────────────────────
 // Groupes de ramassage de déchets, déchetteries recensées, centres écologiques.
-export const ecoPlaces = pgTable("eco_places", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  kind: placeKind("kind").notNull(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  city: text("city").notNull(),
-  lat: real("lat").notNull(),
-  lng: real("lng").notNull(),
-  // Info pratique libre : date de rassemblement, horaires d'ouverture…
-  schedule: text("schedule"),
-  createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
-});
+export const ecoPlaces = pgTable(
+  "eco_places",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    kind: placeKind("kind").notNull(),
+    name: text("name").notNull(),
+    description: text("description").notNull(),
+    city: text("city").notNull(),
+    lat: real("lat").notNull(),
+    lng: real("lng").notNull(),
+    // Info pratique libre : date de rassemblement, horaires d'ouverture…
+    schedule: text("schedule"),
+    createdBy: uuid("created_by").references(() => users.id, { onDelete: "set null" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+  },
+  // « Mes publications » filtre par auteur.
+  (t) => [index("eco_places_created_by_idx").on(t.createdBy)]
+);
 
 // ── Messages de contact (formulaire public, art. 2.3) ────────────────────────
 export const contactMessages = pgTable("contact_messages", {

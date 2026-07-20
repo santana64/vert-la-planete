@@ -128,12 +128,9 @@ export async function loginAction(_prev: AuthState, formData: FormData): Promise
   await createSession(user.id, formData.get("remember") === "on");
 
   const next = formData.get("next");
-  const dest =
-    typeof next === "string" && next.startsWith("/") && !next.startsWith("//")
-      ? next
-      : user.role === "partenaire"
-        ? "/espace-partenaire"
-        : "/compte";
+  // Chemin interne uniquement : commence par "/" mais pas "//" ni "/\" (open redirect).
+  const safeNext = typeof next === "string" && /^\/(?![/\\])/.test(next) ? next : null;
+  const dest = safeNext ?? (user.role === "partenaire" ? "/espace-partenaire" : "/compte");
   redirect(dest);
 }
 

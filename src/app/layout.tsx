@@ -7,6 +7,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { getCurrentUser } from "@/lib/auth";
 import { COMPANY } from "@/lib/constants";
+import { jsonLd } from "@/lib/jsonld";
 import { getSiteUrl } from "@/lib/site-url";
 
 const serif = Fraunces({
@@ -99,7 +100,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <ScrollReveal />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLd(organizationJsonLd) }}
         />
       </body>
     </html>
