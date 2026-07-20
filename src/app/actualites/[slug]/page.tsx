@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ShareButtons } from "@/components/ShareButtons";
 import { formatDate } from "@/lib/format";
 import { getArticleBySlug } from "@/lib/queries";
 import { jsonLd } from "@/lib/jsonld";
@@ -79,10 +80,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </p>
         ))}
 
-        <div style={{ marginTop: 32, paddingTop: 24, borderTop: ".5px solid rgba(0,0,0,.07)" }}>
+        <div style={{ marginTop: 32, paddingTop: 24, borderTop: ".5px solid rgba(0,0,0,.07)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           <Link href="/actualites" className="see-all">
             ← Toutes les actualités
           </Link>
+          <ShareButtons title={article.title} />
         </div>
       </div>
     </div>

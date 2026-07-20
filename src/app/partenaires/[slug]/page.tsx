@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { ShareButtons } from "@/components/ShareButtons";
 import { ReviewForm } from "@/components/ReviewForm";
 import { SellerMiniMap } from "@/components/map/SellerMiniMap";
 import { getCurrentUser } from "@/lib/auth";
@@ -117,8 +118,9 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
                   <span className="fiche-det">✓ Partenaire Pro</span>
                 ) : null}
               </div>
-              <div style={{ marginTop: 12 }}>
+              <div style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
                 <FavoriteButton sellerId={seller.id} initial={favorited} isLoggedIn={Boolean(user)} />
+                <ShareButtons title={`${seller.name} — ${seller.category}`} />
               </div>
             </div>
           </div>
