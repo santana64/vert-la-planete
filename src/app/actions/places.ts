@@ -6,6 +6,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { ecoPlaces } from "@/db/schema";
 import { getCurrentUser } from "@/lib/auth";
+import { checkContentFields } from "@/lib/moderation";
 
 export type PlaceState = { ok?: boolean; error?: string };
 
@@ -42,6 +43,9 @@ export async function createEcoPlaceAction(
   if (parsed.data.lat === 0 && parsed.data.lng === 0) {
     return { error: "Placez le lieu sur la carte (un clic suffit)." };
   }
+
+  const moderation = checkContentFields(parsed.data.name, parsed.data.description);
+  if (!moderation.ok) return { error: moderation.reason };
 
   await db.insert(ecoPlaces).values({
     ...parsed.data,

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { contactMessages } from "@/db/schema";
 import { COMPANY } from "@/lib/constants";
+import { checkContent } from "@/lib/moderation";
 
 export type ContactState = { ok?: boolean; error?: string };
 
@@ -67,6 +68,9 @@ export async function sendContactAction(
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Formulaire invalide" };
   }
+
+  const moderation = checkContent(parsed.data.message);
+  if (!moderation.ok) return { error: moderation.reason };
 
   await db.insert(contactMessages).values(parsed.data);
   await forwardByEmail(parsed.data);

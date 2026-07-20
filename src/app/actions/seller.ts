@@ -9,6 +9,7 @@ import { products, sellers } from "@/db/schema";
 import { requireSeller } from "@/lib/auth";
 import { BADGES, CATEGORIES, FREE_PRODUCT_LIMIT, GRADIENTS, REGIONS } from "@/lib/constants";
 import { slugify } from "@/lib/format";
+import { checkContentFields } from "@/lib/moderation";
 import { getSellerProductCount } from "@/lib/queries";
 
 export type SellerFormState = { error?: string; ok?: boolean };
@@ -78,6 +79,10 @@ export async function createProductAction(
     return { error: parsed.error.issues[0]?.message ?? "Formulaire invalide" };
   }
   const data = parsed.data;
+
+  const moderation = checkContentFields(data.name, data.description);
+  if (!moderation.ok) return { error: moderation.reason };
+
   const slug = await uniqueProductSlug(data.name);
 
   await db.insert(products).values({
@@ -129,6 +134,9 @@ export async function updateProductAction(
     return { error: parsed.error.issues[0]?.message ?? "Formulaire invalide" };
   }
   const data = parsed.data;
+
+  const moderation = checkContentFields(data.name, data.description);
+  if (!moderation.ok) return { error: moderation.reason };
 
   await db
     .update(products)
@@ -187,6 +195,13 @@ export async function updateSellerProfileAction(
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Formulaire invalide" };
   }
+
+  const moderation = checkContentFields(
+    parsed.data.name,
+    parsed.data.tagline,
+    parsed.data.description
+  );
+  if (!moderation.ok) return { error: moderation.reason };
 
   const { websiteUrl, ...rest } = parsed.data;
   await db

@@ -8,6 +8,7 @@ import { db } from "@/db";
 import { reviews, sellers } from "@/db/schema";
 import { getCurrentUser } from "@/lib/auth";
 import { isUniqueViolation } from "@/lib/db-errors";
+import { checkContent } from "@/lib/moderation";
 
 export type ReviewState = { ok?: boolean; error?: string };
 
@@ -33,6 +34,9 @@ export async function addReviewAction(
     return { error: parsed.error.issues[0]?.message ?? "Formulaire invalide" };
   }
   const { sellerId, rating, body } = parsed.data;
+
+  const moderation = checkContent(body);
+  if (!moderation.ok) return { error: moderation.reason };
 
   const [seller] = await db
     .select({ id: sellers.id, slug: sellers.slug, userId: sellers.userId })
