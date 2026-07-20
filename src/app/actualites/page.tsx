@@ -4,7 +4,10 @@ import { listArticles } from "@/lib/queries";
 import { str } from "@/lib/search-params";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Actualités — Vert La Planète" };
+export const metadata = {
+  title: "Actualités — Vert La Planète",
+  alternates: { canonical: "/actualites" }
+};
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 

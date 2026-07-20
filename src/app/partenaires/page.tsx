@@ -8,7 +8,10 @@ import { listEcoPlaces, listSellers } from "@/lib/queries";
 import { buildFilterHref, str } from "@/lib/search-params";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Boutiques partenaires — Vert La Planète" };
+export const metadata = {
+  title: "Boutiques partenaires — Vert La Planète",
+  alternates: { canonical: "/partenaires" }
+};
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 

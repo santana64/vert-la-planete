@@ -94,7 +94,7 @@ export default function ContactPage() {
               Laissez-nous un <em>message</em>
             </h2>
             <p className="contact-info-p">
-              Votre message est enregistré et transmis directement à l&apos;équipe — acheteurs,
+              Votre message est enregistré et transmis directement à l&apos;équipe — particuliers,
               producteurs, artisans, marques : toutes les prises de contact sont les bienvenues.
             </p>
             <div className="contact-items">

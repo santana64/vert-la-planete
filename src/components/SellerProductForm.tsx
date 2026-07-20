@@ -37,15 +37,15 @@ export function SellerProductForm({
       <input type="hidden" name="gradient" value={gradient} />
 
       <div className="form-group">
-        <label className="form-lbl">Nom du produit</label>
-        <input className="form-in" type="text" name="name" defaultValue={defaults.name} placeholder="Panier de légumes bio" required />
+        <label className="form-lbl" htmlFor="fld-name">Nom du produit</label>
+        <input className="form-in" type="text" id="fld-name" name="name" defaultValue={defaults.name} placeholder="Panier de légumes bio" required />
       </div>
 
       <div className="form-group">
-        <label className="form-lbl">Description</label>
+        <label className="form-lbl" htmlFor="fld-description">Description</label>
         <textarea
           className="form-textarea"
-          name="description"
+          id="fld-description" name="description"
           defaultValue={defaults.description}
           placeholder="Présentez votre produit, son origine, sa démarche écologique…"
           required
@@ -54,19 +54,19 @@ export function SellerProductForm({
 
       <div className="form-row">
         <div className="form-group">
-          <label className="form-lbl">Prix (€)</label>
-          <input className="form-in" type="text" name="price" defaultValue={defaults.price} placeholder="18,00" required />
+          <label className="form-lbl" htmlFor="fld-price">Prix (€)</label>
+          <input className="form-in" type="text" id="fld-price" name="price" defaultValue={defaults.price} placeholder="18,00" required />
         </div>
         <div className="form-group">
-          <label className="form-lbl">Unité (optionnel)</label>
-          <input className="form-in" type="text" name="unit" defaultValue={defaults.unit} placeholder="/ kg, / semaine…" />
+          <label className="form-lbl" htmlFor="fld-unit">Unité (optionnel)</label>
+          <input className="form-in" type="text" id="fld-unit" name="unit" defaultValue={defaults.unit} placeholder="/ kg, / semaine…" />
         </div>
       </div>
 
       <div className="form-row">
         <div className="form-group">
-          <label className="form-lbl">Catégorie</label>
-          <select className="form-select" name="category" defaultValue={defaults.category ?? CATEGORIES[0]}>
+          <label className="form-lbl" htmlFor="fld-category">Catégorie</label>
+          <select className="form-select" id="fld-category" name="category" defaultValue={defaults.category ?? CATEGORIES[0]}>
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>
                 {c}
@@ -75,8 +75,8 @@ export function SellerProductForm({
           </select>
         </div>
         <div className="form-group">
-          <label className="form-lbl">Label (optionnel)</label>
-          <select className="form-select" name="badge" defaultValue={defaults.badge ?? ""}>
+          <label className="form-lbl" htmlFor="fld-badge">Label (optionnel)</label>
+          <select className="form-select" id="fld-badge" name="badge" defaultValue={defaults.badge ?? ""}>
             <option value="">Aucun</option>
             {BADGES.map((b) => (
               <option key={b} value={b}>
@@ -88,8 +88,8 @@ export function SellerProductForm({
       </div>
 
       <div className="form-group">
-        <label className="form-lbl">Visuel</label>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+        <span className="form-lbl" style={{ display: "block" }}>Visuel</span>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }} role="group" aria-label="Choix du visuel">
           {GRADIENTS.map((g) => (
             <button
               type="button"
@@ -114,7 +114,7 @@ export function SellerProductForm({
         className="form-group"
         style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}
       >
-        <input type="checkbox" name="isNew" defaultChecked={defaults.isNew ?? true} />
+        <input type="checkbox" id="fld-isNew" name="isNew" defaultChecked={defaults.isNew ?? true} />
         <span style={{ fontSize: 13, color: "var(--f)" }}>Mettre en avant comme nouveauté</span>
       </label>
 

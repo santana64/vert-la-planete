@@ -1,6 +1,9 @@
 import Link from "next/link";
 
-export const metadata = { title: "À propos — Vert La Planète" };
+export const metadata = {
+  title: "À propos — Vert La Planète",
+  alternates: { canonical: "/a-propos" }
+};
 
 export default function AProposPage() {
   return (
@@ -10,35 +13,36 @@ export default function AProposPage() {
           <div>
             <div className="kicker">Notre mission</div>
             <h1 className="about-h">
-              Rapprocher les acheteurs des <em>acteurs écologiques</em>
+              Rendre visibles les <em>acteurs écologiques</em>
             </h1>
             <p className="about-p">
-              Vert La Planète est une marketplace qui met en relation directe les consommateurs
-              avec les producteurs, artisans et marques engagés. Sans intermédiaire, en circuit
-              court, et en toute transparence.
+              Vert La Planète est le réseau des acteurs de la transition écologique en France :
+              un annuaire et une carte qui rassemblent producteurs, artisans, marques engagées,
+              points de collecte et initiatives citoyennes.
             </p>
             <p className="about-p">
-              Chaque vendeur présente sa démarche et son score écologique. Chaque achat soutient
-              une économie locale et durable.
+              Chaque partenaire présente sa démarche et son score écologique. On vous met en
+              relation directe avec lui — sans intermédiaire, en circuit court, en toute
+              transparence.
             </p>
             <div className="about-no-ai">
               <div className="about-no-ai-icon">🌍</div>
               <div>
                 <div className="about-no-ai-text">Circuits courts &amp; démarches vérifiées</div>
                 <div className="about-no-ai-sub">
-                  Des vendeurs sélectionnés pour leur engagement réel.
+                  Des partenaires sélectionnés pour leur engagement réel.
                 </div>
               </div>
             </div>
           </div>
           <div className="founder-card">
             <div className="founder-avatar">VP</div>
-            <div className="founder-name">Une marketplace engagée</div>
+            <div className="founder-name">Un réseau engagé</div>
             <div className="founder-title">Pour consommer mieux, près de chez soi</div>
             <p className="founder-bio">
-              Nous croyons qu&apos;acheter responsable doit être simple. Vert La Planète réunit en
-              un seul endroit les meilleurs produits écologiques de France, et donne aux petits
-              producteurs les moyens de vendre en direct.
+              Nous croyons que trouver et soutenir les acteurs écologiques doit être simple. Vert
+              La Planète les réunit en un seul endroit et leur donne les moyens de gagner en
+              visibilité auprès d&apos;une communauté qui veut agir.
             </p>
           </div>
         </div>
@@ -53,32 +57,34 @@ export default function AProposPage() {
           <div className="mission-grid">
             <div className="mission-card">
               <div className="mission-icon">🤝</div>
-              <div className="mission-h">Vente directe</div>
+              <div className="mission-h">Mise en relation directe</div>
               <p className="mission-p">
-                Zéro intermédiaire : les vendeurs fixent leurs prix et gardent le lien avec leurs
-                clients.
+                Zéro intermédiaire : vous contactez les partenaires en direct, ils gardent le lien
+                avec leur communauté.
               </p>
             </div>
             <div className="mission-card">
               <div className="mission-icon">🌿</div>
               <div className="mission-h">Démarches vérifiées</div>
               <p className="mission-p">
-                Chaque boutique affiche son score écologique et ses labels, pour acheter en
-                confiance.
+                Chaque fiche affiche un score écologique et des critères d&apos;engagement, pour
+                s&apos;orienter en confiance.
               </p>
             </div>
             <div className="mission-card">
               <div className="mission-icon">📍</div>
               <div className="mission-h">Ancrage local</div>
               <p className="mission-p">
-                Une cartographie pour découvrir les acteurs écologiques de votre région.
+                Une carte de France pour découvrir les acteurs et initiatives écologiques de votre
+                région.
               </p>
             </div>
             <div className="mission-card">
               <div className="mission-icon">♻️</div>
-              <div className="mission-h">Consommation durable</div>
+              <div className="mission-h">Éco-conception</div>
               <p className="mission-p">
-                Des produits pensés pour durer, réduire les déchets et respecter le vivant.
+                Un site sobre et léger, sans newsletter imposée ni tracking publicitaire — à
+                l&apos;image de nos valeurs.
               </p>
             </div>
           </div>
@@ -88,15 +94,15 @@ export default function AProposPage() {
       <div className="cta-section">
         <div className="cta-kicker">Rejoignez le mouvement</div>
         <h2 className="cta-h">
-          Achetez ou vendez <em>autrement</em>
+          Agissez, <em>localement</em>
         </h2>
         <p className="cta-sub">
-          Découvrez des centaines de produits écologiques, ou ouvrez votre boutique en quelques
-          minutes.
+          Explorez la carte des acteurs près de chez vous, ou référencez votre activité pour
+          gagner en visibilité.
         </p>
         <div className="cta-acts">
           <Link className="btn-cta" href="/partenaires">
-            Explorer les partenaires →
+            Explorer la carte →
           </Link>
           <Link className="btn-outline" href="/devenir-partenaire">
             Devenir partenaire

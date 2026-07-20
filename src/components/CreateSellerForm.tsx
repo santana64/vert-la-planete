@@ -11,14 +11,14 @@ export function CreateSellerForm() {
   return (
     <form action={formAction}>
       <div className="form-group">
-        <label className="form-lbl">Nom de la boutique</label>
-        <input className="form-in" type="text" name="name" placeholder="La Ferme de Maxime" required />
+        <label className="form-lbl" htmlFor="fld-name">Nom de la boutique</label>
+        <input className="form-in" type="text" id="fld-name" name="name" placeholder="La Ferme de Maxime" required />
       </div>
 
       <div className="form-row">
         <div className="form-group">
-          <label className="form-lbl">Catégorie</label>
-          <select className="form-select" name="category" defaultValue={CATEGORIES[0]}>
+          <label className="form-lbl" htmlFor="fld-category">Catégorie</label>
+          <select className="form-select" id="fld-category" name="category" defaultValue={CATEGORIES[0]}>
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>
                 {c}
@@ -27,8 +27,8 @@ export function CreateSellerForm() {
           </select>
         </div>
         <div className="form-group">
-          <label className="form-lbl">Région</label>
-          <select className="form-select" name="region" defaultValue={REGIONS[0]}>
+          <label className="form-lbl" htmlFor="fld-region">Région</label>
+          <select className="form-select" id="fld-region" name="region" defaultValue={REGIONS[0]}>
             {REGIONS.map((r) => (
               <option key={r} value={r}>
                 {r}
@@ -39,26 +39,26 @@ export function CreateSellerForm() {
       </div>
 
       <div className="form-group">
-        <label className="form-lbl">Ville</label>
-        <input className="form-in" type="text" name="city" placeholder="Tours" required />
+        <label className="form-lbl" htmlFor="fld-city">Ville</label>
+        <input className="form-in" type="text" id="fld-city" name="city" placeholder="Tours" required />
       </div>
 
       <div className="form-group">
-        <label className="form-lbl">Accroche</label>
+        <label className="form-lbl" htmlFor="fld-tagline">Accroche</label>
         <input
           className="form-in"
           type="text"
-          name="tagline"
+          id="fld-tagline" name="tagline"
           placeholder="Maraîcher bio en circuit court"
           required
         />
       </div>
 
       <div className="form-group">
-        <label className="form-lbl">Présentation</label>
+        <label className="form-lbl" htmlFor="fld-description">Présentation</label>
         <textarea
           className="form-textarea"
-          name="description"
+          id="fld-description" name="description"
           placeholder="Présentez votre activité, votre démarche écologique, vos produits…"
           required
         />

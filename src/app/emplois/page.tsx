@@ -2,7 +2,10 @@ import Link from "next/link";
 import { listJobs } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Emplois & Formations — Vert La Planète" };
+export const metadata = {
+  title: "Emplois & Formations — Vert La Planète",
+  alternates: { canonical: "/emplois" }
+};
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 

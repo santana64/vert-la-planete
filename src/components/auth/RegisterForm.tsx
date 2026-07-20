@@ -34,16 +34,17 @@ export function RegisterForm({ initialRole = "membre" }: { initialRole?: "membre
       </div>
 
       <div className="form-group">
-        <label className="form-lbl">Prénom et nom</label>
-        <input className="form-in" type="text" name="name" placeholder="Marie Dupont" required />
+        <label className="form-lbl" htmlFor="reg-name">Prénom et nom</label>
+        <input id="reg-name" className="form-in" type="text" name="name" autoComplete="name" placeholder="Marie Dupont" required />
       </div>
       <div className="form-group">
-        <label className="form-lbl">Adresse e-mail</label>
-        <input className="form-in" type="email" name="email" placeholder="vous@exemple.fr" required />
+        <label className="form-lbl" htmlFor="reg-email">Adresse e-mail</label>
+        <input id="reg-email" className="form-in" type="email" name="email" autoComplete="email" placeholder="vous@exemple.fr" required />
       </div>
       <div className="form-group">
-        <label className="form-lbl">Mot de passe</label>
+        <label className="form-lbl" htmlFor="reg-password">Mot de passe</label>
         <input
+          id="reg-password"
           className="form-in"
           type="password"
           name="password"
@@ -53,8 +54,9 @@ export function RegisterForm({ initialRole = "membre" }: { initialRole?: "membre
         />
       </div>
       <div className="form-group">
-        <label className="form-lbl">Confirmez le mot de passe</label>
+        <label className="form-lbl" htmlFor="reg-confirm">Confirmez le mot de passe</label>
         <input
+          id="reg-confirm"
           className="form-in"
           type="password"
           name="confirmPassword"

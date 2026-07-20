@@ -34,8 +34,8 @@ export default async function InscriptionPage({ searchParams }: { searchParams: 
         </div>
         <div className="auth-h">Rejoindre la communauté 🌱</div>
         <p className="auth-sub">
-          Créez votre compte pour acheter en circuit court — ou ouvrez votre boutique de
-          producteur / artisan engagé.
+          Créez votre compte pour suivre vos partenaires favoris et enrichir la carte — ou
+          référencez votre activité de producteur / artisan engagé.
         </p>
         <RegisterForm initialRole={initialRole} />
       </div>

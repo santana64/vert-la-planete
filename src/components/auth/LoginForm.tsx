@@ -12,12 +12,12 @@ export function LoginForm({ next }: { next?: string }) {
     <form action={formAction}>
       {next ? <input type="hidden" name="next" value={next} /> : null}
       <div className="form-group">
-        <label className="form-lbl">Adresse e-mail</label>
-        <input className="form-in" type="email" name="email" placeholder="vous@exemple.fr" required />
+        <label className="form-lbl" htmlFor="login-email">Adresse e-mail</label>
+        <input id="login-email" className="form-in" type="email" name="email" autoComplete="email" placeholder="vous@exemple.fr" required />
       </div>
       <div className="form-group">
-        <label className="form-lbl">Mot de passe</label>
-        <input className="form-in" type="password" name="password" placeholder="••••••••" required />
+        <label className="form-lbl" htmlFor="login-password">Mot de passe</label>
+        <input id="login-password" className="form-in" type="password" name="password" autoComplete="current-password" placeholder="••••••••" required />
       </div>
 
       <label

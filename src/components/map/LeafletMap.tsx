@@ -1,5 +1,6 @@
 "use client";
 
+import "leaflet/dist/leaflet.css";
 import { CircleMarker, MapContainer, Popup, TileLayer } from "react-leaflet";
 import { FRANCE_CENTER } from "@/lib/geo";
 import { FOUNDER_META, KIND_META, type MapPoint } from "@/lib/places";

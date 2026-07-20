@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { sendContactAction, type ContactState } from "@/app/actions/contact";
 import { SubmitButton } from "@/components/SubmitButton";
 
-const PROFILES = ["Acheteur", "Producteur / artisan", "Marque engagée", "Presse", "Autre"];
+const PROFILES = ["Particulier", "Producteur / artisan", "Marque engagée", "Presse", "Autre"];
 
 export function ContactForm() {
   const [state, formAction] = useActionState<ContactState, FormData>(sendContactAction, {});
