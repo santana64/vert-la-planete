@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 
 const ITEMS = [
   { href: "/", label: "Accueil", icon: "🌿", match: (p: string) => p === "/" },
-  { href: "/partenaires", label: "Partenaires", icon: "🛍️", match: (p: string) => p.startsWith("/partenaires") },
+  { href: "/partenaires", label: "Partenaires", icon: "🛍️", match: (p: string) => p === "/partenaires" || p.startsWith("/partenaires/") },
+  { href: "/partenaires#carte", label: "Carte", icon: "🗺️", match: () => false },
   { href: "/actualites", label: "Actus", icon: "📰", match: (p: string) => p.startsWith("/actualites") },
-  { href: "/offres", label: "Offres", icon: "✨", match: (p: string) => p.startsWith("/offres") },
   { href: "/compte", label: "Compte", icon: "👤", match: (p: string) => p.startsWith("/compte") || p.startsWith("/espace-partenaire") || p.startsWith("/connexion") }
 ];
 

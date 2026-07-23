@@ -10,9 +10,12 @@ type NavUser = { name: string; role: "membre" | "partenaire" } | null;
 
 const LINKS = [
   { href: "/", label: "Accueil", match: (p: string) => p === "/" },
-  { href: "/partenaires", label: "Partenaires", match: (p: string) => p.startsWith("/partenaires") },
+  { href: "/partenaires", label: "Partenaires", match: (p: string) => p === "/partenaires" || p.startsWith("/partenaires/") },
+  { href: "/partenaires#carte", label: "Carte", match: () => false },
+  { href: "/partenaires#themes", label: "Thématiques", match: () => false },
+  { href: "/lieux/proposer", label: "Participer", match: (p: string) => p.startsWith("/lieux") },
   { href: "/actualites", label: "Actualités", match: (p: string) => p.startsWith("/actualites") },
-  { href: "/emplois", label: "Emplois & Formations", match: (p: string) => p.startsWith("/emplois") },
+  { href: "/emplois", label: "Emplois", match: (p: string) => p.startsWith("/emplois") },
   { href: "/offres", label: "Offres", match: (p: string) => p.startsWith("/offres") },
   { href: "/a-propos", label: "À propos", match: (p: string) => p.startsWith("/a-propos") },
   { href: "/contact", label: "Contact", match: (p: string) => p.startsWith("/contact") }

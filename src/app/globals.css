@@ -1360,3 +1360,49 @@ html.rv-ready .sec-head[data-rv]{transform:translateY(10px)}
   .ps-val{font-size:20px}
   .ps-lbl{letter-spacing:.02em}
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   REFONTE ACCUEIL / MENU / FOOTER (retour client — juillet)
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Menu plus fourni (Carte, Thématiques, Participer) → on resserre un peu */
+.nav-links{gap:17px}
+@media(max-width:1120px){.nav-links{gap:13px}.nav-links a{font-size:12.5px}}
+
+/* Hero sans carte : colonne unique, centrée */
+.hero-inner--solo{grid-template-columns:1fr;max-width:840px;text-align:center}
+.hero-inner--solo .hero-eyebrow{justify-content:center}
+.hero-inner--solo .hero-h1,.hero-inner--solo .hero-p{margin-left:auto;margin-right:auto}
+.hero-inner--solo .hero-p{max-width:660px}
+.hero-inner--solo .hero-btns{justify-content:center}
+
+/* Chiffres : une seule ligne, compacts, séparateurs fins (desktop ET mobile) */
+.hero-stats--row{display:inline-flex;justify-content:center;align-items:stretch;flex-wrap:nowrap;gap:0;border-top:none;padding-top:24px}
+.hero-stats--row .stat-item{padding:0 22px;margin:0;border-right:none;text-align:center}
+.hero-stats--row .stat-val{font-size:27px}
+.hero-stats--row .stat-lbl{white-space:nowrap;font-size:11px}
+.stat-sep{width:1px;background:rgba(0,0,0,.1);margin:4px 0}
+@media(max-width:600px){
+  .hero-stats--row{flex-direction:row !important;flex-wrap:nowrap;gap:0 !important;padding-top:18px}
+  .hero-stats--row .stat-item{border-bottom:none !important;padding:0 12px !important;min-width:0 !important}
+  .hero-stats--row .stat-val{font-size:20px}
+  .hero-stats--row .stat-lbl{font-size:9.5px}
+}
+
+/* Partenaires accueil : 2 colonnes */
+.pchips-grid--two{grid-template-columns:repeat(2,1fr);max-width:720px;margin:0 auto}
+@media(max-width:600px){.pchips-grid--two{grid-template-columns:1fr 1fr}}
+
+/* Footer allégé : marque + juridique seulement */
+.footer-top--lean{grid-template-columns:1.7fr 1fr;margin-bottom:40px}
+@media(max-width:760px){.footer-top--lean{grid-template-columns:1fr}}
+
+/* Réseaux sociaux + cagnotte (footer) */
+.footer-social{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.footer-social-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;border:.5px solid rgba(0,0,0,.12);color:var(--s);background:#fff;transition:all .16s var(--e1)}
+.footer-social-btn:hover{color:#fff;background:var(--s);border-color:var(--s);transform:translateY(-1px)}
+.footer-leetchi{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:10px;background:var(--l);color:#fff;font-size:13px;font-weight:600;transition:all .16s var(--e1)}
+.footer-leetchi:hover{filter:brightness(1.05);transform:translateY(-1px)}
+
+/* Contact : canal e-mail unique, centré */
+.contact-cta-grid--solo{grid-template-columns:1fr;max-width:560px;margin-left:auto;margin-right:auto}

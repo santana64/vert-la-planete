@@ -149,6 +149,19 @@ export const COMPANY = {
   }
 } as const;
 
+/**
+ * Réseaux sociaux & cagnotte de soutien.
+ * Laisser une chaîne vide masque automatiquement le lien partout (footer, etc.).
+ * Renseigner l'URL complète (https://…) suffit à l'afficher — aucun autre code à toucher.
+ */
+export const SOCIAL: { instagram: string; linkedin: string } = {
+  instagram: "", // ex : https://www.instagram.com/vertlaplanete
+  linkedin: "" // ex : https://www.linkedin.com/company/vertlaplanete
+};
+
+/** Cagnotte Leetchi de soutien au projet — vide = bouton masqué. */
+export const LEETCHI_URL: string = ""; // ex : https://www.leetchi.com/c/vert-la-planete
+
 /** Gradient presets reused for logos / product imagery (matches template palette). */
 export const GRADIENTS = [
   "linear-gradient(135deg,#1e5c35,#3daa62)",

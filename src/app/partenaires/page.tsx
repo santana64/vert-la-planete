@@ -81,7 +81,7 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
         </div>
       ) : null}
 
-      <div className="explorer-body">
+      <div className="explorer-body" id="themes">
         <aside className="filters-panel">
           <div className="filter-group">
             <div className="filter-title">Catégorie</div>
@@ -152,7 +152,7 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
       </div>
 
       {/* CARTE INTERACTIVE */}
-      <div style={{ background: "#fff" }}>
+      <div style={{ background: "#fff" }} id="carte">
         <div className="section">
           <div className="kicker">Cartographie de France</div>
           <div className="h2" style={{ marginBottom: 6 }}>
