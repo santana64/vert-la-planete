@@ -11,8 +11,8 @@ export default function RgpdPage() {
     >
       <LegalSection title="Responsable de traitement">
         <p>
-          {COMPANY.name} ({COMPANY.legalForm}), SIREN {COMPANY.siren}, dont le siège est situé{" "}
-          {COMPANY.address}, représentée par {COMPANY.representative}. Contact :{" "}
+          {COMPANY.name} ({COMPANY.legalForm}), SIREN {COMPANY.siren}, dont le siège est situé au
+          Mée-sur-Seine (77), représentée par {COMPANY.representative}. Contact :{" "}
           {COMPANY.email}.
         </p>
       </LegalSection>
