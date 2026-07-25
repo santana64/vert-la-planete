@@ -12,6 +12,14 @@ function InstagramIcon() {
   );
 }
 
+function FacebookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden fill="currentColor">
+      <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.03 4.39 11.03 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8v8.44C19.61 23.1 24 18.1 24 12.07z" />
+    </svg>
+  );
+}
+
 function LinkedInIcon() {
   return (
     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden fill="currentColor">
@@ -21,7 +29,7 @@ function LinkedInIcon() {
 }
 
 export function Footer() {
-  const hasSocial = SOCIAL.instagram || SOCIAL.linkedin || LEETCHI_URL;
+  const hasSocial = SOCIAL.instagram || SOCIAL.facebook || SOCIAL.linkedin || LEETCHI_URL;
 
   return (
     <footer>
@@ -47,6 +55,11 @@ export function Footer() {
                 {SOCIAL.instagram ? (
                   <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="footer-social-btn">
                     <InstagramIcon />
+                  </a>
+                ) : null}
+                {SOCIAL.facebook ? (
+                  <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="footer-social-btn">
+                    <FacebookIcon />
                   </a>
                 ) : null}
                 {SOCIAL.linkedin ? (

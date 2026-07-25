@@ -154,13 +154,15 @@ export const COMPANY = {
  * Laisser une chaîne vide masque automatiquement le lien partout (footer, etc.).
  * Renseigner l'URL complète (https://…) suffit à l'afficher — aucun autre code à toucher.
  */
-export const SOCIAL: { instagram: string; linkedin: string } = {
-  instagram: "", // ex : https://www.instagram.com/vertlaplanete
-  linkedin: "" // ex : https://www.linkedin.com/company/vertlaplanete
+export const SOCIAL: { instagram: string; facebook: string; linkedin: string } = {
+  instagram: "https://www.instagram.com/vertlaplanete",
+  facebook: "https://www.facebook.com/vertlaplanete",
+  linkedin: "" // en attente de l'URL exacte de la page LinkedIn (le slug /company/vertlaplanete n'existe pas)
 };
 
 /** Cagnotte Leetchi de soutien au projet — vide = bouton masqué. */
-export const LEETCHI_URL: string = ""; // ex : https://www.leetchi.com/c/vert-la-planete
+export const LEETCHI_URL: string =
+  "https://www.leetchi.com/c/soutenez-levolution-de-notre-entreprise-engagee-pour-lenvironnement-1467200";
 
 /** Gradient presets reused for logos / product imagery (matches template palette). */
 export const GRADIENTS = [
