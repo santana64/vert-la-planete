@@ -32,23 +32,11 @@ export function PasswordInput({
       />
       <button
         type="button"
+        className="pw-toggle"
         onClick={() => setShow((s) => !s)}
         aria-label={show ? "Masquer le mot de passe" : "Afficher le mot de passe"}
         aria-pressed={show}
         title={show ? "Masquer" : "Afficher"}
-        style={{
-          position: "absolute",
-          right: 6,
-          top: "50%",
-          transform: "translateY(-50%)",
-          height: 34,
-          width: 34,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "var(--pb)",
-          borderRadius: 8
-        }}
       >
         {show ? (
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

@@ -21,7 +21,9 @@ export default async function CreatePartnerPage() {
         <p className="auth-sub">
           Présentez votre démarche et rejoignez l&apos;annuaire des partenaires engagés.
         </p>
-        <CreateSellerForm />
+        <div className="contact-form-card">
+          <CreateSellerForm />
+        </div>
       </div>
     </div>
   );

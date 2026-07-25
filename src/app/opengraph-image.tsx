@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
@@ -5,7 +7,8 @@ export const alt = "Vert La Planète — Annuaire des acteurs de la transition �
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpengraphImage() {
+export default async function OpengraphImage() {
+  const logo = await readFile(join(process.cwd(), "public/logo-officiel.jpg"));
   return new ImageResponse(
     (
       <div
@@ -22,21 +25,16 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <div
-            style={{
-              width: 84,
-              height: 84,
-              borderRadius: 20,
-              background: "#1a7671",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 46
-            }}
-          >
-            🌍
-          </div>
-          <div style={{ fontSize: 40, color: "#bde5cd" }}>vertlaplanete</div>
+          {/* Rendu Satori (image OG) : next/image n'existe pas ici, un <img> data-URI est la voie officielle. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            alt=""
+            src={"data:image/jpeg;base64," + logo.toString("base64")}
+            width={84}
+            height={84}
+            style={{ borderRadius: 20 }}
+          />
+          <div style={{ fontSize: 40, color: "#bde5cd" }}>Vert La Planète</div>
         </div>
         <div style={{ fontSize: 76, fontWeight: 400, marginTop: 48, lineHeight: 1.08, letterSpacing: -2 }}>
           Le réseau des acteurs de la transition écologique

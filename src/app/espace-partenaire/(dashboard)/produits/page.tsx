@@ -78,11 +78,7 @@ export default async function PartnerProductsPage() {
                       </Link>
                       <form action={deleteProductAction}>
                         <input type="hidden" name="productId" value={p.id} />
-                        <button
-                          type="submit"
-                          className="tbl-action"
-                          style={{ color: "#c0392b", borderColor: "rgba(192,57,43,.3)" }}
-                        >
+                        <button type="submit" className="tbl-action danger">
                           Suppr.
                         </button>
                       </form>

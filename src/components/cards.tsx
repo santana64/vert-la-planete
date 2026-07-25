@@ -23,7 +23,7 @@ export function SectionHead({
     <div className="sec-head" data-reveal>
       <div>
         <div className="kicker">{kicker}</div>
-        <div className="h2" style={small ? { fontSize: 26 } : undefined}>
+        <div className={small ? "h2 h2--sm" : "h2"}>
           {title} {em ? <em>{em}</em> : null}
         </div>
       </div>

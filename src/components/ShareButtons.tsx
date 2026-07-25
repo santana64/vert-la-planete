@@ -16,8 +16,8 @@ export function ShareButtons({ title }: { title: string }) {
   const enc = encodeURIComponent;
   const links = url
     ? [
-        { label: "WhatsApp", color: "#25d366", href: `https://wa.me/?text=${enc(`${title} ${url}`)}` },
-        { label: "Facebook", color: "#1877f2", href: `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}` },
+        { label: "WhatsApp", color: "#0e7264", href: `https://wa.me/?text=${enc(`${title} ${url}`)}` },
+        { label: "Facebook", color: "#1465cc", href: `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}` },
         { label: "X", color: "#0f1419", href: `https://twitter.com/intent/tweet?text=${enc(title)}&url=${enc(url)}` },
         { label: "LinkedIn", color: "#0a66c2", href: `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}` }
       ]

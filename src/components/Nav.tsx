@@ -89,14 +89,19 @@ export function Nav({ user }: { user: NavUser }) {
 
       <div className={`mob-nav-drawer${drawerOpen ? " open" : ""}`} id="mob-drawer">
         {LINKS.map((l) => (
-          <Link key={l.href} href={l.href} className={l.match(pathname) ? "active" : ""}>
+          <Link
+            key={l.href}
+            href={l.href}
+            className={l.match(pathname) ? "active" : ""}
+            onClick={() => setDrawerOpen(false)}
+          >
             {l.label}
           </Link>
         ))}
         <div className="mob-nav-drawer-footer">
           {user ? (
             <>
-              <Link href="/compte" className="btn-ghost" style={{ textAlign: "center" }}>
+              <Link href="/compte" className="btn-ghost" onClick={() => setDrawerOpen(false)}>
                 Mon compte
               </Link>
               <form action={logoutAction} style={{ flex: 1 }}>
@@ -107,10 +112,10 @@ export function Nav({ user }: { user: NavUser }) {
             </>
           ) : (
             <>
-              <Link href="/connexion" className="btn-ghost" style={{ textAlign: "center" }}>
+              <Link href="/connexion" className="btn-ghost" onClick={() => setDrawerOpen(false)}>
                 Connexion
               </Link>
-              <Link href="/inscription" className="btn-primary" style={{ textAlign: "center" }}>
+              <Link href="/inscription" className="btn-primary" onClick={() => setDrawerOpen(false)}>
                 Rejoindre
               </Link>
             </>

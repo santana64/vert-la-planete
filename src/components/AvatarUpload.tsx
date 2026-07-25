@@ -67,20 +67,25 @@ export function AvatarUpload({
       >
         {!shown ? initials : null}
         <span
+          aria-hidden
           style={{
             position: "absolute",
             bottom: 0,
-            left: 0,
             right: 0,
-            background: "rgba(9,31,18,.65)",
+            width: 26,
+            height: 26,
+            borderRadius: "50%",
+            background: "var(--s)",
             color: "#fff",
-            fontSize: 10,
-            fontFamily: "var(--sans)",
-            padding: "3px 0",
-            textAlign: "center"
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 13,
+            border: "2px solid #fff",
+            boxShadow: "var(--sh-sm)"
           }}
         >
-          {busy ? "…" : "📷 Modifier"}
+          {busy ? "…" : "📷"}
         </span>
       </button>
       <input

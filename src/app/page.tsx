@@ -85,7 +85,7 @@ export default async function HomePage() {
 
       {/* RÉSEAU — les familles d'acteurs, en tête */}
       <div style={{ background: "#fff" }}>
-        <div className="section" style={{ paddingTop: 46, paddingBottom: 46 }}>
+        <div className="section section--compact">
           <SectionHead
             kicker="Le réseau"
             title="Quatre familles"
@@ -93,7 +93,7 @@ export default async function HomePage() {
             href="/partenaires#carte"
             linkLabel="Explorer la carte →"
           />
-          <div className="audience-grid" style={{ gridTemplateColumns: "repeat(4,1fr)", marginTop: 0 }}>
+          <div className="audience-grid audience-grid--four">
             {NETWORK.map(({ kind, desc }) => (
               <Link key={kind} href="/partenaires#carte" className="audience-card" data-reveal style={{ textAlign: "left" }}>
                 <div className="audience-icon" style={{ background: `${KIND_META[kind].color}14`, color: KIND_META[kind].color }}>
@@ -114,7 +114,7 @@ export default async function HomePage() {
           <h2 className="h2" style={{ marginBottom: 14 }}>
             Rendre visibles les <em>acteurs écologiques</em>
           </h2>
-          <p style={{ fontSize: 16, lineHeight: 1.7, color: "var(--pb)", fontWeight: 300, margin: "0 auto 22px" }}>
+          <p style={{ fontSize: 15, lineHeight: 1.75, color: "var(--pb)", fontWeight: 300, margin: "0 auto 22px" }}>
             Vert La Planète rassemble producteurs, artisans, marques engagées, points de collecte
             et initiatives citoyennes sur une carte de France. Chaque acteur présente sa démarche —
             on vous met en relation directe, en circuit court, sans intermédiaire.
@@ -127,9 +127,9 @@ export default async function HomePage() {
 
       {/* SITE ÉCO — juste sous l'à-propos */}
       <div style={{ background: "#fff" }}>
-        <div className="section" style={{ paddingTop: 52, paddingBottom: 52 }}>
+        <div className="section section--compact">
           <SectionHead kicker="Nos engagements" title="Un site" em="éco-responsable" />
-          <div className="audience-grid" style={{ gridTemplateColumns: "repeat(4,1fr)", marginTop: 0 }}>
+          <div className="audience-grid audience-grid--four">
             {ENGAGEMENTS.map((e) => (
               <div key={e.title} className="audience-card" data-reveal>
                 <div className="audience-icon">{e.icon}</div>
@@ -212,7 +212,7 @@ export default async function HomePage() {
       {/* ACTUALITÉS — juste un lien */}
       {latestArticles.length > 0 ? (
         <div className="section-alt">
-          <div className="section" style={{ paddingTop: 40, paddingBottom: 40 }}>
+          <div className="section section--compact">
             <SectionHead
               kicker="Actualités"
               title="Contenus &"

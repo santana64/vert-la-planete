@@ -191,7 +191,7 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
         <div style={{ padding: "32px 0", borderBottom: ".5px solid rgba(0,0,0,.07)" }}>
           <div className="col-h">Produits du partenaire</div>
           {products.length === 0 ? (
-            <p style={{ color: "var(--pb)", fontWeight: 300 }}>
+            <p style={{ color: "var(--pb)", fontWeight: 300, fontSize: 14 }}>
               Ce partenaire n&apos;a pas encore publié de produit.
             </p>
           ) : (
@@ -224,29 +224,15 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
 
         <div className="fiche-cta">
           {seller.websiteUrl ? (
-            <a
-              className="btn-visit"
-              href={seller.websiteUrl}
-              target="_blank"
-              rel="noreferrer"
-              style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-            >
+            <a className="btn-visit" href={seller.websiteUrl} target="_blank" rel="noreferrer">
               Visiter le site du partenaire →
             </a>
           ) : (
-            <Link
-              className="btn-visit"
-              href="/partenaires"
-              style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-            >
+            <Link className="btn-visit" href="/partenaires">
               Voir tous les partenaires →
             </Link>
           )}
-          <Link
-            className="btn-contact"
-            href="/contact"
-            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-          >
+          <Link className="btn-contact" href="/contact">
             Contacter
           </Link>
         </div>

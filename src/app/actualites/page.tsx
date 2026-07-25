@@ -45,9 +45,9 @@ export default async function ActualitesPage({ searchParams }: { searchParams: S
         </div>
       </div>
 
-      <div className="section">
+      <div className="section" style={{ paddingTop: 40 }}>
         {articles.length === 0 ? (
-          <p style={{ color: "var(--pb)", fontWeight: 300 }}>
+          <p style={{ color: "var(--pb)", fontWeight: 300, fontSize: 14 }}>
             Aucun article dans cette catégorie pour le moment.
           </p>
         ) : (

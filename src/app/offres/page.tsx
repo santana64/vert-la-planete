@@ -21,16 +21,7 @@ export default async function OffresPage({ searchParams }: { searchParams: Searc
           <h1 className="about-h" style={{ maxWidth: 720, margin: "0 auto" }}>
             Gagnez en visibilité, <em>à votre rythme</em>
           </h1>
-          <p
-            style={{
-              fontSize: 15,
-              color: "var(--pb)",
-              fontWeight: 300,
-              maxWidth: 560,
-              margin: "12px auto 0",
-              lineHeight: 1.75
-            }}
-          >
+          <p className="about-p" style={{ maxWidth: 560, margin: "12px auto 0" }}>
             Référencez votre activité gratuitement, puis passez à l&apos;offre Pro quand vous
             voulez. Sans engagement pour l&apos;offre mensuelle, résiliable à tout moment.
           </p>

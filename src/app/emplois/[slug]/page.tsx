@@ -41,7 +41,7 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
           <span className="badge badge-eco">{job.kind}</span>
           <span className="badge badge-amber">{job.contractType}</span>
         </div>
-        <h1 className="about-h" style={{ fontSize: 34, marginBottom: 6 }}>
+        <h1 className="about-h about-h--detail" style={{ marginBottom: 6 }}>
           {job.title}
         </h1>
         <div className="art-meta" style={{ marginBottom: 24 }}>
@@ -49,39 +49,22 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
         </div>
 
         {paragraphs.map((p, i) => (
-          <p
-            key={i}
-            style={{ fontSize: 15, color: "var(--st)", fontWeight: 300, lineHeight: 1.85, marginBottom: 16 }}
-          >
+          <p key={i} className="article-body-text">
             {p}
           </p>
         ))}
 
         <div className="fiche-cta">
           {job.contactUrl ? (
-            <a
-              className="btn-visit"
-              href={job.contactUrl}
-              target="_blank"
-              rel="noreferrer"
-              style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-            >
+            <a className="btn-visit" href={job.contactUrl} target="_blank" rel="noreferrer">
               Postuler / S&apos;inscrire →
             </a>
           ) : (
-            <Link
-              className="btn-visit"
-              href="/contact"
-              style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-            >
+            <Link className="btn-visit" href="/contact">
               Candidater via le formulaire →
             </Link>
           )}
-          <Link
-            className="btn-contact"
-            href="/emplois"
-            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-          >
+          <Link className="btn-contact" href="/emplois">
             Voir les autres offres
           </Link>
         </div>

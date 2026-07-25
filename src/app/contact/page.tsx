@@ -18,7 +18,7 @@ export default function ContactPage() {
         <div className="explorer-header-inner">
           <div className="kicker">Contact</div>
           <h1 className="explorer-h1">
-            Parlons de votre <em style={{ fontStyle: "italic", color: "var(--fn)" }}>projet vert</em>
+            Parlons de votre <em>projet vert</em>
           </h1>
           <p className="explorer-sub" style={{ marginBottom: 0 }}>
             Une question, l&apos;envie de devenir partenaire, un partenariat ? Écrivez-nous — on
@@ -27,7 +27,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <div className="section" style={{ paddingTop: 44 }}>
+      <div className="section" style={{ paddingTop: 48 }}>
         {/* Canal direct */}
         <div className="contact-cta-grid contact-cta-grid--solo">
           <a className="contact-cta em" href={`mailto:${COMPANY.email}`}>

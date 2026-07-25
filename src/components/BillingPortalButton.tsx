@@ -25,7 +25,7 @@ export function BillingPortalButton({ label }: { label: string }) {
         {pending ? "Ouverture…" : label}
       </button>
       {error ? (
-        <p style={{ fontSize: 12, color: "var(--pb)", fontWeight: 300, marginTop: 8, lineHeight: 1.5 }}>
+        <p className="field-error" style={{ marginTop: 8 }}>
           {error}
         </p>
       ) : null}

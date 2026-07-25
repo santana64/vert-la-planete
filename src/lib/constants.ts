@@ -166,10 +166,10 @@ export const LEETCHI_URL: string = ""; // ex : https://www.leetchi.com/c/vert-la
 export const GRADIENTS = [
   "linear-gradient(135deg,#1e5c35,#3daa62)",
   "linear-gradient(135deg,#3d6b4a,#72b888)",
-  "linear-gradient(135deg,#1a3a4a,#2e6b8a)",
+  "linear-gradient(135deg,#24544b,#4f8f82)",
   "linear-gradient(135deg,#4a6741,#7ab065)",
   "linear-gradient(135deg,#7b4f1a,#d4a857)",
   "linear-gradient(135deg,#4a3728,#8b6b4f)",
-  "linear-gradient(135deg,#5a3a7a,#8b5caa)",
+  "linear-gradient(135deg,#3e5c48,#7a9c86)",
   "linear-gradient(135deg,#1a4a2e,#3daa62)"
 ] as const;

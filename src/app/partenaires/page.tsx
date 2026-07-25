@@ -64,7 +64,7 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
       {/* PARTENAIRES PRO — mise en avant exclusive */}
       {proSellers.length > 0 ? (
         <div className="section-alt">
-          <div className="section" style={{ paddingBottom: 40 }}>
+          <div className="section" style={{ paddingTop: 40, paddingBottom: 40 }}>
             <SectionHead
               kicker="Sélection Pro"
               title="Nos partenaires"
@@ -122,7 +122,7 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
           </div>
 
           {sellers.length === 0 ? (
-            <p style={{ color: "var(--pb)", fontWeight: 300 }}>
+            <p style={{ color: "var(--pb)", fontWeight: 300, fontSize: 14 }}>
               Aucun partenaire ne correspond à votre recherche.
             </p>
           ) : (
@@ -153,12 +153,12 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
 
       {/* CARTE INTERACTIVE */}
       <div style={{ background: "#fff" }} id="carte">
-        <div className="section">
+        <div className="section" style={{ paddingTop: 52 }}>
           <div className="kicker">Cartographie de France</div>
           <div className="h2" style={{ marginBottom: 6 }}>
             Agir <em>près de chez vous</em>
           </div>
-          <p style={{ fontSize: 14, color: "var(--pb)", fontWeight: 300, marginBottom: 24, maxWidth: 620 }}>
+          <p style={{ fontSize: 15, color: "var(--pb)", fontWeight: 300, marginBottom: 24, maxWidth: 620 }}>
             Partenaires Pro, points de collecte, initiatives urbaines et événements groupés —
             une carte collaborative enrichie par la communauté.
           </p>

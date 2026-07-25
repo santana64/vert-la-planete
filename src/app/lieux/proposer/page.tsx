@@ -20,7 +20,9 @@ export default async function ProposerLieuPage() {
           Événement groupé, point de collecte, initiative urbaine — enrichissez la carte
           communautaire pour toute la France.
         </p>
-        <EcoPlaceForm />
+        <div className="contact-form-card">
+          <EcoPlaceForm />
+        </div>
       </div>
     </div>
   );

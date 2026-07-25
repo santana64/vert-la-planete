@@ -16,10 +16,11 @@ export function RegisterForm({ initialRole = "membre" }: { initialRole?: "membre
 
       <div className="form-group">
         <label className="form-lbl">Je souhaite</label>
-        <div className="product-variant-chips" style={{ display: "flex", gap: 10 }}>
+        <div className="product-variant-chips">
           <button
             type="button"
             className={`product-variant-chip${role === "membre" ? " on" : ""}`}
+            style={{ flex: 1, padding: "12px 10px", fontSize: 14, textAlign: "center" }}
             onClick={() => setRole("membre")}
           >
             Membre 🌿
@@ -27,6 +28,7 @@ export function RegisterForm({ initialRole = "membre" }: { initialRole?: "membre
           <button
             type="button"
             className={`product-variant-chip${role === "partenaire" ? " on" : ""}`}
+            style={{ flex: 1, padding: "12px 10px", fontSize: 14, textAlign: "center" }}
             onClick={() => setRole("partenaire")}
           >
             Partenaire 🛍️

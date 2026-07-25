@@ -57,8 +57,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       <div className="section" style={{ maxWidth: 760 }}>
         <span className="badge badge-eco">{article.category}</span>
         <h1
-          className="about-h"
-          style={{ fontSize: 38, margin: "14px 0 10px", lineHeight: 1.15 }}
+          className="about-h about-h--detail"
+          style={{ margin: "14px 0 10px" }}
         >
           {article.title}
         </h1>
@@ -68,14 +68,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         <div
           style={{ height: 260, borderRadius: 16, background: article.gradient, marginBottom: 28 }}
         />
-        <p style={{ fontSize: 17, color: "var(--st)", fontWeight: 300, lineHeight: 1.7, marginBottom: 20 }}>
+        <p className="article-lead">
           {article.excerpt}
         </p>
         {paragraphs.map((p, i) => (
-          <p
-            key={i}
-            style={{ fontSize: 15, color: "var(--st)", fontWeight: 300, lineHeight: 1.85, marginBottom: 16 }}
-          >
+          <p key={i} className="article-body-text">
             {p}
           </p>
         ))}

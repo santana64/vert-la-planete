@@ -22,15 +22,18 @@ export type MapPoint = {
   founder?: boolean;
 };
 
-export const KIND_META: Record<MapPointKind, { label: string; color: string; icon: string }> = {
-  partenaire: { label: "Partenaires Pro", color: "#1a5230", icon: "🛍️" },
-  ramassage: { label: "Événements groupés", color: "#3daa62", icon: "🤝" },
-  dechetterie: { label: "Points de collecte", color: "#a85e0a", icon: "♻️" },
-  centre: { label: "Initiatives urbaines", color: "#2e6b8a", icon: "🌱" }
+export const KIND_META: Record<
+  MapPointKind,
+  { label: string; color: string; textColor: string; icon: string }
+> = {
+  partenaire: { label: "Partenaires Pro", color: "#1a5230", textColor: "#1a5230", icon: "🛍️" },
+  ramassage: { label: "Événements groupés", color: "#3daa62", textColor: "#267a46", icon: "🤝" },
+  dechetterie: { label: "Points de collecte", color: "#a85e0a", textColor: "#a85e0a", icon: "♻️" },
+  centre: { label: "Initiatives urbaines", color: "#2e6b8a", textColor: "#2e6b8a", icon: "🌱" }
 };
 
 /** Marqueur « Membre fondateur » (premiers partenaires Pro). */
-export const FOUNDER_META = { label: "Membres fondateurs", color: "#e8a020", icon: "★" };
+export const FOUNDER_META = { label: "Membres fondateurs", color: "#e8a020", textColor: "#a85e0a", icon: "★" };
 
 export function kindLabel(kind: string): string {
   const meta = KIND_META[kind as MapPointKind];

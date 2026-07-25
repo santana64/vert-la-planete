@@ -49,21 +49,28 @@ export default function LeafletMap({
             >
               <Popup>
                 <div style={{ fontFamily: "var(--sans)", minWidth: 180 }}>
-                  <div style={{ fontSize: 11, color: fillColor, fontWeight: 600, marginBottom: 2 }}>
+                  <div
+                    style={{
+                      fontSize: 11,
+                      color: p.founder ? FOUNDER_META.textColor : meta.textColor,
+                      fontWeight: 500,
+                      marginBottom: 2
+                    }}
+                  >
                     {p.founder ? `${FOUNDER_META.icon} Membre fondateur · ` : null}
                     {meta.icon} {meta.label}
                   </div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: "#091f12" }}>{p.name}</div>
-                  <div style={{ fontSize: 12, color: "#4e6e58", marginTop: 2 }}>
+                  <div style={{ fontSize: 14, fontWeight: 500, color: "var(--f)" }}>{p.name}</div>
+                  <div style={{ fontSize: 12, color: "var(--pb)", marginTop: 2 }}>
                     {p.detail} · {p.city}
                   </div>
                   {p.schedule ? (
-                    <div style={{ fontSize: 12, color: "#4e6e58", marginTop: 4 }}>🕐 {p.schedule}</div>
+                    <div style={{ fontSize: 12, color: "var(--pb)", marginTop: 4 }}>🕐 {p.schedule}</div>
                   ) : null}
                   {p.href ? (
                     <a
                       href={p.href}
-                      style={{ fontSize: 12, color: "#1a5230", fontWeight: 600, display: "inline-block", marginTop: 6 }}
+                      style={{ fontSize: 12, color: "var(--s)", fontWeight: 500, display: "inline-block", marginTop: 6 }}
                     >
                       Voir la fiche →
                     </a>

@@ -39,7 +39,7 @@ export function CarteInteractive({
   }, [points]);
 
   return (
-    <div id="carte">
+    <div>
       <div style={{ display: "flex", gap: 7, flexWrap: "wrap", alignItems: "center", marginBottom: 14 }}>
         {FILTERS.map((f) => (
           <button

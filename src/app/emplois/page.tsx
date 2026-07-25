@@ -65,14 +65,14 @@ export default async function EmploisPage({ searchParams }: { searchParams: Sear
         </div>
       </div>
 
-      <div className="section">
+      <div className="section" style={{ paddingTop: 40 }}>
         <div className="results-topbar">
           <span className="results-count">
             <strong>{jobs.length}</strong> offre{jobs.length > 1 ? "s" : ""}
           </span>
         </div>
         {jobs.length === 0 ? (
-          <p style={{ color: "var(--pb)", fontWeight: 300 }}>Aucune offre ne correspond à ces filtres.</p>
+          <p style={{ color: "var(--pb)", fontWeight: 300, fontSize: 14 }}>Aucune offre ne correspond à ces filtres.</p>
         ) : (
           <div className="results-list two-col">
             {jobs.map((job) => (

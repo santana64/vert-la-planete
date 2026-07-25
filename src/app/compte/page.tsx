@@ -80,7 +80,7 @@ export default async function ComptePage() {
       <div className="profil-body">
         {/* MES AVANTAGES */}
         <div className="kicker">Mes avantages</div>
-        <div className="h2" style={{ fontSize: 26, marginBottom: 20 }}>
+        <div className="h2 h2--sm" style={{ marginBottom: 20 }}>
           Ce que votre offre <em>vous apporte</em>
         </div>
         <div className="dash-2col" style={{ marginBottom: 40 }}>
@@ -117,7 +117,7 @@ export default async function ComptePage() {
 
         {/* PAIEMENTS — factures + moyen de paiement dans un même portail sécurisé */}
         <div className="kicker">Paiements</div>
-        <div className="h2" style={{ fontSize: 26, marginBottom: 20 }}>
+        <div className="h2 h2--sm" style={{ marginBottom: 20 }}>
           Factures & <em>moyen de paiement</em>
         </div>
         <div
@@ -137,7 +137,7 @@ export default async function ComptePage() {
 
         {/* MES FAVORIS */}
         <div className="kicker">Mes favoris</div>
-        <div className="h2" style={{ fontSize: 26, marginBottom: 24 }}>
+        <div className="h2 h2--sm" style={{ marginBottom: 24 }}>
           Partenaires <em>sauvegardés</em>
         </div>
         <div className="favs-grid" style={{ marginBottom: 40 }}>
@@ -160,7 +160,7 @@ export default async function ComptePage() {
 
         {/* MES PUBLICATIONS */}
         <div className="kicker">Mes publications</div>
-        <div className="h2" style={{ fontSize: 26, marginBottom: 24 }}>
+        <div className="h2 h2--sm" style={{ marginBottom: 24 }}>
           Avis & lieux <em>partagés</em>
         </div>
         {publicationCount === 0 ? (

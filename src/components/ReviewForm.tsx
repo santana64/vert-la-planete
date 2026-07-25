@@ -33,9 +33,12 @@ export function ReviewForm({
 
   if (state.ok) {
     return (
-      <p style={{ fontSize: 13, color: "var(--s)", fontWeight: 500, marginTop: 14 }} role="status">
-        ✓ Merci pour votre avis ! Il est maintenant visible sur la fiche.
-      </p>
+      <div style={{ textAlign: "center", padding: "16px 0" }} role="status">
+        <div className="onboard-success-icon" style={{ margin: "0 auto 12px", width: 56, height: 56, fontSize: 24 }}>✓</div>
+        <p style={{ fontSize: 13, color: "var(--s)", fontWeight: 500 }}>
+          Merci pour votre avis ! Il est maintenant visible sur la fiche.
+        </p>
+      </div>
     );
   }
 
@@ -60,7 +63,7 @@ export function ReviewForm({
               style={{
                 fontSize: 26,
                 lineHeight: 1,
-                color: star <= (hover || rating) ? "#e8a020" : "var(--dw)",
+                color: star <= (hover || rating) ? "var(--am)" : "var(--dw)",
                 transition: "color .12s, transform .12s",
                 transform: star <= hover ? "scale(1.15)" : "none"
               }}
@@ -87,7 +90,7 @@ export function ReviewForm({
 
       {state.error ? <p className="field-error">{state.error}</p> : null}
 
-      <SubmitButton className="btn-primary" pendingLabel="Publication…">
+      <SubmitButton className="form-submit" pendingLabel="Publication…">
         Publier mon avis
       </SubmitButton>
     </form>
