@@ -22,7 +22,7 @@ const NETWORK: { kind: MapPointKind; desc: string }[] = [
 
 export default async function HomePage() {
   const [sellers, stats, articles, places] = await Promise.all([
-    getFeaturedSellers(4),
+    getFeaturedSellers(6),
     getMarketplaceStats(),
     listArticles(),
     listEcoPlaces()
@@ -41,9 +41,9 @@ export default async function HomePage() {
               <span>Réseau écologique & local</span>
             </div>
             <h1 className="hero-h1">
-              Le réseau des acteurs
+              Le réseau des acteurs de la
               <br />
-              de la <em>transition écologique</em>
+              <em>transition écologique</em>
             </h1>
             <p className="hero-p" style={{ marginBottom: 28 }}>
               La carte de France des acteurs engagés : trouvez qui agit près de chez vous,

@@ -58,7 +58,7 @@ export function Footer() {
                   </a>
                 ) : null}
                 {SOCIAL.facebook ? (
-                  <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="footer-social-btn">
+                  <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" aria-label="Communauté Facebook Messenger" className="footer-social-btn">
                     <FacebookIcon />
                   </a>
                 ) : null}

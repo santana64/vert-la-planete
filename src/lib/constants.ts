@@ -156,8 +156,10 @@ export const COMPANY = {
  */
 export const SOCIAL: { instagram: string; facebook: string; linkedin: string } = {
   instagram: "https://www.instagram.com/vertlaplanete",
-  facebook: "https://www.facebook.com/vertlaplanete",
-  linkedin: "" // en attente de l'URL exacte de la page LinkedIn (le slug /company/vertlaplanete n'existe pas)
+  // Communauté Messenger (lien d'invitation fourni par le client, sans le paramètre de partage).
+  facebook: "https://m.me/ch/AbZFPahioDDmJGF0/",
+  // Profil LinkedIn (slug avec accent + emoji, percent-encodé pour l'attribut href).
+  linkedin: "https://www.linkedin.com/in/vert-la-plan%C3%A8te-%F0%9F%8C%BF-5888752ba"
 };
 
 /** Cagnotte Leetchi de soutien au projet — vide = bouton masqué. */
