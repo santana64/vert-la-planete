@@ -138,6 +138,7 @@ img{max-width:100%;display:block}
 .pchip-logo{width:52px;height:52px;border-radius:12px;background:var(--fo);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:17px;color:var(--s);font-weight:300}
 .pchip-name{font-size:14px;font-weight:500;color:var(--f);letter-spacing:-.01em;margin-bottom:3px}
 .pchip-cat{font-size:11px;color:var(--pb);font-weight:300;margin-bottom:10px}
+.pchip-badges{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
 
 /* ── PRODUITS ── */
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
@@ -1480,3 +1481,10 @@ html.rv-ready :where([data-rv].rv-in){opacity:1;transform:none}
 
 /* Boutons d'offres : même gabarit que .btn-cta dans les cartes tarifs */
 .audience-card .btn-primary{font-size:14px;padding:13px 28px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center}
+
+/* Bouton « Soutenir » dans la barre du haut (retour client) */
+.nav-soutenir{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:8px 14px;border-radius:9px;background:var(--fo);color:var(--s);font-weight:500;border:.5px solid var(--dw);white-space:nowrap;transition:all .16s var(--e1)}
+.nav-soutenir:hover{background:var(--fn);color:#fff;border-color:var(--fn);transform:translateY(-1px)}
+@media(max-width:1140px){.nav-soutenir{display:none}}
+/* Version tiroir mobile (pleine largeur) */
+.mob-nav-soutenir{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px;padding:12px;border-radius:10px;background:var(--fo);color:var(--s);font-weight:500;border:.5px solid var(--dw)}

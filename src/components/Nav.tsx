@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NavLogo } from "@/components/Logo";
 import { logoutAction } from "@/app/actions/auth";
+import { LEETCHI_URL } from "@/lib/constants";
 
 type NavUser = { name: string; role: "membre" | "partenaire" } | null;
 
@@ -51,6 +52,11 @@ export function Nav({ user }: { user: NavUser }) {
         </div>
 
         <div className="nav-actions">
+          {LEETCHI_URL ? (
+            <a href={LEETCHI_URL} target="_blank" rel="noreferrer" className="nav-soutenir">
+              💚 Soutenir
+            </a>
+          ) : null}
           {user ? (
             <>
               {user.role === "partenaire" && (
@@ -98,6 +104,17 @@ export function Nav({ user }: { user: NavUser }) {
             {l.label}
           </Link>
         ))}
+        {LEETCHI_URL ? (
+          <a
+            href={LEETCHI_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="mob-nav-soutenir"
+            onClick={() => setDrawerOpen(false)}
+          >
+            💚 Soutenir le projet
+          </a>
+        ) : null}
         <div className="mob-nav-drawer-footer">
           {user ? (
             <>

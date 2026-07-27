@@ -86,11 +86,12 @@ export function PartnerChip({ seller }: { seller: Seller }) {
       <div className="pchip-cat">
         {seller.category} · {seller.city}
       </div>
-      {seller.offer !== "gratuit" ? (
-        <span className="badge badge-amber">★ Partenaire Pro</span>
-      ) : (
-        <span className="badge badge-eco">{seller.region}</span>
-      )}
+      <div className="pchip-badges">
+        {seller.offer !== "gratuit" ? (
+          <span className="badge badge-amber">★ Partenaire Pro</span>
+        ) : null}
+        <span className="badge badge-eco">🌱 Engagé</span>
+      </div>
     </Link>
   );
 }
