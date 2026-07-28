@@ -737,7 +737,6 @@ input[type="checkbox"],input[type="radio"]{accent-color:var(--s)}
 
   /* Typography */
   .hero-h1{font-size:28px !important;letter-spacing:-.02em}
-  .hero-h1 br,.cta-h br{display:none}
   .explorer-h1{font-size:28px !important}
   .about-h,.contact-info-h{font-size:26px !important}
   .h2{font-size:22px !important}
@@ -1519,3 +1518,43 @@ html.rv-ready :where([data-rv].rv-in){opacity:1;transform:none}
   .rcard-thumb--theme{width:88px}
   .rcard-medallion{font-size:29px}
 }
+
+/* ══ RETOURS CLIENT — lot 2 (accueil, footer, menu) ══ */
+
+/* Ligne engagements déplacée du footer vers le hero (sous les chiffres) */
+.hero-eco-line{margin-top:20px;font-size:12px;color:var(--s);font-weight:500;letter-spacing:.01em}
+.hero-inner--solo .hero-eco-line{text-align:center}
+
+/* Réseau : chaque carte cliquable, flèche « Découvrir » alignée en bas */
+.audience-card--link{display:flex;flex-direction:column;height:100%}
+.audience-card--link .audience-p{flex:1}
+.audience-go{margin-top:12px;font-size:12px;font-weight:500;color:var(--s);display:inline-flex;align-items:center;gap:6px;transition:gap .2s var(--e1)}
+a.audience-card--link:hover .audience-go{gap:11px}
+
+/* Chips partenaires : badges alignés en bas → hauteurs homogènes */
+.pchip{display:flex;flex-direction:column;align-items:center}
+.pchip-badges{margin-top:auto;padding-top:6px}
+
+/* Outils ADEME (accueil) */
+.ademe-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+@media(max-width:700px){.ademe-grid{grid-template-columns:1fr}}
+.ademe-card{display:flex;gap:16px;align-items:flex-start;background:#fff;border:.5px solid var(--dw);border-radius:16px;padding:22px;transition:border-color .22s var(--e1),box-shadow .22s var(--e1),transform .22s var(--e1)}
+.ademe-card:hover{border-color:var(--mi);box-shadow:var(--sh-md);transform:translateY(-3px)}
+.ademe-ico{font-size:28px;line-height:1;flex-shrink:0;width:52px;height:52px;border-radius:14px;background:var(--fo);display:flex;align-items:center;justify-content:center}
+.ademe-h{font-size:15px;font-weight:500;color:var(--f);letter-spacing:-.01em;margin-bottom:5px}
+.ademe-p{font-size:13px;color:var(--pb);line-height:1.6;font-weight:300;margin-bottom:10px}
+.ademe-cta{font-size:13px;font-weight:500;color:var(--s);display:inline-flex;align-items:center;gap:6px;transition:gap .2s var(--e1)}
+.ademe-card:hover .ademe-cta{gap:10px}
+.ademe-note{margin-top:16px;font-size:11px;color:var(--sd);font-weight:300;text-align:center}
+
+/* CTA : bouton « Offres » encadré foncé + étincelle (mis en avant, sans bouton
+   noir plein : fond transparent, cadre foncé ; le survol reste vert). */
+.btn-offers{border:1px solid var(--f);color:var(--f);font-weight:500}
+.btn-offers:hover{background:var(--s);color:#fff;border-color:var(--s)}
+
+/* Footer : icônes réseaux + « Soutenir » alignés sur le même bord */
+.footer-social{flex-direction:column;align-items:flex-start;gap:12px}
+.footer-social-icons{display:flex;align-items:center;gap:10px}
+
+/* Menu mobile : sous 900px, masquer les entrées déjà dans la barre du bas */
+@media(max-width:900px){.mob-nav-drawer > a.mob-dup{display:none}}

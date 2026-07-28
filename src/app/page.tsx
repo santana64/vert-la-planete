@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CountUp } from "@/components/CountUp";
 import { PartnerChip, SectionHead } from "@/components/cards";
-import { ENGAGEMENTS } from "@/lib/constants";
+import { ADEME_TOOLS, ENGAGEMENTS_SHORT } from "@/lib/constants";
 import { KIND_META, type MapPointKind } from "@/lib/places";
 import {
   getFeaturedSellers,
@@ -12,12 +12,12 @@ import {
 
 export const dynamic = "force-dynamic";
 
-/** Les 4 familles d'acteurs de la carte — présentées « en tête » d'accueil. */
-const NETWORK: { kind: MapPointKind; desc: string }[] = [
-  { kind: "partenaire", desc: "Producteurs, artisans et marques engagées, référencés et vérifiés." },
-  { kind: "dechetterie", desc: "Points de collecte et de recyclage près de chez vous." },
-  { kind: "centre", desc: "Initiatives citoyennes et projets urbains durables." },
-  { kind: "ramassage", desc: "Événements et actions de ramassage organisés en groupe." }
+/** Les 4 familles d'acteurs de la carte — chacune renvoie vers la page concernée. */
+const NETWORK: { kind: MapPointKind; desc: string; href: string }[] = [
+  { kind: "partenaire", desc: "Producteurs, artisans et marques engagées, référencés et vérifiés.", href: "/partenaires" },
+  { kind: "dechetterie", desc: "Points de collecte et de recyclage près de chez vous.", href: "/partenaires#carte" },
+  { kind: "centre", desc: "Initiatives citoyennes et projets urbains durables.", href: "/partenaires#carte" },
+  { kind: "ramassage", desc: "Événements et actions de ramassage organisés en groupe.", href: "/partenaires#carte" }
 ];
 
 export default async function HomePage() {
@@ -62,7 +62,7 @@ export default async function HomePage() {
                 <div className="stat-val">
                   <CountUp value={stats.sellers} />
                 </div>
-                <div className="stat-lbl">Partenaires</div>
+                <div className="stat-lbl">Partenaires engagés</div>
               </div>
               <div className="stat-sep" aria-hidden />
               <div className="stat-item">
@@ -79,11 +79,12 @@ export default async function HomePage() {
                 <div className="stat-lbl">Régions</div>
               </div>
             </div>
+            <p className="hero-eco-line">{ENGAGEMENTS_SHORT}</p>
           </div>
         </div>
       </section>
 
-      {/* RÉSEAU — les familles d'acteurs, en tête */}
+      {/* RÉSEAU — les familles d'acteurs, chacune vers sa page */}
       <div style={{ background: "#fff" }}>
         <div className="section section--compact">
           <SectionHead
@@ -94,48 +95,15 @@ export default async function HomePage() {
             linkLabel="Explorer la carte →"
           />
           <div className="audience-grid audience-grid--four">
-            {NETWORK.map(({ kind, desc }) => (
-              <Link key={kind} href="/partenaires#carte" className="audience-card" data-reveal style={{ textAlign: "left" }}>
+            {NETWORK.map(({ kind, desc, href }) => (
+              <Link key={kind} href={href} className="audience-card audience-card--link" data-reveal style={{ textAlign: "left" }}>
                 <div className="audience-icon" style={{ background: `${KIND_META[kind].color}14`, color: KIND_META[kind].color }}>
                   {KIND_META[kind].icon}
                 </div>
                 <div className="audience-h">{KIND_META[kind].label}</div>
                 <div className="audience-p">{desc}</div>
+                <span className="audience-go">Découvrir →</span>
               </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* À PROPOS — bref */}
-      <div className="section-alt">
-        <div className="section" style={{ maxWidth: 760, textAlign: "center" }}>
-          <div className="kicker" style={{ justifyContent: "center" }}>À propos</div>
-          <h2 className="h2" style={{ marginBottom: 14 }}>
-            Rendre visibles les <em>acteurs écologiques</em>
-          </h2>
-          <p style={{ fontSize: 15, lineHeight: 1.75, color: "var(--pb)", fontWeight: 300, margin: "0 auto 22px" }}>
-            Vert La Planète rassemble producteurs, artisans, marques engagées, points de collecte
-            et initiatives citoyennes sur une carte de France. Chaque acteur présente sa démarche —
-            on vous met en relation directe, en circuit court, sans intermédiaire.
-          </p>
-          <Link className="see-all" href="/a-propos" style={{ justifyContent: "center" }}>
-            Découvrir notre mission →
-          </Link>
-        </div>
-      </div>
-
-      {/* SITE ÉCO — juste sous l'à-propos */}
-      <div style={{ background: "#fff" }}>
-        <div className="section section--compact">
-          <SectionHead kicker="Nos engagements" title="Un site" em="éco-responsable" />
-          <div className="audience-grid audience-grid--four">
-            {ENGAGEMENTS.map((e) => (
-              <div key={e.title} className="audience-card" data-reveal>
-                <div className="audience-icon">{e.icon}</div>
-                <div className="audience-h">{e.title}</div>
-                <div className="audience-p">{e.desc}</div>
-              </div>
             ))}
           </div>
         </div>
@@ -191,8 +159,28 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* PARTENAIRES — deux colonnes + voir tout */}
+      {/* OUTILS ADEME — mesurer son impact (liens externes) */}
       <div style={{ background: "#fff" }}>
+        <div className="section section--compact">
+          <SectionHead kicker="Passez à l'action" title="Mesurez votre" em="impact" />
+          <div className="ademe-grid">
+            {ADEME_TOOLS.map((tool) => (
+              <a key={tool.href} href={tool.href} target="_blank" rel="noreferrer" className="ademe-card" data-reveal>
+                <div className="ademe-ico">{tool.icon}</div>
+                <div className="ademe-body">
+                  <div className="ademe-h">{tool.title}</div>
+                  <div className="ademe-p">{tool.desc}</div>
+                  <span className="ademe-cta">{tool.cta} ↗</span>
+                </div>
+              </a>
+            ))}
+          </div>
+          <p className="ademe-note">Outils gratuits proposés par l&apos;ADEME — ils s&apos;ouvrent sur un site externe.</p>
+        </div>
+      </div>
+
+      {/* PARTENAIRES — deux colonnes + voir tout */}
+      <div className="section-alt">
         <div className="section">
           <SectionHead
             kicker="Boutiques partenaires"
@@ -211,7 +199,7 @@ export default async function HomePage() {
 
       {/* ACTUALITÉS — juste un lien */}
       {latestArticles.length > 0 ? (
-        <div className="section-alt">
+        <div style={{ background: "#fff" }}>
           <div className="section section--compact">
             <SectionHead
               kicker="Actualités"
@@ -240,8 +228,8 @@ export default async function HomePage() {
           <Link className="btn-cta" href="/devenir-partenaire">
             Devenir partenaire →
           </Link>
-          <Link className="btn-outline" href="/offres">
-            Voir les offres
+          <Link className="btn-outline btn-offers" href="/offres">
+            ✨ Voir les offres
           </Link>
         </div>
       </div>

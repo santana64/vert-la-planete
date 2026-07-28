@@ -214,6 +214,27 @@ export const SOCIAL: { instagram: string; facebook: string; linkedin: string } =
 export const LEETCHI_URL: string =
   "https://www.leetchi.com/c/soutenez-levolution-de-notre-entreprise-engagee-pour-lenvironnement-1467200";
 
+/**
+ * Outils gratuits de l'ADEME mis en avant sur l'accueil (liens externes).
+ * Aident le visiteur à mesurer son impact — cohérent avec la mission.
+ */
+export const ADEME_TOOLS: { icon: string; title: string; desc: string; href: string; cta: string }[] = [
+  {
+    icon: "🧠",
+    title: "Quiz — Testez vos connaissances",
+    desc: "Un quiz ludique de l'ADEME sur l'impact carbone de nos gestes du quotidien.",
+    href: "https://impactco2.fr/outils/quiz",
+    cta: "Faire le quiz"
+  },
+  {
+    icon: "👣",
+    title: "Calculez votre empreinte carbone",
+    desc: "« Nos Gestes Climat » (ADEME) : estimez votre empreinte et vos leviers d'action prioritaires.",
+    href: "https://nosgestesclimat.fr/?utm_source=relais_ico2&utm_medium=link&utm_campaign=integration",
+    cta: "Calculer mon empreinte"
+  }
+];
+
 /** Gradient presets reused for logos / product imagery (matches template palette). */
 export const GRADIENTS = [
   "linear-gradient(135deg,#1e5c35,#3daa62)",

@@ -9,13 +9,16 @@ import { LEETCHI_URL } from "@/lib/constants";
 
 type NavUser = { name: string; role: "membre" | "partenaire" } | null;
 
+// `inBottomNav` : déjà présent dans la barre du bas (mobile) → masqué du tiroir
+// sous 900px pour éviter la redondance (retour client). Reste visible entre
+// 900 et 1140px où la barre du bas n'existe pas.
 const LINKS = [
-  { href: "/", label: "Accueil", match: (p: string) => p === "/" },
-  { href: "/partenaires", label: "Partenaires", match: (p: string) => p === "/partenaires" || p.startsWith("/partenaires/") },
-  { href: "/partenaires#carte", label: "Carte", match: () => false },
+  { href: "/", label: "Accueil", match: (p: string) => p === "/", inBottomNav: true },
+  { href: "/partenaires", label: "Partenaires", match: (p: string) => p === "/partenaires" || p.startsWith("/partenaires/"), inBottomNav: true },
+  { href: "/partenaires#carte", label: "Carte", match: () => false, inBottomNav: true },
   { href: "/partenaires#themes", label: "Thématiques", match: () => false },
   { href: "/lieux/proposer", label: "Participer", match: (p: string) => p.startsWith("/lieux") },
-  { href: "/actualites", label: "Actualités", match: (p: string) => p.startsWith("/actualites") },
+  { href: "/actualites", label: "Actualités", match: (p: string) => p.startsWith("/actualites"), inBottomNav: true },
   { href: "/emplois", label: "Emplois", match: (p: string) => p.startsWith("/emplois") },
   { href: "/offres", label: "Offres", match: (p: string) => p.startsWith("/offres") },
   { href: "/a-propos", label: "À propos", match: (p: string) => p.startsWith("/a-propos") },
@@ -98,7 +101,7 @@ export function Nav({ user }: { user: NavUser }) {
           <Link
             key={l.href}
             href={l.href}
-            className={l.match(pathname) ? "active" : ""}
+            className={`${l.match(pathname) ? "active" : ""}${l.inBottomNav ? " mob-dup" : ""}`}
             onClick={() => setDrawerOpen(false)}
           >
             {l.label}

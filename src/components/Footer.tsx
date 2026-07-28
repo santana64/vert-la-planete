@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LeafMark } from "@/components/Logo";
-import { COMPANY, ENGAGEMENTS_SHORT, LEETCHI_URL, SOCIAL } from "@/lib/constants";
+import { COMPANY, LEETCHI_URL, SOCIAL } from "@/lib/constants";
 
 function InstagramIcon() {
   return (
@@ -40,8 +40,7 @@ export function Footer() {
               <LeafMark size={32} />
               <span>Vert La Planète</span>
             </div>
-            <p className="footer-mention">{ENGAGEMENTS_SHORT}</p>
-            <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 6 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               <a href={COMPANY.domain} target="_blank" rel="noreferrer" style={{ fontSize: 13, color: "var(--s)", fontWeight: 500 }}>
                 🌍 {COMPANY.domainLabel} ↗
               </a>
@@ -52,21 +51,23 @@ export function Footer() {
 
             {hasSocial ? (
               <div className="footer-social">
-                {SOCIAL.instagram ? (
-                  <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="footer-social-btn">
-                    <InstagramIcon />
-                  </a>
-                ) : null}
-                {SOCIAL.facebook ? (
-                  <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" aria-label="Communauté Facebook Messenger" className="footer-social-btn">
-                    <FacebookIcon />
-                  </a>
-                ) : null}
-                {SOCIAL.linkedin ? (
-                  <a href={SOCIAL.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="footer-social-btn">
-                    <LinkedInIcon />
-                  </a>
-                ) : null}
+                <div className="footer-social-icons">
+                  {SOCIAL.instagram ? (
+                    <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="footer-social-btn">
+                      <InstagramIcon />
+                    </a>
+                  ) : null}
+                  {SOCIAL.facebook ? (
+                    <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" aria-label="Communauté Facebook Messenger" className="footer-social-btn">
+                      <FacebookIcon />
+                    </a>
+                  ) : null}
+                  {SOCIAL.linkedin ? (
+                    <a href={SOCIAL.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="footer-social-btn">
+                      <LinkedInIcon />
+                    </a>
+                  ) : null}
+                </div>
                 {LEETCHI_URL ? (
                   <a href={LEETCHI_URL} target="_blank" rel="noreferrer" className="footer-leetchi">
                     💚 Soutenir le projet
