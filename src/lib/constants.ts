@@ -12,6 +12,54 @@ export const CATEGORIES = [
 
 export type Category = (typeof CATEGORIES)[number];
 
+/**
+ * Identité visuelle par thématique (cartes de l'annuaire) : emoji + dégradé
+ * « nature » propre à chaque catégorie. Rend les vignettes thématiques et
+ * cohérentes plutôt qu'un aplat aléatoire. Verts/terreux, alignés sur la palette.
+ */
+export const CATEGORY_META: Record<Category, { icon: string; gradient: string }> = {
+  "Alimentation bio": {
+    icon: "🥕",
+    gradient:
+      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.28),rgba(255,255,255,0) 58%),linear-gradient(150deg,#1a5230 0%,#3daa62 100%)"
+  },
+  "Mode durable": {
+    icon: "🧵",
+    gradient:
+      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.26),rgba(255,255,255,0) 58%),linear-gradient(150deg,#24544b 0%,#4f8f82 100%)"
+  },
+  "Énergie & habitat": {
+    icon: "☀️",
+    gradient:
+      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.26),rgba(255,255,255,0) 58%),linear-gradient(150deg,#12321e 0%,#267a46 100%)"
+  },
+  "Maison & jardin": {
+    icon: "🪴",
+    gradient:
+      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.28),rgba(255,255,255,0) 58%),linear-gradient(150deg,#2e6b3f 0%,#7ab065 100%)"
+  },
+  "Cosmétiques naturels": {
+    icon: "🌸",
+    gradient:
+      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.28),rgba(255,255,255,0) 58%),linear-gradient(150deg,#3d6b4a 0%,#7ecb99 100%)"
+  },
+  "Zéro déchet": {
+    icon: "♻️",
+    gradient:
+      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.26),rgba(255,255,255,0) 58%),linear-gradient(150deg,#1a4a2e 0%,#3daa62 100%)"
+  },
+  "Mobilité douce": {
+    icon: "🚲",
+    gradient:
+      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.26),rgba(255,255,255,0) 58%),linear-gradient(150deg,#1e5c35 0%,#5fae74 100%)"
+  },
+  "Artisanat local": {
+    icon: "🧺",
+    gradient:
+      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.24),rgba(255,255,255,0) 58%),linear-gradient(150deg,#4a3728 0%,#a85e0a 100%)"
+  }
+};
+
 export const BADGES = ["Bio", "Local", "Zéro déchet", "Recyclé", "Made in France"] as const;
 export type Badge = (typeof BADGES)[number];
 

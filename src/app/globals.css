@@ -1488,3 +1488,34 @@ html.rv-ready :where([data-rv].rv-in){opacity:1;transform:none}
 @media(max-width:1140px){.nav-soutenir{display:none}}
 /* Version tiroir mobile (pleine largeur) */
 .mob-nav-soutenir{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px;padding:12px;border-radius:10px;background:var(--fo);color:var(--s);font-weight:500;border:.5px solid var(--dw)}
+
+/* ══ CARTE RÉSULTAT .rcard — refonte thématique « médaillon botanique » ══
+   Polish partagé léger (partenaires + emplois). Le traitement riche est scopé
+   à .rcard-thumb--theme, employé UNIQUEMENT sur /partenaires — /emplois intact. */
+.rcard{display:flex;border:.5px solid var(--dw);border-radius:16px;overflow:hidden;background:#fff;cursor:pointer;transition:border-color .25s var(--e1),box-shadow .25s var(--e1),transform .25s var(--e1)}
+.rcard:hover{border-color:var(--mi);box-shadow:var(--sh-md)}
+.results-list.two-col .rcard{align-items:stretch}
+/* .rcard-thumb NU reste à 90px (emplois pose son fond+emoji en inline). */
+
+/* Médaillon botanique — vignette /partenaires uniquement. Dégradé par catégorie
+   posé en inline ; ici profondeur, texture feuilles, halo et grand emoji. */
+.rcard-thumb--theme{position:relative;width:100px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.16),inset 0 14px 22px -14px rgba(255,255,255,.28),inset -16px 0 26px -12px rgba(9,31,18,.35)}
+.rcard-thumb--theme::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='54' height='54' viewBox='0 0 54 54'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.1' stroke-linecap='round'%3E%3Cpath d='M14 6c-7 6-7 20 0 27 7-7 7-21 0-27z'/%3E%3Cpath d='M14 6v27'/%3E%3Cpath d='M40 24c-6 5-6 18 0 24 6-6 6-19 0-24z'/%3E%3Cpath d='M40 24v24'/%3E%3C/g%3E%3C/svg%3E");background-size:52px 52px;opacity:.13;mix-blend-mode:screen}
+.rcard-thumb--theme::after{content:'';position:absolute;left:50%;top:50%;width:92px;height:92px;transform:translate(-50%,-50%);pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.32) 0%,rgba(255,255,255,0) 62%)}
+.rcard-medallion{position:relative;z-index:1;font-size:34px;line-height:1;filter:drop-shadow(0 2px 5px rgba(9,31,18,.32));transition:transform .35s var(--e1)}
+.rcard:hover .rcard-medallion{transform:scale(1.08) rotate(-3deg)}
+
+/* Tags : catégorie avec icône, région, badge Engagé (vert, jamais noir) */
+.rtag{display:inline-flex;align-items:center;gap:5px;font-size:10px;background:var(--fo);color:var(--s);padding:3px 10px;border-radius:20px;border:.5px solid var(--dw);font-weight:500;letter-spacing:.03em}
+.rtag--cat{padding-left:8px}
+.rtag-ico{font-size:11px;line-height:1;filter:saturate(.9)}
+.rtag--engage{background:var(--s);color:#fff;border-color:var(--s)}
+
+@media (prefers-reduced-motion: reduce){
+  .rcard,.rcard-medallion{transition:none}
+  .rcard:hover .rcard-medallion{transform:none}
+}
+@media(max-width:480px){
+  .rcard-thumb--theme{width:88px}
+  .rcard-medallion{font-size:29px}
+}
