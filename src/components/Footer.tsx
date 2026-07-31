@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LeafMark } from "@/components/Logo";
-import { COMPANY, LEETCHI_URL, SOCIAL } from "@/lib/constants";
+import { COMPANY, LEETCHI_URL, SLOGAN, SOCIAL } from "@/lib/constants";
 
 function InstagramIcon() {
   return (
@@ -87,6 +87,11 @@ export function Footer() {
             </div>
           </div>
         </div>
+
+        <figure className="footer-slogan">
+          <blockquote>« {SLOGAN.text} »</blockquote>
+          <figcaption>— {SLOGAN.author}</figcaption>
+        </figure>
 
         <div className="footer-bottom">
           <p className="footer-copy">

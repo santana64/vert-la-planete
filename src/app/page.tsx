@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Co2Counter } from "@/components/Co2Counter";
 import { CountUp } from "@/components/CountUp";
 import { PartnerChip, SectionHead } from "@/components/cards";
 import { ADEME_TOOLS, ENGAGEMENTS_SHORT } from "@/lib/constants";
@@ -31,6 +32,9 @@ export default async function HomePage() {
 
   return (
     <div className="page active">
+      {/* COMPTEUR CO₂ « en direct » — en tête (calcul local, 0 traceur) */}
+      <Co2Counter />
+
       {/* HERO — carte déplacée dans le menu (« Carte »), accueil allégé */}
       <section className="hero">
         <div className="hero-grid-bg" />

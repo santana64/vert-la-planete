@@ -235,6 +235,27 @@ export const ADEME_TOOLS: { icon: string; title: string; desc: string; href: str
   }
 ];
 
+/**
+ * Compteur CO₂ « en direct » de l'accueil.
+ * Calculé CÔTÉ CLIENT à partir d'un total annuel (aucun appel réseau, aucun
+ * traceur → 100 % éco-conçu). Le bouton renvoie vers la source officielle pour
+ * la donnée exacte. `franceTonnesPerYear` est une estimation, facilement ajustable.
+ */
+export const CO2_COUNTER = {
+  // Ordre de grandeur des émissions de CO₂ de la France (~300 Mt/an). À confirmer.
+  franceTonnesPerYear: 300_000_000,
+  year: 2026,
+  sourceCompteur: "https://www.compteur.net/compteur-pays-emission-de-co2-FR/",
+  sourceRte:
+    "https://www.rte-france.com/donnees-publications/eco2mix-donnees-temps-reel/emissions-co2-par-kwh-produit-france"
+} as const;
+
+/** Citation affichée en bas de page. */
+export const SLOGAN = {
+  text: "Planter un jardin, c'est croire en demain.",
+  author: "Audrey Hepburn"
+} as const;
+
 /** Gradient presets reused for logos / product imagery (matches template palette). */
 export const GRADIENTS = [
   "linear-gradient(135deg,#1e5c35,#3daa62)",
