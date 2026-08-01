@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CarteInteractive } from "@/components/map/CarteInteractive";
 import { PartnerChip, SectionHead } from "@/components/cards";
+import { LeafIcon, PinIcon } from "@/components/icons";
 import { getCurrentUser } from "@/lib/auth";
 import { CATEGORIES, CATEGORY_META, REGIONS, type Category } from "@/lib/constants";
 import { buildMapPoints } from "@/lib/map-points";
@@ -128,28 +129,29 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
           ) : (
             <div className="results-list two-col">
               {(proSellers.length > 0 ? otherSellers : sellers).map((seller) => {
-                const catMeta = CATEGORY_META[seller.category as Category] ?? {
-                  icon: "🌿",
-                  gradient: seller.gradient
-                };
+                const gradient =
+                  CATEGORY_META[seller.category as Category]?.gradient ?? seller.gradient;
                 return (
                   <Link key={seller.id} href={`/partenaires/${seller.slug}`} className="rcard">
-                    <div className="rcard-thumb rcard-thumb--theme" style={{ background: catMeta.gradient }}>
-                      <span className="rcard-medallion" aria-hidden="true">{catMeta.icon}</span>
+                    <div className="rcard-thumb rcard-thumb--theme" style={{ background: gradient }}>
+                      <span className="rcard-initials" aria-hidden="true">{seller.logoInitials}</span>
                     </div>
                     <div className="rcard-body">
                       <div className="rcard-hd">
                         <div className="rcard-name">{seller.name}</div>
-                        <div className="rcard-dist">📍 {seller.city}</div>
+                        <div className="rcard-dist">
+                          <PinIcon />
+                          {seller.city}
+                        </div>
                       </div>
                       <div className="rcard-desc">{seller.tagline}</div>
                       <div className="rcard-tags">
-                        <span className="rtag rtag--cat">
-                          <span className="rtag-ico" aria-hidden="true">{catMeta.icon}</span>
-                          {seller.category}
-                        </span>
+                        <span className="rtag">{seller.category}</span>
                         <span className="rtag">{seller.region}</span>
-                        <span className="rtag rtag--engage">🌱 Engagé</span>
+                        <span className="rtag rtag--engage">
+                          <LeafIcon />
+                          Engagé
+                        </span>
                       </div>
                     </div>
                     <div className="rcard-act">
