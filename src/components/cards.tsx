@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Article, Seller } from "@/db/schema";
+import { LeafIcon } from "@/components/icons";
 import { OFFERS } from "@/lib/constants";
 import { formatDate } from "@/lib/format";
 
@@ -90,7 +91,10 @@ export function PartnerChip({ seller }: { seller: Seller }) {
         {seller.offer !== "gratuit" ? (
           <span className="badge badge-amber">★ Partenaire Pro</span>
         ) : null}
-        <span className="badge badge-eco">🌱 Engagé</span>
+        <span className="badge badge-eco pchip-engage">
+          <LeafIcon />
+          Engagé
+        </span>
       </div>
     </Link>
   );
