@@ -3,12 +3,17 @@
 import { useEffect, useState } from "react";
 import { CO2_COUNTER } from "@/lib/constants";
 
-const YEAR_START = Date.UTC(CO2_COUNTER.year, 0, 1);
-const YEAR_MS = Date.UTC(CO2_COUNTER.year + 1, 0, 1) - YEAR_START;
+/** Année civile courante (UTC → identique côté serveur et client, sans figer un millésime). */
+function currentYear(): number {
+  return new Date().getUTCFullYear();
+}
 
-/** Tonnes de CO₂ émises par la France depuis le 1ᵉʳ janvier, au prorata du temps écoulé. */
+/** Tonnes de CO₂ émises par la France depuis le 1ᵉʳ janvier de l'année en cours. */
 function tonnesSoFar(): number {
-  const frac = Math.min(Math.max((Date.now() - YEAR_START) / YEAR_MS, 0), 1);
+  const year = currentYear();
+  const start = Date.UTC(year, 0, 1);
+  const yearMs = Date.UTC(year + 1, 0, 1) - start;
+  const frac = Math.min(Math.max((Date.now() - start) / yearMs, 0), 1);
   return CO2_COUNTER.franceTonnesPerYear * frac;
 }
 
@@ -16,12 +21,18 @@ function tonnesSoFar(): number {
  * Compteur CO₂ « en direct » — 100 % local (aucun appel réseau, aucun traceur).
  * SSR : rend un tiret (pas de valeur dépendante de l'heure → zéro mismatch
  * d'hydratation) ; la valeur réelle apparaît puis s'incrémente côté client.
+ * L'année est dérivée dynamiquement (pas de millésime figé à maintenir).
  */
 export function Co2Counter() {
   const [tonnes, setTonnes] = useState<number | null>(null);
+  // getUTCFullYear() donne la même valeur au rendu serveur et à l'hydratation.
+  const [year, setYear] = useState<number>(() => currentYear());
 
   useEffect(() => {
-    const tick = () => setTonnes(tonnesSoFar());
+    const tick = () => {
+      setTonnes(tonnesSoFar());
+      setYear(currentYear());
+    };
     tick();
     // prefers-reduced-motion : valeur figée, pas d'incrément par seconde.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -45,7 +56,7 @@ export function Co2Counter() {
             <span className="co2-unit">t&nbsp;CO₂</span>
           </div>
           <div className="co2-lbl">
-            Émissions de la France depuis le 1ᵉʳ&nbsp;janvier&nbsp;{CO2_COUNTER.year} · estimation en temps réel
+            Émissions de la France depuis le 1ᵉʳ&nbsp;janvier&nbsp;{year} · estimation en temps réel
           </div>
         </div>
         <div className="co2-actions">

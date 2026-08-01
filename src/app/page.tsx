@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Co2Chart } from "@/components/Co2Chart";
 import { Co2Counter } from "@/components/Co2Counter";
 import { CountUp } from "@/components/CountUp";
 import { PartnerChip, SectionHead } from "@/components/cards";
@@ -162,6 +163,9 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* GRAPHIQUE CO₂ 24 h — fetch serveur caché 1 h, SVG inline, 0 traceur */}
+      <Co2Chart />
 
       {/* OUTILS ADEME — mesurer son impact (liens externes) */}
       <div style={{ background: "#fff" }}>

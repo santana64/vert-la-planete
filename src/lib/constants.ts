@@ -74,15 +74,7 @@ export const REGIONS = [
   "Hauts-de-France"
 ] as const;
 
-/** Engagements de la plateforme — affichés sur l'accueil, le footer, à-propos. */
-export const ENGAGEMENTS = [
-  { icon: "🌱", title: "Site éco-conçu", desc: "Code sobre, pages légères, zéro script superflu" },
-  { icon: "🚫", title: "Zéro newsletter imposée", desc: "Pas de spam, pas d'e-mails non sollicités" },
-  { icon: "🔒", title: "Zéro tracking publicitaire", desc: "Aucun traceur, aucune revente de données" },
-  { icon: "📍", title: "Circuits courts", desc: "Des acteurs locaux et vérifiés, près de chez vous" }
-] as const;
-
-/** Version courte des engagements (hero, footer). */
+/** Version courte des engagements (affichée dans le hero de l'accueil). */
 export const ENGAGEMENTS_SHORT = "🌿 Éco-conçu · 🚫 Pas de newsletter · 🔒 Pas de tracking";
 
 /** Offre gratuite : nombre maximum de produits publiables (accès restreint, art. 2.3). */
@@ -244,7 +236,6 @@ export const ADEME_TOOLS: { icon: string; title: string; desc: string; href: str
 export const CO2_COUNTER = {
   // Ordre de grandeur des émissions de CO₂ de la France (~300 Mt/an). À confirmer.
   franceTonnesPerYear: 300_000_000,
-  year: 2026,
   sourceCompteur: "https://www.compteur.net/compteur-pays-emission-de-co2-FR/",
   sourceRte:
     "https://www.rte-france.com/donnees-publications/eco2mix-donnees-temps-reel/emissions-co2-par-kwh-produit-france"

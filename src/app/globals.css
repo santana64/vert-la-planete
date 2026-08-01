@@ -1586,3 +1586,52 @@ a.audience-card--link:hover .audience-go{gap:11px}
 .footer-slogan{text-align:center;margin:6px 0 26px}
 .footer-slogan blockquote{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--f);font-weight:300;line-height:1.5;letter-spacing:-.01em}
 .footer-slogan figcaption{font-size:12px;color:var(--s);font-weight:500;margin-top:8px}
+
+/* ── Graphique CO₂ « aire dégradée pédagogique » (éco-conçu, SVG inline) ──── */
+.co2chart{background:var(--fo);border-top:1px solid var(--dw);border-bottom:1px solid var(--dw)}
+.co2chart-inner{max-width:1000px;margin:0 auto;padding:40px 24px 34px}
+.co2chart-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:16px}
+.co2chart-kicker{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--fn);margin-bottom:10px}
+.co2chart-dot{width:7px;height:7px;border-radius:50%;background:var(--l);box-shadow:0 0 0 4px rgba(61,170,98,.18);animation:pulse 2.2s ease-in-out infinite}
+.co2chart-title{font-family:var(--serif);font-size:30px;font-weight:300;line-height:1.12;letter-spacing:-.025em;color:var(--f)}
+.co2chart-title em{font-style:italic;color:var(--s)}
+.co2chart-sub{font-size:12.5px;color:var(--pb);font-weight:300;margin-top:6px}
+.co2chart-now{text-align:right;line-height:1}
+.co2chart-now-val{font-family:var(--serif);font-size:54px;font-weight:300;letter-spacing:-.03em;color:var(--f);display:inline-flex;align-items:baseline;gap:10px}
+.co2chart-now-unit{font-family:var(--sans);font-size:12.5px;font-weight:400;color:var(--sd);letter-spacing:0}
+.co2chart-now-time{font-size:12px;color:var(--sd);font-weight:300;margin-top:6px}
+.co2chart-now-meta{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:10px}
+.co2chart-badge{font-size:11px;padding:4px 12px;border-radius:20px;font-weight:500;letter-spacing:.03em;border:.5px solid}
+.co2chart-badge--faible{background:var(--fo);color:var(--fn);border-color:var(--dw)}
+.co2chart-badge--modere{background:#fef8ee;color:var(--am);border-color:var(--ams)}
+.co2chart-badge--eleve{background:#fdecea;color:#b3261e;border-color:#f6c9c4}
+.co2chart-trend{font-size:11.5px;color:var(--sd);font-weight:300}
+.co2chart-svg{width:100%;height:auto;aspect-ratio:760/240;display:block;overflow:visible}
+.co2chart-grid{stroke:var(--dw);stroke-width:1;opacity:.55}
+.co2chart-area{fill:url(#co2chart-fill);stroke:none}
+.co2chart-stroke{fill:none;stroke:var(--fn);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.co2chart-mm-dot{fill:var(--s)}
+.co2chart-mm-lbl{font-family:var(--sans);font-size:10px;font-weight:500;fill:var(--sd)}
+.co2chart-end-guide{stroke:var(--l);stroke-width:1;stroke-dasharray:2 3;opacity:.5}
+.co2chart-end-halo{fill:rgba(61,170,98,.22)}
+.co2chart-end-dot{fill:var(--l);stroke:#fff;stroke-width:1.6}
+.co2chart-axis{display:flex;align-items:center;margin-top:10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--sd);font-weight:400}
+.co2chart-axis-arrow{flex:1;height:.5px;margin:0 14px;background:linear-gradient(to right,var(--dw),var(--l))}
+.co2chart-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:18px}
+.co2chart-legend{font-size:12.5px;color:var(--pb);font-weight:300;max-width:52ch}
+.co2chart-src{font-size:13px;font-weight:500;padding:10px 18px;border-radius:10px;background:var(--l);color:var(--f);white-space:nowrap;transition:background .16s var(--e1),transform .16s var(--e1)}
+.co2chart-src:hover{background:var(--fn);color:#fff;transform:translateY(-1px)}
+@media (max-width:640px){
+  .co2chart-inner{padding:30px 18px 26px}
+  .co2chart-head{align-items:flex-start}
+  .co2chart-now{text-align:left}
+  .co2chart-now-val{font-size:42px}
+  .co2chart-now-meta{justify-content:flex-start}
+  .co2chart-title{font-size:24px}
+  .co2chart-foot{flex-direction:column;align-items:stretch}
+  .co2chart-src{text-align:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .co2chart-dot{animation:none}
+  .co2chart-src{transition:none}
+}
