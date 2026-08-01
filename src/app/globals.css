@@ -1503,9 +1503,11 @@ html.rv-ready :where([data-rv].rv-in){opacity:1;transform:none}
 .rcard-thumb--theme{position:relative;width:100px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 0 .5px rgba(255,255,255,.16),inset 0 14px 22px -14px rgba(255,255,255,.28),inset -16px 0 26px -12px rgba(9,31,18,.35)}
 .rcard-thumb--theme::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='54' height='54' viewBox='0 0 54 54'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.1' stroke-linecap='round'%3E%3Cpath d='M14 6c-7 6-7 20 0 27 7-7 7-21 0-27z'/%3E%3Cpath d='M14 6v27'/%3E%3Cpath d='M40 24c-6 5-6 18 0 24 6-6 6-19 0-24z'/%3E%3Cpath d='M40 24v24'/%3E%3C/g%3E%3C/svg%3E");background-size:52px 52px;opacity:.13;mix-blend-mode:screen}
 .rcard-thumb--theme::after{content:'';position:absolute;left:50%;top:50%;width:92px;height:92px;transform:translate(-50%,-50%);pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.32) 0%,rgba(255,255,255,0) 62%)}
-/* Médaillon = initiales serif (langage « avatar » du site) plutôt qu'un emoji. */
+/* Médaillon = petit picto thématique en coin + initiales serif au centre. */
 .rcard-initials{position:relative;z-index:1;font-family:var(--serif);font-size:28px;font-weight:300;letter-spacing:.03em;color:#fff;text-shadow:0 2px 8px rgba(9,31,18,.4);transition:transform .35s var(--e1)}
 .rcard:hover .rcard-initials{transform:scale(1.06)}
+.rcard-cat-ico{position:absolute;top:9px;left:9px;z-index:2;width:17px;height:17px;color:#fff;opacity:.82}
+.rcard-cat-ico svg{width:100%;height:100%;display:block}
 
 /* Ville avec épingle en trait fin (remplace l'emoji 📍 rouge) */
 .rcard-dist{display:inline-flex;align-items:center;gap:4px}

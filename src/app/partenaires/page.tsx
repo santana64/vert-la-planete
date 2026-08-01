@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CarteInteractive } from "@/components/map/CarteInteractive";
 import { PartnerChip, SectionHead } from "@/components/cards";
-import { LeafIcon, PinIcon } from "@/components/icons";
+import { CategoryIcon, LeafIcon, PinIcon } from "@/components/icons";
 import { getCurrentUser } from "@/lib/auth";
 import { CATEGORIES, CATEGORY_META, REGIONS, type Category } from "@/lib/constants";
 import { buildMapPoints } from "@/lib/map-points";
@@ -134,6 +134,9 @@ export default async function PartenairesPage({ searchParams }: { searchParams: 
                 return (
                   <Link key={seller.id} href={`/partenaires/${seller.slug}`} className="rcard">
                     <div className="rcard-thumb rcard-thumb--theme" style={{ background: gradient }}>
+                      <span className="rcard-cat-ico" aria-hidden="true">
+                        <CategoryIcon category={seller.category} />
+                      </span>
                       <span className="rcard-initials" aria-hidden="true">{seller.logoInitials}</span>
                     </div>
                     <div className="rcard-body">
