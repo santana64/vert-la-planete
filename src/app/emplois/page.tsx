@@ -1,6 +1,15 @@
 import Link from "next/link";
+import { BriefcaseIcon, GradIcon } from "@/components/icons";
 import { listJobs } from "@/lib/queries";
 import { buildFilterHref, str } from "@/lib/search-params";
+
+/** Dégradés « nature » du médaillon selon le type (formation vs emploi). */
+const KIND_GRAD = {
+  Formation:
+    "radial-gradient(circle at 30% 22%,rgba(255,255,255,.26),rgba(255,255,255,0) 58%),linear-gradient(150deg,#24544b 0%,#4f8f82 100%)",
+  Emploi:
+    "radial-gradient(circle at 30% 22%,rgba(255,255,255,.26),rgba(255,255,255,0) 58%),linear-gradient(150deg,#1a5230 0%,#3daa62 100%)"
+} as const;
 
 export const dynamic = "force-dynamic";
 export const metadata = {
@@ -78,16 +87,12 @@ export default async function EmploisPage({ searchParams }: { searchParams: Sear
             {jobs.map((job) => (
               <Link key={job.id} href={`/emplois/${job.slug}`} className="rcard">
                 <div
-                  className="rcard-thumb"
-                  style={{
-                    background: job.kind === "Formation" ? "var(--fo)" : "var(--pp)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 26
-                  }}
+                  className="rcard-thumb rcard-thumb--theme"
+                  style={{ background: job.kind === "Formation" ? KIND_GRAD.Formation : KIND_GRAD.Emploi }}
                 >
-                  {job.kind === "Formation" ? "🎓" : "💼"}
+                  <span className="rcard-kind-ico" aria-hidden="true">
+                    {job.kind === "Formation" ? <GradIcon /> : <BriefcaseIcon />}
+                  </span>
                 </div>
                 <div className="rcard-body">
                   <div className="rcard-hd">

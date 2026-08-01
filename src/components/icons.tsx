@@ -19,6 +19,26 @@ export function LeafIcon() {
   );
 }
 
+export function GradIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M12 5 2 9l10 4 10-4-10-4z" />
+      <path d="M5 10.6V15c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-4.4" />
+      <path d="M22 9v4.2" />
+    </svg>
+  );
+}
+
+export function BriefcaseIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="3" y="7.5" width="18" height="12" rx="2" />
+      <path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5" />
+      <path d="M3 12.5h18" />
+    </svg>
+  );
+}
+
 /** Tracés (paths) d'icône par catégorie — trait fin, 24×24, monochrome. */
 const CATEGORY_PATHS: Record<string, string> = {
   "Alimentation bio":
