@@ -1516,6 +1516,13 @@ html.rv-ready :where([data-rv].rv-in){opacity:1;transform:none}
 .rcard:hover .rcard-kind-ico{transform:scale(1.06)}
 @media (prefers-reduced-motion: reduce){.rcard-kind-ico{transition:none}.rcard:hover .rcard-kind-ico{transform:none}}
 
+/* Cadrage du corps : marge à gauche (le texte ne colle plus au médaillon),
+   ville EMPILÉE sous le nom (fin du vide « nom … ville »), bloc centré vertical. */
+.rcard-body{padding:16px 20px;min-width:0;display:flex;flex-direction:column;justify-content:center}
+.rcard-hd{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:2px;margin-bottom:9px}
+.rcard-name{font-size:15.5px;line-height:1.25}
+.rcard-desc{margin-bottom:12px}
+
 /* Ville avec épingle en trait fin (remplace l'emoji 📍 rouge) */
 .rcard-dist{display:inline-flex;align-items:center;gap:4px}
 .rcard-dist svg{width:11px;height:11px;color:var(--sd);flex-shrink:0}
