@@ -234,11 +234,10 @@ export const ADEME_TOOLS: { icon: string; title: string; desc: string; href: str
  * la donnée exacte. `franceTonnesPerYear` est une estimation, facilement ajustable.
  */
 export const CO2_COUNTER = {
-  // Ordre de grandeur des émissions de CO₂ de la France (~300 Mt/an). À confirmer.
+  // Ordre de grandeur des émissions de CO₂ de la France (~300 Mt/an). À confirmer
+  // avec la source (compteur.net) ; affiché comme « estimation ».
   franceTonnesPerYear: 300_000_000,
-  sourceCompteur: "https://www.compteur.net/compteur-pays-emission-de-co2-FR/",
-  sourceRte:
-    "https://www.rte-france.com/donnees-publications/eco2mix-donnees-temps-reel/emissions-co2-par-kwh-produit-france"
+  sourceCompteur: "https://www.compteur.net/compteur-pays-emission-de-co2-FR/"
 } as const;
 
 /** Citation affichée en bas de page. */

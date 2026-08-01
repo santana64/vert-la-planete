@@ -156,7 +156,7 @@ export async function Co2Chart() {
   const gridYs = [0, 0.5, 1].map((f) => PAD_T + f * INNER_H);
 
   return (
-    <section className="co2chart" aria-labelledby="co2chart-title">
+    <section className="co2chart" id="electricite" aria-labelledby="co2chart-title">
       <div className="co2chart-inner">
         <header className="co2chart-head">
           <div>
