@@ -52,11 +52,13 @@ export default async function EmploisPage({ searchParams }: { searchParams: Sear
             <Link className={`fchip${!current.kind ? " on" : ""}`} href={href(current, { kind: null })}>
               Tout
             </Link>
-            <Link className={`fchip${current.kind === "Emploi" ? " on" : ""}`} href={href(current, { kind: "Emploi" })}>
-              💼 Emplois
+            <Link className={`fchip fchip--ico${current.kind === "Emploi" ? " on" : ""}`} href={href(current, { kind: "Emploi" })}>
+              <BriefcaseIcon />
+              Emplois
             </Link>
-            <Link className={`fchip${current.kind === "Formation" ? " on" : ""}`} href={href(current, { kind: "Formation" })}>
-              🎓 Formations
+            <Link className={`fchip fchip--ico${current.kind === "Formation" ? " on" : ""}`} href={href(current, { kind: "Formation" })}>
+              <GradIcon />
+              Formations
             </Link>
           </div>
 

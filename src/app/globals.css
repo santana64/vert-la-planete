@@ -262,6 +262,8 @@ a.audience-card:hover{border-color:var(--mi);transform:translateY(-3px);box-shad
 .filter-chips{display:flex;flex-wrap:wrap;gap:7px}
 .fchip{font-size:12px;padding:6px 14px;border-radius:30px;background:transparent;border:.5px solid rgba(0,0,0,.12);color:var(--st);cursor:pointer;transition:all .15s;font-family:var(--sans)}
 .fchip:hover{border-color:var(--mi);color:var(--s)}
+.fchip--ico{display:inline-flex;align-items:center;gap:5px}
+.fchip--ico svg{width:13px;height:13px}
 .fchip.on{background:var(--fo);color:var(--s);border-color:var(--dw);font-weight:500}
 .results-area{flex:1;padding:28px 36px}
 .results-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:16px;border-bottom:.5px solid rgba(0,0,0,.06)}
