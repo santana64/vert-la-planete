@@ -7,7 +7,7 @@ import { NavLogo } from "@/components/Logo";
 import { logoutAction } from "@/app/actions/auth";
 import { LEETCHI_URL } from "@/lib/constants";
 
-type NavUser = { name: string; role: "membre" | "partenaire" } | null;
+type NavUser = { name: string; role: "membre" | "partenaire"; isAdmin?: boolean } | null;
 
 // `inBottomNav` : déjà présent dans la barre du bas (mobile) → masqué du tiroir
 // sous 900px pour éviter la redondance (retour client). Reste visible entre
@@ -62,6 +62,11 @@ export function Nav({ user }: { user: NavUser }) {
           ) : null}
           {user ? (
             <>
+              {user.isAdmin && (
+                <Link href="/admin" className="btn-ghost nav-admin-link">
+                  ⚙ Admin
+                </Link>
+              )}
               {user.role === "partenaire" && (
                 <Link href="/espace-partenaire" className="btn-ghost">
                   Espace partenaire
@@ -116,6 +121,15 @@ export function Nav({ user }: { user: NavUser }) {
             onClick={() => setDrawerOpen(false)}
           >
             💚 Soutenir le projet
+          </a>
+        ) : null}
+        {user?.isAdmin ? (
+          <a
+            href="/admin"
+            className="mob-nav-soutenir"
+            onClick={() => setDrawerOpen(false)}
+          >
+            ⚙ Espace admin
           </a>
         ) : null}
         <div className="mob-nav-drawer-footer">

@@ -5,7 +5,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { BottomNav } from "@/components/BottomNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, isAdminEmail } from "@/lib/auth";
 import { COMPANY } from "@/lib/constants";
 import { jsonLd } from "@/lib/jsonld";
 import { getSiteUrl } from "@/lib/site-url";
@@ -93,7 +93,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a href="#contenu" className="skip-link">
           Aller au contenu principal
         </a>
-        <Nav user={user ? { name: user.name, role: user.role } : null} />
+        <Nav
+          user={user ? { name: user.name, role: user.role, isAdmin: isAdminEmail(user.email) } : null}
+        />
         <main id="contenu">{children}</main>
         <Footer />
         <BottomNav />

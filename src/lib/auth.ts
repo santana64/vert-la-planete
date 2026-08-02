@@ -71,6 +71,32 @@ export async function requireUser(redirectTo = "/connexion"): Promise<User> {
   return user;
 }
 
+/**
+ * Administrateurs = e-mails listés dans ADMIN_EMAILS (séparés par des virgules).
+ * Choix volontaire : aucun rôle « admin » en base → impossible de s'auto-promouvoir
+ * via l'application. Seule une variable d'environnement (contrôlée par l'hébergeur)
+ * accorde l'accès. Insensible à la casse.
+ */
+export function isAdminEmail(email: string | null | undefined): boolean {
+  if (!email) return false;
+  const list = (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+  return list.includes(email.trim().toLowerCase());
+}
+
+/**
+ * Exige un utilisateur connecté ET administrateur. À appeler dans le layout
+ * /admin ET dans chaque action de mutation admin (défense en profondeur —
+ * la frontière de sécurité ne repose jamais sur l'UI seule).
+ */
+export async function requireAdmin(): Promise<User> {
+  const user = await requireUser("/connexion?next=/admin");
+  if (!isAdminEmail(user.email)) redirect("/");
+  return user;
+}
+
 export async function getSellerForUser(userId: string): Promise<Seller | null> {
   const [seller] = await db.select().from(sellers).where(eq(sellers.userId, userId)).limit(1);
   return seller ?? null;
