@@ -2,7 +2,7 @@ import Link from "next/link";
 import { logoutAction } from "@/app/actions/auth";
 import { AvatarUpload } from "@/components/AvatarUpload";
 import { BillingPortalButton } from "@/components/BillingPortalButton";
-import { getSellerForUser, requireUser } from "@/lib/auth";
+import { getSellerForUser, isAdminEmail, requireUser } from "@/lib/auth";
 import { OFFERS } from "@/lib/constants";
 import { formatDate } from "@/lib/format";
 import { kindLabel } from "@/lib/places";
@@ -59,6 +59,11 @@ export default async function ComptePage() {
             </div>
           </div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            {isAdminEmail(user.email) ? (
+              <Link href="/admin" className="btn-primary">
+                ⚙ Espace admin
+              </Link>
+            ) : null}
             {seller ? (
               <Link href="/espace-partenaire" className="btn-sm-outline">
                 Espace partenaire →
