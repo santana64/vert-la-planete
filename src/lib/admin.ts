@@ -1,6 +1,7 @@
 import "server-only";
 import { desc, eq, sql } from "drizzle-orm";
 import { db } from "@/db";
+import { requireAdmin } from "@/lib/auth";
 import {
   articles,
   contactMessages,
@@ -42,6 +43,7 @@ async function countOf(table: typeof sellers | typeof users | typeof reviews | t
 }
 
 export async function getAdminStats(): Promise<AdminStats> {
+  await requireAdmin();
   const [
     sellersTotal,
     sellersVerified,
@@ -97,6 +99,7 @@ export type AdminSellerRow = {
 };
 
 export async function adminListSellers(): Promise<AdminSellerRow[]> {
+  await requireAdmin();
   return db
     .select({
       id: sellers.id,
@@ -127,6 +130,7 @@ export type AdminUserRow = {
 };
 
 export async function adminListUsers(): Promise<AdminUserRow[]> {
+  await requireAdmin();
   return db
     .select({
       id: users.id,
@@ -151,6 +155,7 @@ export type AdminReviewRow = {
 };
 
 export async function adminListReviews(): Promise<AdminReviewRow[]> {
+  await requireAdmin();
   return db
     .select({
       id: reviews.id,
@@ -167,14 +172,17 @@ export async function adminListReviews(): Promise<AdminReviewRow[]> {
 }
 
 export async function adminListEcoPlaces(): Promise<EcoPlace[]> {
+  await requireAdmin();
   return db.select().from(ecoPlaces).orderBy(desc(ecoPlaces.createdAt));
 }
 
 export async function adminListMessages(): Promise<ContactMessage[]> {
+  await requireAdmin();
   return db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
 }
 
 export async function adminListArticles(): Promise<Article[]> {
+  await requireAdmin();
   return db.select().from(articles).orderBy(desc(articles.publishedAt));
 }
 
@@ -182,16 +190,19 @@ export async function adminListArticles(): Promise<Article[]> {
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export async function adminGetArticle(id: string): Promise<Article | null> {
+  await requireAdmin();
   if (!UUID_RE.test(id)) return null;
   const [row] = await db.select().from(articles).where(eq(articles.id, id)).limit(1);
   return row ?? null;
 }
 
 export async function adminListJobs(): Promise<Job[]> {
+  await requireAdmin();
   return db.select().from(jobs).orderBy(desc(jobs.createdAt));
 }
 
 export async function adminGetJob(id: string): Promise<Job | null> {
+  await requireAdmin();
   if (!UUID_RE.test(id)) return null;
   const [row] = await db.select().from(jobs).where(eq(jobs.id, id)).limit(1);
   return row ?? null;
