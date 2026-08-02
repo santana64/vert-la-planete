@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";
 import { db } from "@/db";
 import { sellers, users, type Seller, type User } from "@/db/schema";
+import { COMPANY } from "@/lib/constants";
 
 const SESSION_COOKIE = "vlp_session";
 const SESSION_DAYS = 30;
@@ -79,10 +80,15 @@ export async function requireUser(redirectTo = "/connexion"): Promise<User> {
  */
 export function isAdminEmail(email: string | null | undefined): boolean {
   if (!email) return false;
-  const list = (process.env.ADMIN_EMAILS ?? "")
+  const configured = (process.env.ADMIN_EMAILS ?? "")
     .split(",")
     .map((e) => e.trim().toLowerCase())
     .filter(Boolean);
+  // Si ADMIN_EMAILS n'est pas défini, on retombe sur l'e-mail de l'exploitant
+  // (compte réel + mot de passe fort). Les comptes de démo seedés (mot de passe
+  // public dans le code) ne sont JAMAIS admin par défaut → aucune faille via
+  // identifiants publics. Définir ADMIN_EMAILS (Vercel) remplace ce défaut.
+  const list = configured.length ? configured : [COMPANY.email.trim().toLowerCase()];
   return list.includes(email.trim().toLowerCase());
 }
 
