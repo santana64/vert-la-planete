@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { listArticles, listJobs, listSellers } from "@/lib/queries";
+import { getAllProductSlugs, listArticles, listJobs, listSellers } from "@/lib/queries";
 import { getSiteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-dynamic";
@@ -30,13 +30,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Contenus dynamiques — tolérant à une base injoignable (le sitemap statique reste servi).
   try {
-    const [sellers, articles, jobs] = await Promise.all([
+    const [sellers, articles, jobs, productSlugs] = await Promise.all([
       listSellers(),
       listArticles(),
-      listJobs()
+      listJobs(),
+      getAllProductSlugs()
     ]);
     for (const s of sellers) {
       entries.push({ url: `${base}/partenaires/${s.slug}`, changeFrequency: "weekly", priority: 0.8 });
+    }
+    for (const pr of productSlugs) {
+      entries.push({ url: `${base}/produits/${pr.slug}`, changeFrequency: "monthly", priority: 0.6 });
     }
     for (const a of articles) {
       entries.push({ url: `${base}/actualites/${a.slug}`, changeFrequency: "monthly", priority: 0.6 });

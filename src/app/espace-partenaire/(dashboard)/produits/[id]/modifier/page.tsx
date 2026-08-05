@@ -46,7 +46,11 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
             category: product.category,
             badge: product.badge ?? "",
             gradient: product.gradient,
-            isNew: product.isNew
+            isNew: product.isNew,
+            origin: product.origin ?? "",
+            materials: product.materials ?? "",
+            impactNote: product.impactNote ?? "",
+            labels: product.labels ?? ""
           }}
         />
       </div>

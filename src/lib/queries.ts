@@ -69,6 +69,52 @@ export async function getSellerProducts(sellerId: string): Promise<Product[]> {
     .orderBy(desc(products.createdAt));
 }
 
+export type ProductWithSeller = {
+  product: Product;
+  seller: {
+    name: string;
+    slug: string;
+    logoInitials: string;
+    category: string;
+    city: string;
+    region: string;
+    verified: boolean;
+    ecoScore: number;
+    ecoLabel: string;
+    websiteUrl: string | null;
+  };
+};
+
+/** Produit public par slug, avec son partenaire (pour la fiche produit détaillée). */
+export async function getProductBySlug(slug: string): Promise<ProductWithSeller | null> {
+  const [row] = await db
+    .select({
+      product: products,
+      seller: {
+        name: sellers.name,
+        slug: sellers.slug,
+        logoInitials: sellers.logoInitials,
+        category: sellers.category,
+        city: sellers.city,
+        region: sellers.region,
+        verified: sellers.verified,
+        ecoScore: sellers.ecoScore,
+        ecoLabel: sellers.ecoLabel,
+        websiteUrl: sellers.websiteUrl
+      }
+    })
+    .from(products)
+    .innerJoin(sellers, eq(products.sellerId, sellers.id))
+    .where(eq(products.slug, slug))
+    .limit(1);
+  return row ?? null;
+}
+
+/** Tous les slugs de produits (sitemap). */
+export async function getAllProductSlugs(): Promise<{ slug: string }[]> {
+  return db.select({ slug: products.slug }).from(products);
+}
+
 export async function getSellerProductCount(sellerId: string): Promise<number> {
   const [row] = await db
     .select({ n: sql<number>`count(*)::int` })

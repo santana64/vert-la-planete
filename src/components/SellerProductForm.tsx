@@ -17,6 +17,10 @@ export type ProductFormDefaults = {
   badge?: string;
   gradient?: string;
   isNew?: boolean;
+  origin?: string;
+  materials?: string;
+  impactNote?: string;
+  labels?: string;
 };
 
 export function SellerProductForm({
@@ -110,9 +114,40 @@ export function SellerProductForm({
         </div>
       </div>
 
+      <div style={{ margin: "10px 0 4px", paddingTop: 16, borderTop: ".5px solid rgba(0,0,0,.08)" }}>
+        <span className="form-lbl" style={{ display: "block", marginBottom: 2 }}>Impact & traçabilité <span style={{ color: "var(--sd)", fontWeight: 400 }}>(optionnel — renforce votre crédibilité)</span></span>
+      </div>
+
+      <div className="form-row">
+        <div className="form-group">
+          <label className="form-lbl" htmlFor="fld-origin">Provenance / traçabilité</label>
+          <input className="form-in" type="text" id="fld-origin" name="origin" defaultValue={defaults.origin} placeholder="Fabriqué en Bretagne, coton Inde certifié…" />
+        </div>
+        <div className="form-group">
+          <label className="form-lbl" htmlFor="fld-materials">Composition / matériaux</label>
+          <input className="form-in" type="text" id="fld-materials" name="materials" defaultValue={defaults.materials} placeholder="100% lin français, bois FSC…" />
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label className="form-lbl" htmlFor="fld-impact">Bénéfice écologique</label>
+        <textarea
+          className="form-textarea"
+          id="fld-impact" name="impactNote"
+          defaultValue={defaults.impactNote}
+          placeholder="Ex : évite ~2 kg de CO₂ vs neuf · zéro plastique · circuit court…"
+          style={{ minHeight: 70 }}
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="form-lbl" htmlFor="fld-labels">Labels / certifications</label>
+        <input className="form-in" type="text" id="fld-labels" name="labels" defaultValue={defaults.labels} placeholder="Bio, GOTS, Made in France (séparés par des virgules)" />
+      </div>
+
       <label
         className="form-group"
-        style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}
+        style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", marginTop: 8 }}
       >
         <input type="checkbox" id="fld-isNew" name="isNew" defaultChecked={defaults.isNew ?? true} />
         <span style={{ fontSize: 13, color: "var(--f)" }}>Mettre en avant comme nouveauté</span>

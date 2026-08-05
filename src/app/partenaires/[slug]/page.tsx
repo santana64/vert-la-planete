@@ -197,7 +197,7 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
           ) : (
             <div className="prods-mini-grid">
               {products.map((p) => (
-                <div key={p.id} className="prd-mini" style={{ cursor: "default" }}>
+                <Link key={p.id} href={`/produits/${p.slug}`} className="prd-mini">
                   <div className="prd-mini-img" style={{ background: p.gradient }} />
                   <div className="prd-mini-info">
                     <div className="prd-mini-name">{p.name}</div>
@@ -205,8 +205,9 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
                       {formatPrice(p.priceCents)}
                       {p.unit ? <span className="prd-mini-period"> {p.unit}</span> : null}
                     </div>
+                    <span className="prd-mini-period" style={{ color: "var(--s)", fontWeight: 500 }}>Voir la fiche →</span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

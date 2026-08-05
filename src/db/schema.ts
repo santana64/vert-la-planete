@@ -86,6 +86,11 @@ export const products = pgTable(
     badge: text("badge"),
     gradient: text("gradient").notNull(),
     isNew: boolean("is_new").notNull().default(false),
+    // ── Fiche détaillée & impact (transparence — renseigné par le partenaire) ──
+    origin: text("origin"), // provenance / traçabilité
+    materials: text("materials"), // composition / matériaux
+    impactNote: text("impact_note"), // bénéfice écologique (CO₂ évité, zéro déchet…)
+    labels: text("labels"), // labels / certifications (séparés par des virgules)
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
   },
   // Requêtes fréquentes filtrées par vendeur (fiche + espace partenaire).

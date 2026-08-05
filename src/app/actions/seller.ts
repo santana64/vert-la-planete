@@ -29,8 +29,36 @@ const productSchema = z.object({
   badge: z.union([z.enum(BADGES), z.literal("")]).optional(),
   unit: z.string().trim().max(16).optional(),
   gradient: z.string().trim().optional(),
-  isNew: z.boolean().optional()
+  isNew: z.boolean().optional(),
+  // Fiche détaillée & impact (transparence, renseigné par le partenaire).
+  origin: z.string().trim().max(200).optional(),
+  materials: z.string().trim().max(200).optional(),
+  impactNote: z.string().trim().max(400).optional(),
+  labels: z.string().trim().max(200).optional()
 });
+
+/** Champs impact d'un FormData → objet prêt pour l'insert/update (vide = null). */
+function impactFields(fd: FormData) {
+  return {
+    origin: fd.get("origin"),
+    materials: fd.get("materials"),
+    impactNote: fd.get("impactNote"),
+    labels: fd.get("labels")
+  };
+}
+function impactValues(data: {
+  origin?: string;
+  materials?: string;
+  impactNote?: string;
+  labels?: string;
+}) {
+  return {
+    origin: data.origin ? data.origin : null,
+    materials: data.materials ? data.materials : null,
+    impactNote: data.impactNote ? data.impactNote : null,
+    labels: data.labels ? data.labels : null
+  };
+}
 
 async function uniqueProductSlug(base: string): Promise<string> {
   const root = slugify(base) || "produit";
@@ -73,14 +101,19 @@ export async function createProductAction(
     badge: formData.get("badge") ?? "",
     unit: formData.get("unit") ?? "",
     gradient: formData.get("gradient") ?? "",
-    isNew: formData.get("isNew") === "on"
+    isNew: formData.get("isNew") === "on",
+    ...impactFields(formData)
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Formulaire invalide" };
   }
   const data = parsed.data;
 
-  const moderation = checkContentFields(data.name, data.description);
+  const moderation = checkContentFields(
+    ...[data.name, data.description, data.origin, data.materials, data.impactNote, data.labels].filter(
+      (s): s is string => Boolean(s)
+    )
+  );
   if (!moderation.ok) return { error: moderation.reason };
 
   const slug = await uniqueProductSlug(data.name);
@@ -95,7 +128,8 @@ export async function createProductAction(
     category: data.category,
     badge: data.badge ? data.badge : null,
     gradient: data.gradient || GRADIENTS[Math.floor(Math.random() * GRADIENTS.length)],
-    isNew: data.isNew ?? true
+    isNew: data.isNew ?? true,
+    ...impactValues(data)
   });
 
   revalidatePath("/espace-partenaire/produits");
@@ -128,14 +162,19 @@ export async function updateProductAction(
     badge: formData.get("badge") ?? "",
     unit: formData.get("unit") ?? "",
     gradient: formData.get("gradient") ?? "",
-    isNew: formData.get("isNew") === "on"
+    isNew: formData.get("isNew") === "on",
+    ...impactFields(formData)
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Formulaire invalide" };
   }
   const data = parsed.data;
 
-  const moderation = checkContentFields(data.name, data.description);
+  const moderation = checkContentFields(
+    ...[data.name, data.description, data.origin, data.materials, data.impactNote, data.labels].filter(
+      (s): s is string => Boolean(s)
+    )
+  );
   if (!moderation.ok) return { error: moderation.reason };
 
   await db
@@ -148,7 +187,8 @@ export async function updateProductAction(
       category: data.category,
       badge: data.badge ? data.badge : null,
       gradient: data.gradient || undefined,
-      isNew: data.isNew ?? false
+      isNew: data.isNew ?? false,
+      ...impactValues(data)
     })
     .where(eq(products.id, productId.data));
 
