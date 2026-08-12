@@ -9,6 +9,7 @@ import { getCurrentUser, isAdminEmail } from "@/lib/auth";
 import { COMPANY } from "@/lib/constants";
 import { jsonLd } from "@/lib/jsonld";
 import { getSiteUrl } from "@/lib/site-url";
+import { Analytics } from "@vercel/analytics/next";
 
 const serif = Fraunces({
   subsets: ["latin"],
@@ -100,6 +101,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Footer />
         <BottomNav />
         <ScrollReveal />
+        <Analytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLd(organizationJsonLd) }}
