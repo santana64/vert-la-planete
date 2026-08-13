@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
+import { LaunchIntro } from "@/components/LaunchIntro";
 import { Footer } from "@/components/Footer";
 import { BottomNav } from "@/components/BottomNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -90,6 +91,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="fr" className={`${serif.variable} ${sans.variable}`}>
       <body>
+        <LaunchIntro />
         <a href="#contenu" className="skip-link">
           Aller au contenu principal
         </a>

@@ -16,47 +16,54 @@ export type Category = (typeof CATEGORIES)[number];
  * Identité visuelle par thématique (cartes de l'annuaire) : emoji + dégradé
  * « nature » propre à chaque catégorie. Rend les vignettes thématiques et
  * cohérentes plutôt qu'un aplat aléatoire. Verts/terreux, alignés sur la palette.
+ *
+ * ACCESSIBILITÉ — le médaillon porte des initiales et un picto BLANCS. Le voile
+ * radial sombre (10 % au départ du dégradé, 40 % à l'autre bout) compense le
+ * point clair du dégradé : le blanc reste au-dessus de 4,5:1 (WCAG AA) sur toute
+ * la surface. Avant, un halo blanc éclaircissait au contraire ce point-là et le
+ * contraste tombait à 1,9:1 sur « Cosmétiques naturels ». Toute retouche des
+ * teintes doit être revérifiée contre le blanc (seuil 4,5:1).
  */
 export const CATEGORY_META: Record<Category, { icon: string; gradient: string }> = {
   "Alimentation bio": {
     icon: "🥕",
     gradient:
-      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.28),rgba(255,255,255,0) 58%),linear-gradient(150deg,#1a5230 0%,#3daa62 100%)"
+      "radial-gradient(circle at 30% 22%,rgba(9,31,18,.10),rgba(9,31,18,.40) 80%),linear-gradient(150deg,#1a5230 0%,#3daa62 100%)"
   },
   "Mode durable": {
     icon: "🧵",
     gradient:
-      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.26),rgba(255,255,255,0) 58%),linear-gradient(150deg,#24544b 0%,#4f8f82 100%)"
+      "radial-gradient(circle at 30% 22%,rgba(9,31,18,.10),rgba(9,31,18,.40) 80%),linear-gradient(150deg,#24544b 0%,#4f8f82 100%)"
   },
   "Énergie & habitat": {
     icon: "☀️",
     gradient:
-      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.26),rgba(255,255,255,0) 58%),linear-gradient(150deg,#12321e 0%,#267a46 100%)"
+      "radial-gradient(circle at 30% 22%,rgba(9,31,18,.10),rgba(9,31,18,.40) 80%),linear-gradient(150deg,#12321e 0%,#267a46 100%)"
   },
   "Maison & jardin": {
     icon: "🪴",
     gradient:
-      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.28),rgba(255,255,255,0) 58%),linear-gradient(150deg,#2e6b3f 0%,#7ab065 100%)"
+      "radial-gradient(circle at 30% 22%,rgba(9,31,18,.10),rgba(9,31,18,.40) 80%),linear-gradient(150deg,#2e6b3f 0%,#76ab62 100%)"
   },
   "Cosmétiques naturels": {
     icon: "🌸",
     gradient:
-      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.28),rgba(255,255,255,0) 58%),linear-gradient(150deg,#3d6b4a 0%,#7ecb99 100%)"
+      "radial-gradient(circle at 30% 22%,rgba(9,31,18,.10),rgba(9,31,18,.40) 80%),linear-gradient(150deg,#3d6b4a 0%,#6aab81 100%)"
   },
   "Zéro déchet": {
     icon: "♻️",
     gradient:
-      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.26),rgba(255,255,255,0) 58%),linear-gradient(150deg,#1a4a2e 0%,#3daa62 100%)"
+      "radial-gradient(circle at 30% 22%,rgba(9,31,18,.10),rgba(9,31,18,.40) 80%),linear-gradient(150deg,#1a4a2e 0%,#3daa62 100%)"
   },
   "Mobilité douce": {
     icon: "🚲",
     gradient:
-      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.26),rgba(255,255,255,0) 58%),linear-gradient(150deg,#1e5c35 0%,#5fae74 100%)"
+      "radial-gradient(circle at 30% 22%,rgba(9,31,18,.10),rgba(9,31,18,.40) 80%),linear-gradient(150deg,#1e5c35 0%,#5fae74 100%)"
   },
   "Artisanat local": {
     icon: "🧺",
     gradient:
-      "radial-gradient(circle at 30% 22%,rgba(255,255,255,.24),rgba(255,255,255,0) 58%),linear-gradient(150deg,#4a3728 0%,#a85e0a 100%)"
+      "radial-gradient(circle at 30% 22%,rgba(9,31,18,.10),rgba(9,31,18,.40) 80%),linear-gradient(150deg,#4a3728 0%,#a85e0a 100%)"
   }
 };
 
@@ -167,6 +174,16 @@ export const LAUNCH_PROMO = {
   short: "Badge « Membre fondateur » + mise en avant prioritaire pour les 50 premiers partenaires Pro."
 } as const;
 
+/**
+ * Animation d'ouverture affichée à l'arrivée sur le site (période de lancement).
+ * Mettre `active: false` la retire partout, sans toucher au code — même principe
+ * que LAUNCH_PROMO ci-dessus.
+ */
+export const LAUNCH_INTRO = {
+  active: true,
+  tagline: "L'annuaire de celles et ceux qui agissent"
+} as const;
+
 /** Données légales du Client (issues du contrat) — pour les pages légales / footer. */
 export const COMPANY = {
   name: "VERT LA PLANÈTE",
@@ -246,14 +263,22 @@ export const SLOGAN = {
   author: "Audrey Hepburn"
 } as const;
 
-/** Gradient presets reused for logos / product imagery (matches template palette). */
+/**
+ * Gradient presets reused for logos / product imagery (matches template palette).
+ *
+ * ACCESSIBILITÉ — ces dégradés servent de fond aux initiales BLANCHES des tuiles
+ * partenaires (`.pchip-logo`, 17px). Contrairement au médaillon de l'annuaire, il
+ * n'y a pas de voile par-dessus : la teinte claire de chaque dégradé doit donc
+ * tenir seule les 4,5:1 face au blanc. Les valeurs ci-dessous sont calibrées pour
+ * ça (le doré #d4a857 d'origine tombait à 2,2:1). À revérifier avant tout ajout.
+ */
 export const GRADIENTS = [
-  "linear-gradient(135deg,#1e5c35,#3daa62)",
-  "linear-gradient(135deg,#3d6b4a,#72b888)",
-  "linear-gradient(135deg,#24544b,#4f8f82)",
-  "linear-gradient(135deg,#4a6741,#7ab065)",
-  "linear-gradient(135deg,#7b4f1a,#d4a857)",
+  "linear-gradient(135deg,#1e5c35,#2f844c)",
+  "linear-gradient(135deg,#3d6b4a,#4f7f5e)",
+  "linear-gradient(135deg,#24544b,#467f74)",
+  "linear-gradient(135deg,#4a6741,#587f49)",
+  "linear-gradient(135deg,#7b4f1a,#8d703a)",
   "linear-gradient(135deg,#4a3728,#8b6b4f)",
-  "linear-gradient(135deg,#3e5c48,#7a9c86)",
-  "linear-gradient(135deg,#1a4a2e,#3daa62)"
+  "linear-gradient(135deg,#3e5c48,#607b6a)",
+  "linear-gradient(135deg,#1a4a2e,#2f844c)"
 ] as const;
