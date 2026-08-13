@@ -64,6 +64,54 @@ const GESTES = [
   }
 ];
 
+/** Points de dépôt — chaque carte renvoie vers la carte ou l'annuaire filtré. */
+const OU_DEPOSER = [
+  {
+    h: "Les points de collecte",
+    p: "Déchetteries, bornes textiles, collecte des piles et des appareils électriques : la carte les recense au fil des signalements de la communauté.",
+    href: "/partenaires#carte",
+    ico: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z" />
+        <circle cx="12" cy="10" r="2.6" />
+      </svg>
+    )
+  },
+  {
+    h: "Les commerçants du vrac",
+    p: "Épiceries en vrac, consigne, réparateurs et ressourceries référencés dans l'annuaire, avec leur démarche et leur contact direct.",
+    href: "/partenaires?category=Z%C3%A9ro%20d%C3%A9chet",
+    ico: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 8h16l-1.2 11.2a1.6 1.6 0 0 1-1.6 1.4H6.8a1.6 1.6 0 0 1-1.6-1.4z" />
+        <path d="M8.6 8V6.2a3.4 3.4 0 0 1 6.8 0V8" />
+      </svg>
+    )
+  },
+  {
+    h: "Signaler un lieu",
+    p: "Une boîte à livres au coin de la rue, un composteur de quartier, une recyclerie ? Ajoutez-la : elle servira à tous vos voisins.",
+    href: "/lieux/proposer",
+    ico: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="8.6" />
+        <path d="M12 8.2v7.6M8.2 12h7.6" />
+      </svg>
+    )
+  },
+  {
+    h: "Mesurer avant d'agir",
+    p: "Les calculateurs publics de l'ADEME, accessibles depuis l'accueil, chiffrent l'impact réel de chaque geste — utile pour prioriser.",
+    href: "/",
+    ico: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3.4" y="3.4" width="17.2" height="17.2" rx="2.4" />
+        <path d="M7.6 15.4V11M12 15.4V8.2M16.4 15.4v-2.6" />
+      </svg>
+    )
+  }
+];
+
 export default function RecyclagePage() {
   return (
     <div className="page active">
@@ -146,46 +194,20 @@ export default function RecyclagePage() {
 
       <div className="topic-sec--alt">
         <div className="topic-sec">
-          <SectionHead
-            kicker="Repéré sur le terrain"
-            title="Des initiatives qui"
-            em="donnent le ton"
-            small
-          />
-          <div className="pmosaic pmosaic--two">
-            <figure className="ptile" data-reveal>
-              <Image
-                src="/photos/ocean-wings.jpg"
-                alt="Coque d'un voilier portant le marquage d'une association de dépollution des océans"
-                width={900}
-                height={675}
-                sizes="(max-width: 560px) 100vw, 50vw"
-              />
-              <figcaption>
-                <b>Collecter avant fragmentation</b>
-                Des voiliers sillonnent le littoral pour ramasser les plastiques tant qu&apos;ils
-                sont encore récupérables.
-              </figcaption>
-            </figure>
-            <figure className="ptile" data-reveal>
-              <Image
-                src="/photos/ocean-1percent.jpg"
-                alt="Autocollant « 1% for the Planet » apposé sur la coque d'un voilier"
-                width={900}
-                height={675}
-                sizes="(max-width: 560px) 100vw, 50vw"
-              />
-              <figcaption>
-                <b>Un pourcent, quoi qu&apos;il arrive</b>
-                Des entreprises reversent une part de leur chiffre d&apos;affaires à des
-                associations environnementales, même en année déficitaire.
-              </figcaption>
-            </figure>
-          </div>
-          <p className="topic-src">
-            Photographies prises dans l&apos;espace public et présentées à titre d&apos;illustration.
-            Les organisations visibles sur ces images ne sont pas partenaires de Vert La Planète.
+          <SectionHead kicker="En pratique" title="Où déposer" em="près de chez vous" small />
+          <p className="topic-p" style={{ marginTop: 4 }}>
+            Le bon geste dépend surtout d&apos;une chose : savoir où aller. La carte recense les
+            lieux signalés par la communauté, et chacun peut en ajouter.
           </p>
+          <div className="topic-grid">
+            {OU_DEPOSER.map((o) => (
+              <Link key={o.h} href={o.href} className="topic-card" data-reveal>
+                <div className="topic-card-ico">{o.ico}</div>
+                <h2 className="topic-card-h">{o.h}</h2>
+                <p className="topic-card-p">{o.p}</p>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 
