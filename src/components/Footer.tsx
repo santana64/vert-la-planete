@@ -78,6 +78,16 @@ export function Footer() {
           </div>
 
           <div>
+            <h4 className="footer-col-h">Dossiers</h4>
+            <div className="footer-links">
+              <Link href="/mobilite-verte">Mobilité verte</Link>
+              <Link href="/recyclage">Recyclage &amp; réemploi</Link>
+              <Link href="/partenaires#carte">Carte des acteurs</Link>
+              <Link href="/lieux/proposer">Proposer un lieu</Link>
+            </div>
+          </div>
+
+          <div>
             <h4 className="footer-col-h">Informations légales</h4>
             <div className="footer-links">
               <Link href="/mentions-legales">Mentions légales</Link>

@@ -12,6 +12,8 @@ const STATIC_ROUTES = [
   "/actualites",
   "/emplois",
   "/offres",
+  "/mobilite-verte",
+  "/recyclage",
   "/devenir-partenaire",
   "/a-propos",
   "/contact",

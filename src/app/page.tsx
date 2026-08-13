@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Co2Chart } from "@/components/Co2Chart";
 import { Co2Counter } from "@/components/Co2Counter";
@@ -184,6 +185,78 @@ export default async function HomePage() {
             ))}
           </div>
           <p className="ademe-note">Outils gratuits proposés par l&apos;ADEME — ils s&apos;ouvrent sur un site externe.</p>
+        </div>
+      </div>
+
+      {/* COMMUNES & AGGLOMÉRATIONS — photos de terrain fournies par le client.
+          Les légendes nomment la collectivité photographiée : ce sont des clichés
+          pris dans l'espace public, pas des partenariats. */}
+      <div className="topic-sec--alt">
+        <div className="section section--compact">
+          <SectionHead
+            kicker="Territoires"
+            title="Les communes"
+            em="s'engagent"
+            href="/contact"
+            linkLabel="Parler d'un partenariat →"
+          />
+          <div className="communes-grid">
+            <figure className="topic-figure" data-reveal>
+              <Image
+                src="/photos/communes-plantation.jpg"
+                alt="Panneau au bord d'une avenue : « Ici la Communauté d'Agglomération a planté 370 arbres, 7 500 plantes vivaces, 20 350 arbustes »"
+                width={948}
+                height={592}
+                sizes="(max-width: 960px) 100vw, 55vw"
+              />
+              <figcaption>
+                370 arbres, 7 500 plantes vivaces, 20 350 arbustes sur une seule avenue —
+                Communauté d&apos;Agglomération de La Rochelle.
+              </figcaption>
+            </figure>
+            <div className="communes-side">
+              <figure className="topic-figure" data-reveal>
+                <Image
+                  src="/photos/communes-gestion-nature.jpg"
+                  alt="Panneau « Gestion différenciée — nature préservée » planté sur un talus laissé en végétation libre"
+                  width={1271}
+                  height={953}
+                  sizes="(max-width: 960px) 100vw, 40vw"
+                />
+                <figcaption>
+                  Gestion différenciée : tondre moins, laisser vivre. Un talus non fauché abrite
+                  insectes, oiseaux et fleurs sauvages.
+                </figcaption>
+              </figure>
+              <figure className="topic-figure" data-reveal>
+                <Image
+                  src="/photos/climat-bandes-co2.jpg"
+                  alt="Bandes colorées peintes au sol sur un quai, jalonnées de dalles gravées indiquant l'année et la concentration de CO₂"
+                  width={900}
+                  height={1200}
+                  sizes="(max-width: 960px) 100vw, 40vw"
+                />
+                <figcaption>
+                  Une année par bande, du bleu froid au rouge : la hausse du CO₂ depuis 1865
+                  peinte à même le quai. La dalle indique 287 ppm — contre plus de 420 aujourd&apos;hui.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+          <p className="communes-note">
+            Les collectivités sont devenues les premiers acteurs de la transition sur le terrain :
+            plantations, désimperméabilisation des sols, gestion différenciée des espaces verts,
+            pistes cyclables, points de collecte. Ces chantiers ne se voient qu&apos;au détour
+            d&apos;un panneau — les rendre visibles, c&apos;est déjà les encourager.
+          </p>
+          <div className="communes-acts">
+            <Link className="btn-outline" href="/mobilite-verte">
+              Mobilité verte
+            </Link>
+            <Link className="btn-outline" href="/recyclage">
+              Recyclage &amp; réemploi
+            </Link>
+          </div>
         </div>
       </div>
 
