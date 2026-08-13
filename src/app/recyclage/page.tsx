@@ -152,31 +152,33 @@ export default function RecyclagePage() {
             em="donnent le ton"
             small
           />
-          <div className="topic-strip">
-            <figure data-reveal>
+          <div className="pmosaic pmosaic--two">
+            <figure className="ptile" data-reveal>
               <Image
                 src="/photos/ocean-wings.jpg"
                 alt="Coque d'un voilier portant le marquage d'une association de dépollution des océans"
                 width={900}
                 height={675}
-                sizes="(max-width: 960px) 100vw, 46vw"
+                sizes="(max-width: 560px) 100vw, 50vw"
               />
               <figcaption>
-                Voilier de dépollution à quai. Des associations sillonnent le littoral pour
-                collecter les déchets plastiques avant qu&apos;ils ne se fragmentent.
+                <b>Collecter avant fragmentation</b>
+                Des voiliers sillonnent le littoral pour ramasser les plastiques tant qu&apos;ils
+                sont encore récupérables.
               </figcaption>
             </figure>
-            <figure data-reveal>
+            <figure className="ptile" data-reveal>
               <Image
                 src="/photos/ocean-1percent.jpg"
                 alt="Autocollant « 1% for the Planet » apposé sur la coque d'un voilier"
                 width={900}
                 height={675}
-                sizes="(max-width: 960px) 100vw, 46vw"
+                sizes="(max-width: 560px) 100vw, 50vw"
               />
               <figcaption>
-                Des entreprises s&apos;engagent à reverser une part de leur chiffre d&apos;affaires
-                à des associations environnementales, quel que soit leur résultat.
+                <b>Un pourcent, quoi qu&apos;il arrive</b>
+                Des entreprises reversent une part de leur chiffre d&apos;affaires à des
+                associations environnementales, même en année déficitaire.
               </figcaption>
             </figure>
           </div>

@@ -15,6 +15,41 @@ import {
 
 export const dynamic = "force-dynamic";
 
+/** Chiffres relevés sur le panneau de plantation photographié (bloc « Territoires »). */
+const COMMUNES_STATS = [
+  { n: "370", label: "arbres plantés" },
+  { n: "7 500", label: "plantes vivaces" },
+  { n: "20 350", label: "arbustes" }
+];
+
+/** Mosaïque du bloc « Territoires » — trois clichés pris dans l'espace public. */
+const COMMUNES_PHOTOS = [
+  {
+    src: "/photos/communes-plantation.jpg",
+    w: 948,
+    h: 711,
+    alt: "Panneau au bord d'une avenue : « Ici la Communauté d'Agglomération a planté 370 arbres, 7 500 plantes vivaces, 20 350 arbustes »",
+    titre: "Planter, à l'échelle d'une avenue",
+    legende: "Une agglomération replante ses axes routiers et l'affiche au bord de la route."
+  },
+  {
+    src: "/photos/communes-gestion-nature.jpg",
+    w: 1271,
+    h: 953,
+    alt: "Panneau « Gestion différenciée — nature préservée » planté sur un talus laissé en végétation libre",
+    titre: "Tondre moins, laisser vivre",
+    legende: "La gestion différenciée : un talus non fauché abrite insectes, oiseaux et fleurs sauvages."
+  },
+  {
+    src: "/photos/climat-bandes-co2.jpg",
+    w: 900,
+    h: 675,
+    alt: "Bandes colorées peintes au sol sur un quai, avec une dalle gravée « 1865 — CO₂ = 287 ppm »",
+    titre: "Le climat peint au sol",
+    legende: "Une bande par année depuis 1865. La dalle indique 287 ppm de CO₂ — on dépasse 420 aujourd'hui."
+  }
+];
+
 /** Les 4 familles d'acteurs de la carte — chacune renvoie vers la page concernée. */
 const NETWORK: { kind: MapPointKind; desc: string; href: string }[] = [
   { kind: "partenaire", desc: "Producteurs, artisans et marques engagées, référencés et vérifiés.", href: "/partenaires" },
@@ -200,49 +235,38 @@ export default async function HomePage() {
             href="/contact"
             linkLabel="Parler d'un partenariat →"
           />
-          <div className="communes-grid">
-            <figure className="topic-figure" data-reveal>
-              <Image
-                src="/photos/communes-plantation.jpg"
-                alt="Panneau au bord d'une avenue : « Ici la Communauté d'Agglomération a planté 370 arbres, 7 500 plantes vivaces, 20 350 arbustes »"
-                width={948}
-                height={592}
-                sizes="(max-width: 960px) 100vw, 55vw"
-              />
-              <figcaption>
-                370 arbres, 7 500 plantes vivaces, 20 350 arbustes sur une seule avenue —
-                Communauté d&apos;Agglomération de La Rochelle.
-              </figcaption>
-            </figure>
-            <div className="communes-side">
-              <figure className="topic-figure" data-reveal>
-                <Image
-                  src="/photos/communes-gestion-nature.jpg"
-                  alt="Panneau « Gestion différenciée — nature préservée » planté sur un talus laissé en végétation libre"
-                  width={1271}
-                  height={953}
-                  sizes="(max-width: 960px) 100vw, 40vw"
-                />
-                <figcaption>
-                  Gestion différenciée : tondre moins, laisser vivre. Un talus non fauché abrite
-                  insectes, oiseaux et fleurs sauvages.
-                </figcaption>
-              </figure>
-              <figure className="topic-figure" data-reveal>
-                <Image
-                  src="/photos/climat-bandes-co2.jpg"
-                  alt="Bandes colorées peintes au sol sur un quai, jalonnées de dalles gravées indiquant l'année et la concentration de CO₂"
-                  width={900}
-                  height={1200}
-                  sizes="(max-width: 960px) 100vw, 40vw"
-                />
-                <figcaption>
-                  Une année par bande, du bleu froid au rouge : la hausse du CO₂ depuis 1865
-                  peinte à même le quai. La dalle indique 287 ppm — contre plus de 420 aujourd&apos;hui.
-                </figcaption>
-              </figure>
-            </div>
+          {/* Les chiffres du panneau photographié, sortis de l'image : lisibles à
+              l'écran, indexables, et accessibles aux lecteurs d'écran. */}
+          <div className="communes-stats">
+            {COMMUNES_STATS.map((s) => (
+              <div key={s.label} className="communes-stat" data-reveal>
+                <span className="communes-stat-n">{s.n}</span>
+                <span className="communes-stat-l">{s.label}</span>
+              </div>
+            ))}
           </div>
+          <p className="communes-stat-src">
+            Relevé sur une seule avenue — Communauté d&apos;Agglomération de La Rochelle.
+          </p>
+
+          <div className="pmosaic">
+            {COMMUNES_PHOTOS.map((p) => (
+              <figure key={p.src} className="ptile" data-reveal>
+                <Image
+                  src={p.src}
+                  alt={p.alt}
+                  width={p.w}
+                  height={p.h}
+                  sizes="(max-width: 560px) 100vw, (max-width: 960px) 50vw, 33vw"
+                />
+                <figcaption>
+                  <b>{p.titre}</b>
+                  {p.legende}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
           <p className="communes-note">
             Les collectivités sont devenues les premiers acteurs de la transition sur le terrain :
             plantations, désimperméabilisation des sols, gestion différenciée des espaces verts,

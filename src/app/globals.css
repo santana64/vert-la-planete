@@ -1924,16 +1924,49 @@ a.audience-card--link:hover .audience-go{gap:11px}
 .topic-stat-l{font-size:11.5px;color:var(--pb);font-weight:400;margin-top:8px;line-height:1.5}
 .topic-src{font-size:11.5px;color:var(--sd);font-weight:300;margin-top:14px}
 
-/* Bandeau de vignettes « repéré sur le terrain » */
-.topic-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:24px}
-.topic-strip figure{margin:0;border-radius:14px;overflow:hidden;border:.5px solid var(--dw);background:#fff}
-.topic-strip img{width:100%;height:auto;display:block}
-.topic-strip figcaption{font-size:11.5px;color:var(--sd);font-weight:300;padding:9px 13px 11px;line-height:1.5}
+/* ── MOSAÏQUE DE PHOTOS ──────────────────────────────────────────────────────
+   Toutes les tuiles partagent le même rapport 4:3 quel que soit le cadrage de
+   la photo source : `aspect-ratio` fixe la boîte, `object-fit:cover` remplit.
+   C'est ce qui donne le rythme — des vignettes de hauteurs inégales font
+   « photos posées là », des vignettes alignées font « page composée ».
 
-/* Bloc « les communes s'engagent » sur l'accueil */
-.communes-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;margin-top:26px;align-items:start}
-.communes-side{display:grid;gap:20px}
-.communes-note{font-size:13px;color:var(--pb);font-weight:300;line-height:1.7;margin-top:20px;max-width:70ch}
+   La légende passe EN SURIMPRESSION plutôt que dans une boîte blanche en
+   dessous : le regard reste sur l'image, et la page respire.                  */
+.pmosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+.pmosaic--two{grid-template-columns:repeat(2,1fr)}
+.ptile{
+  position:relative;margin:0;aspect-ratio:4/3;border-radius:16px;overflow:hidden;
+  border:.5px solid var(--dw);background:var(--fo);box-shadow:var(--sh-sm);
+  transition:box-shadow .3s var(--e1),transform .3s var(--e1),border-color .3s var(--e1);
+}
+.ptile:hover{box-shadow:var(--sh-lg);transform:translateY(-3px);border-color:var(--mi)}
+.ptile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--e1)}
+.ptile:hover img{transform:scale(1.045)}
+/* Voile progressif — calibré sur les pixels réels des photos, pas à l'estime.
+   Sur le cliché au ciel le plus clair (207,222,232), un voile à 51 % ne donnait
+   que 4,33:1, sous le seuil AA. À 62 % dès le tiers supérieur de la légende, le
+   blanc remonte au-dessus de 7:1 sur les trois photos. Toute retouche du dégradé
+   doit être remesurée sur les images en place. */
+.ptile figcaption{
+  position:absolute;inset:auto 0 0 0;padding:44px 16px 15px;
+  background:linear-gradient(180deg,rgba(9,31,18,0) 0%,rgba(9,31,18,.62) 34%,rgba(9,31,18,.94) 100%);
+  color:#fff;font-size:12.5px;font-weight:300;line-height:1.5;
+}
+.ptile figcaption b{display:block;font-weight:500;font-size:13.5px;margin-bottom:3px;letter-spacing:-.01em}
+
+/* ── Bloc « les communes s'engagent » (accueil) ── */
+/* Les trois chiffres sont ceux du panneau photographié : on les sort de l'image
+   pour en faire du contenu lisible, indexable et accessible. */
+.communes-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.communes-stat{
+  background:#fff;border:.5px solid var(--dw);border-radius:14px;padding:20px 22px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.communes-stat-n{font-family:var(--serif);font-size:34px;font-weight:300;color:var(--fn);
+  letter-spacing:-.025em;line-height:1}
+.communes-stat-l{font-size:12px;color:var(--pb);font-weight:400;margin-top:7px;letter-spacing:.02em}
+.communes-stat-src{font-size:11.5px;color:var(--sd);font-weight:300;margin-top:14px}
+.communes-note{font-size:13.5px;color:var(--pb);font-weight:300;line-height:1.72;margin-top:24px;max-width:74ch}
 .communes-acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
 
 @media(max-width:960px){
@@ -1941,7 +1974,12 @@ a.audience-card--link:hover .audience-go{gap:11px}
   .topic-hero-inner{grid-template-columns:1fr;gap:30px}
   .topic-h{font-size:32px}
   .topic-sec{padding:48px 24px}
-  .topic-grid,.topic-strip,.communes-grid{grid-template-columns:1fr}
+  .topic-grid{grid-template-columns:1fr}
+  /* Deux tuiles côte à côte restent lisibles sur tablette ; en dessous, une seule. */
+  .pmosaic{grid-template-columns:repeat(2,1fr)}
+  .communes-stats{grid-template-columns:repeat(3,1fr);gap:12px}
+  .communes-stat{padding:16px 16px}
+  .communes-stat-n{font-size:26px}
   .topic-band-body{padding:34px 24px}
   .topic-band-h{font-size:24px}
   .topic-band{min-height:290px}
@@ -1951,4 +1989,13 @@ a.audience-card--link:hover .audience-go{gap:11px}
   .topic-stats{grid-template-columns:1fr}
   .topic-stat{display:flex;align-items:baseline;gap:12px;text-align:left}
   .topic-stat-l{margin-top:0}
+  /* Une photo par ligne : en dessous de 560px, deux tuiles rendent les légendes
+     illisibles. On passe aussi en 3:2, plus haut, pour garder du sujet. */
+  .pmosaic{grid-template-columns:1fr;gap:14px}
+  .ptile{aspect-ratio:3/2}
+  .ptile figcaption{padding:38px 14px 13px;font-size:12px}
+  .communes-stats{grid-template-columns:1fr;gap:10px}
+  .communes-stat{flex-direction:row;align-items:baseline;gap:12px}
+  .communes-stat-n{font-size:28px}
+  .communes-stat-l{margin-top:0}
 }
