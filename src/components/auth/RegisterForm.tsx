@@ -6,12 +6,19 @@ import { registerAction, type AuthState } from "@/app/actions/auth";
 import { PasswordInput } from "@/components/PasswordInput";
 import { SubmitButton } from "@/components/SubmitButton";
 
-export function RegisterForm({ initialRole = "membre" }: { initialRole?: "membre" | "partenaire" }) {
+export function RegisterForm({
+  initialRole = "membre",
+  next
+}: {
+  initialRole?: "membre" | "partenaire";
+  next?: string;
+}) {
   const [state, formAction] = useActionState<AuthState, FormData>(registerAction, {});
   const [role, setRole] = useState<"membre" | "partenaire">(initialRole);
 
   return (
     <form action={formAction}>
+      {next ? <input type="hidden" name="next" value={next} /> : null}
       <input type="hidden" name="role" value={role} />
 
       <div className="form-group">

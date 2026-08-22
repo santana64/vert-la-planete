@@ -41,6 +41,24 @@ export function Nav({ user }: { user: NavUser }) {
     setDrawerOpen(false);
   }, [pathname]);
 
+  // Page d'entrée : tous les liens du menu ramèneraient ici. On ne garde que
+  // la marque et les deux accès qui permettent réellement d'entrer.
+  if (pathname === "/bienvenue") {
+    return (
+      <nav className="nav nav--bare" id="main-nav">
+        <NavLogo />
+        <div className="nav-actions">
+          <Link href="/connexion" className="btn-ghost">
+            Connexion
+          </Link>
+          <Link href="/inscription" className="btn-primary">
+            Rejoindre
+          </Link>
+        </div>
+      </nav>
+    );
+  }
+
   return (
     <>
       <nav className={`nav${scrolled ? " scrolled" : ""}`} id="main-nav">

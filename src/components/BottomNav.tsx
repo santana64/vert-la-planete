@@ -63,6 +63,8 @@ const ITEMS = [
 
 export function BottomNav() {
   const pathname = usePathname();
+  // Page d'entrée : chaque onglet renverrait ici, la barre n'a rien à proposer.
+  if (pathname === "/bienvenue") return null;
   return (
     <div className="bottom-nav">
       {ITEMS.map((item) => (

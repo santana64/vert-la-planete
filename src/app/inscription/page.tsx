@@ -18,6 +18,7 @@ export default async function InscriptionPage({ searchParams }: { searchParams: 
 
   const sp = await searchParams;
   const initialRole = sp.role === "partenaire" || sp.role === "seller" ? "partenaire" : "membre";
+  const next = typeof sp.next === "string" ? sp.next : undefined;
 
   return (
     <div className="page active">
@@ -37,7 +38,7 @@ export default async function InscriptionPage({ searchParams }: { searchParams: 
           Créez votre compte pour suivre vos partenaires favoris et enrichir la carte — ou
           référencez votre activité de producteur / artisan engagé.
         </p>
-        <RegisterForm initialRole={initialRole} />
+        <RegisterForm initialRole={initialRole} next={next} />
       </div>
     </div>
   );

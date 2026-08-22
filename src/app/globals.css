@@ -2006,44 +2006,56 @@ a.audience-card--link:hover .audience-go{gap:11px}
 .audience-grid--two{grid-template-columns:repeat(2,1fr);max-width:760px;margin-left:auto;margin-right:auto}
 @media(max-width:700px){.audience-grid--two{grid-template-columns:1fr}}
 
-/* ══ ÉCRAN D'INSCRIPTION À L'ARRIVÉE ════════════════════════════════════════
-   Demande Client du 13/08/2026. Affiché une fois par session au visiteur non
-   connecté, après l'animation d'ouverture. Voir ACCESS_GATE dans constants.ts
-   pour le contexte et la façon de le désactiver. */
-.gate{
-  position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;
-  padding:24px;background:rgba(9,31,18,.72);backdrop-filter:blur(6px);
-  animation:gateIn .38s var(--e1) both;
+/* ══ PAGE D'ENTRÉE /bienvenue ═══════════════════════════════════════════════
+   Demande Client du 13/08/2026 : après l'animation d'ouverture, le visiteur
+   non connecté arrive sur cette page et crée un compte gratuit pour entrer.
+   Voir ACCESS_GATE dans constants.ts et src/middleware.ts. */
+.welcome{
+  min-height:calc(100vh - 62px);display:grid;grid-template-columns:1.05fr .95fr;
+  align-items:center;gap:56px;max-width:1140px;margin:0 auto;padding:56px 52px 72px;
 }
-.gate-panel{
-  position:relative;width:100%;max-width:470px;background:#fff;border-radius:20px;
-  padding:34px 34px 26px;text-align:center;box-shadow:0 24px 70px rgba(9,31,18,.34);
-  border:.5px solid var(--dw);animation:gatePanel .46s var(--e1) both;
-  max-height:calc(100vh - 48px);overflow-y:auto;
+.welcome-inner{text-align:left}
+.welcome .nav-logo-img{width:72px;height:72px;border-radius:14px 0 14px 0;margin-bottom:22px}
+.welcome-title{font-family:var(--serif);font-size:42px;font-weight:300;color:var(--f);
+  letter-spacing:-.025em;line-height:1.1;margin-bottom:14px}
+.welcome-lead{font-size:15.5px;line-height:1.7;color:var(--pb);font-weight:300;
+  margin-bottom:26px;max-width:52ch}
+.welcome-list{list-style:none;display:grid;gap:12px;margin-bottom:32px}
+.welcome-list li{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;
+  line-height:1.55;color:var(--st);font-weight:300}
+.welcome-list svg{width:18px;height:18px;flex-shrink:0;color:var(--l);margin-top:1px}
+.welcome-acts{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.welcome-cta{font-size:15px;padding:15px 30px}
+.welcome-alt{font-size:14px;color:var(--s);font-weight:500}
+.welcome-alt:hover{text-decoration:underline}
+.welcome-fine{margin-top:26px;font-size:12px;line-height:1.6;color:var(--sd);
+  font-weight:300;max-width:48ch}
+.welcome-fine a{color:var(--s);text-decoration:underline}
+
+/* Colonne partenaires — les deux formules payantes, en rappel. */
+.welcome-offers{background:var(--pp);border:.5px solid var(--dw);border-radius:20px;padding:30px 30px 26px}
+.welcome-offers-lead{font-size:13.5px;line-height:1.65;color:var(--pb);font-weight:300;margin-bottom:20px}
+.welcome-offers-grid{display:grid;gap:12px;margin-bottom:18px}
+.welcome-offer{background:#fff;border:.5px solid var(--dw);border-radius:14px;padding:16px 18px}
+.welcome-offer-name{font-size:13px;font-weight:500;color:var(--f);letter-spacing:.01em}
+.welcome-offer-price{display:flex;align-items:baseline;gap:6px;margin:5px 0 6px}
+.welcome-offer-price strong{font-family:var(--serif);font-size:25px;font-weight:300;color:var(--fn)}
+.welcome-offer-price span{font-size:12px;color:var(--pb);font-weight:300}
+.welcome-offer-tag{font-size:12.5px;line-height:1.55;color:var(--pb);font-weight:300}
+.welcome-offers-link{font-size:13px;color:var(--s);font-weight:500}
+.welcome-offers-link:hover{text-decoration:underline}
+
+@media(max-width:920px){
+  .welcome{grid-template-columns:1fr;gap:36px;padding:40px 24px 56px;min-height:0}
+  .welcome-title{font-size:32px}
+  .welcome-inner{text-align:left}
 }
-.gate-panel .nav-logo-img{margin:0 auto 16px;border-radius:12px 0 12px 0}
-.gate-title{font-family:var(--serif);font-size:27px;font-weight:300;color:var(--f);
-  letter-spacing:-.025em;line-height:1.15;margin-bottom:10px}
-.gate-lead{font-size:14px;line-height:1.65;color:var(--pb);font-weight:300;margin-bottom:20px}
-.gate-list{list-style:none;text-align:left;display:grid;gap:10px;margin-bottom:24px}
-.gate-list li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.55;
-  color:var(--st);font-weight:300}
-.gate-list svg{width:17px;height:17px;flex-shrink:0;color:var(--l);margin-top:1px}
-.gate-cta{width:100%;justify-content:center}
-.gate-alt{display:block;margin-top:13px;font-size:13.5px;color:var(--s);font-weight:500}
-.gate-alt:hover{text-decoration:underline}
-.gate-fine{margin-top:20px;padding-top:16px;border-top:.5px solid var(--dw);
-  font-size:11.5px;line-height:1.55;color:var(--sd);font-weight:300}
-.gate-fine a{color:var(--s);text-decoration:underline}
-
-@keyframes gateIn{from{opacity:0}to{opacity:1}}
-@keyframes gatePanel{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
-
 @media(max-width:480px){
-  .gate{padding:16px}
-  .gate-panel{padding:28px 22px 22px;border-radius:18px}
-  .gate-title{font-size:23px}
+  .welcome-title{font-size:27px}
+  .welcome-cta{width:100%;justify-content:center}
+  .welcome-acts{gap:14px}
+  .welcome-alt{width:100%;text-align:center}
 }
-@media(prefers-reduced-motion:reduce){
-  .gate,.gate-panel{animation:none}
-}
+
+/* Barre de navigation réduite sur la page d'entrée : marque + accès seulement. */
+.nav--bare{box-shadow:none;border-bottom:.5px solid rgba(0,0,0,.06)}

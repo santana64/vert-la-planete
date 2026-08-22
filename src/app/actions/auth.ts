@@ -92,6 +92,13 @@ export async function registerAction(_prev: AuthState, formData: FormData): Prom
   }
 
   await createSession(user.id);
+
+  // Le visiteur renvoyé ici par la page d'entrée retourne là où il allait.
+  // Chemin interne uniquement : commence par "/" mais pas "//" ni "/\" (open redirect).
+  const next = formData.get("next");
+  const safeNext = typeof next === "string" && /^\/(?![/\\])/.test(next) ? next : null;
+  if (safeNext && safeNext !== "/bienvenue") redirect(safeNext);
+
   // Partenaire : accès direct aux offres juste après la création du compte.
   redirect(role === "partenaire" ? "/offres?bienvenue=1" : "/compte");
 }
