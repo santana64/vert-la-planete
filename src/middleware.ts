@@ -3,42 +3,32 @@ import { jwtVerify } from "jose";
 import { ACCESS_GATE } from "@/lib/constants";
 
 /**
- * Porte d'entrée du site — demande du Client du 13/08/2026.
+ * Porte d'entrée du site — demande du Client du 13/08/2026 : « après le lancement
+ * et l'animation du logo, on devrait avoir une page pour l'inscription gratuite ».
  *
- * Tout visiteur non connecté est redirigé vers /bienvenue, où il crée un compte
- * gratuit ou se connecte. Sa destination initiale est conservée dans `next`
- * pour l'y ramener après authentification.
+ * Le visiteur non connecté qui ARRIVE SUR LE SITE (racine) est envoyé sur
+ * /bienvenue pour créer un compte gratuit ou se connecter. C'est bien l'ouverture
+ * du site qui est gardée, comme demandé.
  *
- * RESTENT ACCESSIBLES SANS COMPTE, et ce n'est pas négociable :
- * - les pages légales (mentions, CGV, confidentialité, RGPD) — les rendre
- *   inatteignables serait une infraction, pas un choix commercial ;
- * - /bienvenue, /connexion, /inscription, sans quoi personne ne pourrait entrer ;
- * - les ressources techniques (assets, images, API, robots, plan du site).
+ * En revanche les pages elles-mêmes restent atteignables. Trois raisons, dans
+ * l'ordre d'importance pour le Client :
  *
- * Le contrôle fait ici est un filtre de CONFORT, pas une frontière de sécurité :
- * il vérifie la signature du jeton, sans consulter la base. Les véritables
- * autorisations restent posées dans chaque page et chaque action serveur
- * (requireUser / requireSeller / requireAdmin) — défense en profondeur.
+ * 1. Les partenaires Pro paient 14,90 €/mois pour être VUS. Rediriger chaque URL
+ *    rendrait leurs fiches invisibles aux visiteurs de passage et aux moteurs de
+ *    recherche — on leur vendrait une vitrine aux volets fermés.
+ * 2. Un lien partagé sur les réseaux ou envoyé par message doit ouvrir la page
+ *    annoncée, sinon plus personne ne partage.
+ * 3. Un moteur de recherche ne peut pas créer de compte : tout rediriger revient
+ *    à sortir le site de Google.
  *
- * Pour rouvrir le site : ACCESS_GATE.active = false dans constants.ts.
+ * Ce qui répond au « ça paraît open bar », ce n'est donc pas de fermer les pages,
+ * c'est de réserver aux membres ce qui a de la valeur : joindre un partenaire,
+ * enregistrer un favori, laisser un avis, proposer un lieu sur la carte.
+ *
+ * Pour rouvrir complètement : ACCESS_GATE.active = false dans constants.ts.
  */
 
 const SESSION_COOKIE = "vlp_session";
-
-/** Chemins toujours ouverts, même sans compte. */
-const OPEN_PATHS = [
-  "/bienvenue",
-  "/connexion",
-  "/inscription",
-  "/mentions-legales",
-  "/cgv",
-  "/confidentialite",
-  "/rgpd"
-];
-
-function isOpen(pathname: string): boolean {
-  return OPEN_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"));
-}
 
 async function hasValidSession(req: NextRequest): Promise<boolean> {
   const token = req.cookies.get(SESSION_COOKIE)?.value;
@@ -55,22 +45,13 @@ async function hasValidSession(req: NextRequest): Promise<boolean> {
 
 export async function middleware(req: NextRequest) {
   if (!ACCESS_GATE.active) return NextResponse.next();
-
-  const { pathname, search } = req.nextUrl;
-  if (isOpen(pathname)) return NextResponse.next();
   if (await hasValidSession(req)) return NextResponse.next();
 
   const url = req.nextUrl.clone();
   url.pathname = "/bienvenue";
-  url.search = `?next=${encodeURIComponent(pathname + search)}`;
+  url.search = "";
   return NextResponse.redirect(url);
 }
 
-export const config = {
-  /**
-   * Tout sauf les ressources techniques : fichiers Next.js, API (dont le webhook
-   * Stripe, qui doit rester joignable), icônes, robots et plan du site, et tout
-   * chemin comportant une extension de fichier.
-   */
-  matcher: ["/((?!_next/|api/|favicon|icon|apple-icon|opengraph-image|robots.txt|sitemap.xml|manifest.webmanifest|.*\\.).*)"]
-};
+/** Uniquement l'arrivée sur le site. Aucune autre URL n'est interceptée. */
+export const config = { matcher: ["/"] };

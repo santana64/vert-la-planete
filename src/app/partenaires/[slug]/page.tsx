@@ -223,19 +223,42 @@ export default async function PartenairePage({ params }: { params: Promise<{ slu
           </div>
         ) : null}
 
+        {/* La mise en relation directe est réservée aux membres : c'est elle qui
+            a de la valeur, et c'est ce qui distingue un annuaire d'un catalogue
+            ouvert à tous. La fiche, elle, reste publique — le partenaire Pro paie
+            pour être vu. */}
         <div className="fiche-cta">
-          {seller.websiteUrl ? (
-            <a className="btn-visit" href={seller.websiteUrl} target="_blank" rel="noreferrer">
-              Visiter le site du partenaire →
-            </a>
+          {user ? (
+            <>
+              {seller.websiteUrl ? (
+                <a className="btn-visit" href={seller.websiteUrl} target="_blank" rel="noreferrer">
+                  Visiter le site du partenaire →
+                </a>
+              ) : (
+                <Link className="btn-visit" href="/partenaires">
+                  Voir tous les partenaires →
+                </Link>
+              )}
+              <Link className="btn-contact" href="/contact">
+                Contacter
+              </Link>
+            </>
           ) : (
-            <Link className="btn-visit" href="/partenaires">
-              Voir tous les partenaires →
-            </Link>
+            <>
+              <Link
+                className="btn-visit"
+                href={`/inscription?next=${encodeURIComponent(`/partenaires/${seller.slug}`)}`}
+              >
+                Créer un compte pour contacter ce partenaire →
+              </Link>
+              <Link
+                className="btn-contact"
+                href={`/connexion?next=${encodeURIComponent(`/partenaires/${seller.slug}`)}`}
+              >
+                J&apos;ai déjà un compte
+              </Link>
+            </>
           )}
-          <Link className="btn-contact" href="/contact">
-            Contacter
-          </Link>
         </div>
       </div>
     </div>
