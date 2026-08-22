@@ -133,7 +133,7 @@ export const OFFERS: {
     highlight: true,
     tagline: "Pour être vu en premier et présenter tout votre catalogue.",
     features: [
-      "Tout le contenu de l'offre Gratuite",
+      "Votre fiche boutique complète : présentation, produits, avis, contact",
       "Produits illimités sur votre fiche",
       "Localisation sur la carte de France interactive",
       "Affiché EN PREMIER : section « Partenaires Pro » en haut de l'annuaire",
@@ -161,6 +161,21 @@ export const OFFERS: {
 ];
 
 /**
+ * Offres réellement PROPOSÉES À LA VENTE sur le site.
+ *
+ * Décision du Client (13/08/2026) : ne valoriser que les deux offres payantes.
+ * L'offre Gratuite n'est plus présentée nulle part — ni sur /offres, ni sur
+ * l'accueil, ni au moment de créer une fiche partenaire.
+ *
+ * ATTENTION — la clé "gratuit" reste indispensable dans le modèle de données et
+ * ne doit PAS être supprimée de OFFERS : c'est l'état vers lequel bascule un
+ * partenaire qui résilie (webhook Stripe customer.subscription.deleted) ou dont
+ * le prélèvement échoue. La supprimer casserait la résiliation.
+ * Ici on filtre uniquement ce qui est AFFICHÉ.
+ */
+export const PUBLIC_OFFERS = OFFERS.filter((o) => o.stripeLookupKey !== null);
+
+/**
  * Promotion de lancement (art. 2.3 — « préparation d'une promotion de lancement
  * pour les premiers partenaires, dans la limite d'une configuration simple »).
  * Mettre `active: false` pour la retirer partout, sans toucher au code.
@@ -182,6 +197,31 @@ export const LAUNCH_PROMO = {
 export const LAUNCH_INTRO = {
   active: true,
   tagline: "L'annuaire de celles et ceux qui agissent"
+} as const;
+
+/**
+ * Écran d'inscription affiché à l'arrivée sur le site, juste après l'animation
+ * d'ouverture — demande du Client du 13/08/2026 (« là ça paraît open bar »).
+ *
+ * Le visiteur non connecté doit créer un compte gratuit ou se connecter pour
+ * accéder au contenu. L'écran ne se montre qu'une fois par session de navigation.
+ *
+ * RISQUE ASSUMÉ PAR LE CLIENT, consigné ici pour la suite : un annuaire dont
+ * l'entrée est fermée n'est plus exploré par les moteurs de recherche, et les
+ * fiches des partenaires Pro ne sont plus visibles des visiteurs de passage —
+ * or c'est précisément ce que ces partenaires paient. Si la fréquentation ou les
+ * abonnements chutent, basculer `active: false` rouvre le site immédiatement,
+ * sans autre modification.
+ */
+export const ACCESS_GATE = {
+  active: true,
+  title: "Rejoignez le réseau",
+  lead: "Vert La Planète est un annuaire de terrain, alimenté par ses membres. La création de compte est gratuite et prend moins d'une minute.",
+  bullets: [
+    "Contactez les partenaires en direct, sans intermédiaire",
+    "Enregistrez vos favoris et suivez les initiatives près de chez vous",
+    "Proposez les lieux écolo que vous connaissez sur la carte"
+  ]
 } as const;
 
 /** Données légales du Client (issues du contrat) — pour les pages légales / footer. */

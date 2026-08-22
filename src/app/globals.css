@@ -1999,3 +1999,51 @@ a.audience-card--link:hover .audience-go{gap:11px}
   .communes-stat-n{font-size:28px}
   .communes-stat-l{margin-top:0}
 }
+
+/* Deux offres seulement depuis le retrait de l'offre Gratuite (décision Client
+   du 13/08/2026) : trois colonnes laissaient un vide à droite. On centre la
+   paire et on limite sa largeur pour qu'elle ne s'étire pas sur grand écran. */
+.audience-grid--two{grid-template-columns:repeat(2,1fr);max-width:760px;margin-left:auto;margin-right:auto}
+@media(max-width:700px){.audience-grid--two{grid-template-columns:1fr}}
+
+/* ══ ÉCRAN D'INSCRIPTION À L'ARRIVÉE ════════════════════════════════════════
+   Demande Client du 13/08/2026. Affiché une fois par session au visiteur non
+   connecté, après l'animation d'ouverture. Voir ACCESS_GATE dans constants.ts
+   pour le contexte et la façon de le désactiver. */
+.gate{
+  position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:rgba(9,31,18,.72);backdrop-filter:blur(6px);
+  animation:gateIn .38s var(--e1) both;
+}
+.gate-panel{
+  position:relative;width:100%;max-width:470px;background:#fff;border-radius:20px;
+  padding:34px 34px 26px;text-align:center;box-shadow:0 24px 70px rgba(9,31,18,.34);
+  border:.5px solid var(--dw);animation:gatePanel .46s var(--e1) both;
+  max-height:calc(100vh - 48px);overflow-y:auto;
+}
+.gate-panel .nav-logo-img{margin:0 auto 16px;border-radius:12px 0 12px 0}
+.gate-title{font-family:var(--serif);font-size:27px;font-weight:300;color:var(--f);
+  letter-spacing:-.025em;line-height:1.15;margin-bottom:10px}
+.gate-lead{font-size:14px;line-height:1.65;color:var(--pb);font-weight:300;margin-bottom:20px}
+.gate-list{list-style:none;text-align:left;display:grid;gap:10px;margin-bottom:24px}
+.gate-list li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.55;
+  color:var(--st);font-weight:300}
+.gate-list svg{width:17px;height:17px;flex-shrink:0;color:var(--l);margin-top:1px}
+.gate-cta{width:100%;justify-content:center}
+.gate-alt{display:block;margin-top:13px;font-size:13.5px;color:var(--s);font-weight:500}
+.gate-alt:hover{text-decoration:underline}
+.gate-fine{margin-top:20px;padding-top:16px;border-top:.5px solid var(--dw);
+  font-size:11.5px;line-height:1.55;color:var(--sd);font-weight:300}
+.gate-fine a{color:var(--s);text-decoration:underline}
+
+@keyframes gateIn{from{opacity:0}to{opacity:1}}
+@keyframes gatePanel{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+
+@media(max-width:480px){
+  .gate{padding:16px}
+  .gate-panel{padding:28px 22px 22px;border-radius:18px}
+  .gate-title{font-size:23px}
+}
+@media(prefers-reduced-motion:reduce){
+  .gate,.gate-panel{animation:none}
+}

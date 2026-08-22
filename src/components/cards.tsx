@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Article, Seller } from "@/db/schema";
 import { LeafIcon } from "@/components/icons";
-import { OFFERS } from "@/lib/constants";
+import { PUBLIC_OFFERS } from "@/lib/constants";
 import { formatDate } from "@/lib/format";
 
 /** Tête de section : kicker + titre (avec emphase) + lien « voir tout ». */
@@ -43,8 +43,8 @@ export function SectionHead({
  */
 export function OffersTeaser() {
   return (
-    <div className="audience-grid" style={{ marginTop: 8 }}>
-      {OFFERS.map((offer) => (
+    <div className="audience-grid audience-grid--two" style={{ marginTop: 8 }}>
+      {PUBLIC_OFFERS.map((offer) => (
         <Link
           key={offer.key}
           href="/offres"

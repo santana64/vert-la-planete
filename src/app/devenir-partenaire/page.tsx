@@ -38,7 +38,7 @@ export default async function DevenirPartenairePage() {
                 <div className="audience-icon">🌱</div>
                 <div className="audience-h">Gratuit pour démarrer</div>
                 <div className="audience-p">
-                  Commencez gratuitement, passez à l&apos;offre <Link href="/offres" style={{ color: "var(--s)" }}>Pro</Link> quand vous voulez.
+                  Choisissez votre <Link href="/offres" style={{ color: "var(--s)" }}>formule Pro</Link> — mensuelle sans engagement, ou annuelle avec deux mois offerts.
                 </div>
               </div>
             </div>

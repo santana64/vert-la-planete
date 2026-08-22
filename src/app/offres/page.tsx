@@ -22,8 +22,9 @@ export default async function OffresPage({ searchParams }: { searchParams: Searc
             Gagnez en visibilité, <em>à votre rythme</em>
           </h1>
           <p className="about-p" style={{ maxWidth: 560, margin: "12px auto 0" }}>
-            Référencez votre activité gratuitement, puis passez à l&apos;offre Pro quand vous
-            voulez. Sans engagement pour l&apos;offre mensuelle, résiliable à tout moment.
+            Deux formules, un même objectif : que votre activité soit trouvée par celles et
+            ceux qui la cherchent. Sans engagement pour la formule mensuelle, résiliable à tout
+            moment.
           </p>
         </div>
       </div>
@@ -36,8 +37,8 @@ export default async function OffresPage({ searchParams }: { searchParams: Searc
               <div>
                 <div className="eco-h">Votre compte partenaire est créé !</div>
                 <div className="eco-s">
-                  Dernière étape : choisissez votre offre ci-dessous pour activer votre visibilité
-                  — l&apos;offre Gratuite suffit pour démarrer.
+                  Dernière étape : choisissez votre formule ci-dessous pour activer votre
+                  visibilité dans l&apos;annuaire.
                 </div>
               </div>
               <div className="eco-vrf">Étape 2/2</div>
@@ -75,25 +76,23 @@ export default async function OffresPage({ searchParams }: { searchParams: Searc
               <thead>
                 <tr>
                   <th>Ce que vous obtenez</th>
-                  <th style={{ textAlign: "center" }}>Gratuit</th>
                   <th style={{ textAlign: "center" }}>Pro Mensuel</th>
                   <th style={{ textAlign: "center" }}>Pro Annuel</th>
                 </tr>
               </thead>
               <tbody>
                 {[
-                  ["Fiche boutique complète (présentation, avis, contact)", "✓", "✓", "✓"],
-                  ["Visible dans l'annuaire des partenaires", "✓", "✓", "✓"],
-                  ["Localisation sur la carte de France interactive", "—", "✓", "✓"],
-                  ["Produits présentés sur votre fiche", "3 max", "Illimités", "Illimités"],
-                  ["Affiché en premier (section « Partenaires Pro »)", "—", "✓", "✓"],
-                  ["Badge « ★ Partenaire Pro » (marqueur doré pour les premiers)", "—", "✓", "✓"],
-                  ["Prix", "0 €", "14,90 €/mois", "118,80 €/an (≈ 9,90 €/mois)"],
-                  ["Engagement", "Aucun", "Aucun — résiliable à tout moment", "12 mois"]
-                ].map(([label, a, b, c]) => (
+                  ["Fiche boutique complète (présentation, avis, contact)", "✓", "✓"],
+                  ["Visible dans l'annuaire des partenaires", "✓", "✓"],
+                  ["Localisation sur la carte de France interactive", "✓", "✓"],
+                  ["Produits présentés sur votre fiche", "Illimités", "Illimités"],
+                  ["Affiché en premier (section « Partenaires Pro »)", "✓", "✓"],
+                  ["Badge « ★ Partenaire Pro » (marqueur doré pour les premiers)", "✓", "✓"],
+                  ["Prix", "14,90 €/mois", "118,80 €/an (≈ 9,90 €/mois)"],
+                  ["Engagement", "Aucun — résiliable à tout moment", "12 mois"]
+                ].map(([label, b, c]) => (
                   <tr key={label}>
                     <td>{label}</td>
-                    <td style={{ textAlign: "center", color: a === "—" ? "var(--sd)" : "var(--s)", fontWeight: 500 }}>{a}</td>
                     <td style={{ textAlign: "center", color: b === "—" ? "var(--sd)" : "var(--s)", fontWeight: 500 }}>{b}</td>
                     <td style={{ textAlign: "center", color: c === "—" ? "var(--sd)" : "var(--s)", fontWeight: 500 }}>{c}</td>
                   </tr>

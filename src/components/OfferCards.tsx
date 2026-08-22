@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { startSubscriptionAction } from "@/app/actions/subscription";
-import { OFFERS, type OfferKey } from "@/lib/constants";
+import { PUBLIC_OFFERS, type OfferKey } from "@/lib/constants";
 
 export function OfferCards({
   currentOffer,
@@ -32,8 +32,8 @@ export function OfferCards({
 
   return (
     <>
-      <div className="audience-grid" style={{ alignItems: "stretch", marginTop: 8 }}>
-        {OFFERS.map((offer) => {
+      <div className="audience-grid audience-grid--two" style={{ alignItems: "stretch", marginTop: 8 }}>
+        {PUBLIC_OFFERS.map((offer) => {
           const isCurrent = currentOffer === offer.key;
           return (
             <div
