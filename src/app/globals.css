@@ -1435,8 +1435,14 @@ html.rv-ready :where([data-rv].rv-in){opacity:1;transform:none}
 
 /* Réseaux sociaux + cagnotte (footer) */
 .footer-social{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
-.footer-social-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;border:.5px solid rgba(0,0,0,.12);color:var(--s);background:#fff;transition:all .16s var(--e1)}
-.footer-social-btn:hover{color:#fff;background:var(--s);border-color:var(--s);transform:translateY(-1px)}
+/* Logos officiels : plus de cadre blanc ni de teinte imposée — la pastille de
+   chaque marque EST le bouton. Le survol se contente de soulever, sans toucher
+   aux couleurs, que les chartes des trois plateformes interdisent de modifier. */
+.footer-social-btn{display:inline-flex;align-items:center;justify-content:center;line-height:0;
+  border-radius:9px;transition:transform .16s var(--e1),filter .16s var(--e1)}
+.footer-social-btn:hover{transform:translateY(-2px);filter:saturate(1.08) brightness(1.04)}
+.footer-social-btn:focus-visible{outline:2px solid var(--s);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.footer-social-btn{transition:none}.footer-social-btn:hover{transform:none}}
 .footer-leetchi{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:10px;background:var(--fn);color:#fff;font-size:13px;font-weight:500;transition:all .16s var(--e1)}
 .footer-leetchi:hover{background:var(--s);transform:translateY(-1px)}
 

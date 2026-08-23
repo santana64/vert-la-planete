@@ -2,28 +2,55 @@ import Link from "next/link";
 import { LeafMark } from "@/components/Logo";
 import { COMPANY, LEETCHI_URL, SLOGAN, SOCIAL } from "@/lib/constants";
 
+/**
+ * Logos officiels des trois réseaux, dans leurs couleurs de marque.
+ *
+ * Usage prévu et autorisé par chaque plateforme : renvoyer vers NOS propres
+ * comptes. Les chartes imposent en revanche de ne pas déformer le glyphe ni
+ * d'inventer des couleurs — d'où le dégradé Instagram reproduit fidèlement,
+ * le bleu Facebook #1877F2 et le bleu LinkedIn #0A66C2.
+ */
+
 function InstagramIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="2" y="2" width="20" height="20" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden focusable="false">
+      <defs>
+        <radialGradient id="vlp-ig" cx="30%" cy="107%" r="150%">
+          <stop offset="0" stopColor="#FDF497" />
+          <stop offset="0.05" stopColor="#FDF497" />
+          <stop offset="0.45" stopColor="#FD5949" />
+          <stop offset="0.6" stopColor="#D6249F" />
+          <stop offset="0.9" stopColor="#285AEB" />
+        </radialGradient>
+      </defs>
+      <rect width="24" height="24" rx="6.5" fill="url(#vlp-ig)" />
+      <rect x="6" y="6" width="12" height="12" rx="3.6" fill="none" stroke="#fff" strokeWidth="1.6" />
+      <circle cx="12" cy="12" r="3" fill="none" stroke="#fff" strokeWidth="1.6" />
+      <circle cx="16.4" cy="7.6" r="0.95" fill="#fff" />
     </svg>
   );
 }
 
 function FacebookIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden fill="currentColor">
-      <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.03 4.39 11.03 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8v8.44C19.61 23.1 24 18.1 24 12.07z" />
+    <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden focusable="false">
+      <circle cx="12" cy="12" r="12" fill="#1877F2" />
+      <path
+        fill="#fff"
+        d="M16.67 15.47 17.2 12h-3.33V9.75c0-.95.47-1.88 1.96-1.88h1.51V4.92s-1.37-.23-2.68-.23c-2.74 0-4.52 1.66-4.52 4.66V12H6.9v3.47h3.05v8.39a12.1 12.1 0 0 0 3.92 0v-8.39h2.8z"
+      />
     </svg>
   );
 }
 
 function LinkedInIcon() {
   return (
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden fill="currentColor">
-      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+    <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden focusable="false">
+      <rect width="24" height="24" rx="4.2" fill="#0A66C2" />
+      <path
+        fill="#fff"
+        d="M8.34 18.34H5.67V9.75h2.67v8.59zM7 8.58a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zm11.34 9.76h-2.66v-4.18c0-1-.02-2.28-1.39-2.28-1.39 0-1.6 1.09-1.6 2.21v4.25h-2.67V9.75h2.56v1.17h.04c.36-.68 1.23-1.39 2.53-1.39 2.7 0 3.2 1.78 3.2 4.1v4.71z"
+      />
     </svg>
   );
 }
