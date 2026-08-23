@@ -1425,9 +1425,11 @@ html.rv-ready :where([data-rv].rv-in){opacity:1;transform:none}
 @media(max-width:600px){.pchips-grid--two{grid-template-columns:1fr 1fr}}
 
 /* Footer allégé : marque + juridique seulement, colonne droite calée au bord */
-/* Trois colonnes depuis l'ajout de la colonne « Dossiers » (mobilité, recyclage). */
-.footer-top--lean{grid-template-columns:1.7fr .9fr .9fr;margin-bottom:40px}
-@media(max-width:900px) and (min-width:761px){.footer-top--lean{grid-template-columns:1.4fr 1fr}}
+/* Deux colonnes : la colonne « Dossiers » a été retirée à la demande du Client
+   le 13/08/2026 — depuis la page d'entrée, ses liens permettaient d'accéder aux
+   rubriques du site sans créer de compte. */
+.footer-top--lean{grid-template-columns:1.7fr 1fr;margin-bottom:40px}
+@media(min-width:761px){.footer-top--lean>div:last-child{justify-self:end}}
 @media(min-width:761px){.footer-top--lean>div:last-child{justify-self:end}}
 @media(max-width:760px){.footer-top--lean{grid-template-columns:1fr}}
 
