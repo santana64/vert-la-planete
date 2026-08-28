@@ -92,9 +92,13 @@ export default async function BienvenuePage({ searchParams }: { searchParams: Se
               </div>
             ))}
           </div>
-          <Link className="welcome-offers-link" href="/offres">
-            Voir le détail des offres →
-          </Link>
+          {/* Plus de lien vers /offres : la page est désormais fermée aux visiteurs
+              sans compte, le lien ne ferait que ramener ici. Les deux formules et
+              leurs prix restent affichés ci-dessus — l'objectif du Client, les
+              valoriser dès l'arrivée, est tenu sans envoyer dans une impasse. */}
+          <p className="welcome-offers-fine">
+            Créez votre compte pour découvrir le détail de chaque formule.
+          </p>
         </aside>
       </section>
     </div>

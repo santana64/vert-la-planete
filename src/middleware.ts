@@ -3,32 +3,53 @@ import { jwtVerify } from "jose";
 import { ACCESS_GATE } from "@/lib/constants";
 
 /**
- * Porte d'entrée du site — demande du Client du 13/08/2026 : « après le lancement
- * et l'animation du logo, on devrait avoir une page pour l'inscription gratuite ».
+ * Porte d'entrée du site — demande du Client des 13 et 28/08/2026.
  *
- * Le visiteur non connecté qui ARRIVE SUR LE SITE (racine) est envoyé sur
- * /bienvenue pour créer un compte gratuit ou se connecter. C'est bien l'ouverture
- * du site qui est gardée, comme demandé.
+ * AUCUNE page du site n'est accessible sans compte. Tout visiteur non connecté
+ * est redirigé vers /bienvenue, quelle que soit l'URL demandée, y compris en
+ * arrivant depuis un lien externe ou un moteur de recherche. Sa destination est
+ * conservée dans `next` et il y est ramené après authentification.
  *
- * En revanche les pages elles-mêmes restent atteignables. Trois raisons, dans
- * l'ordre d'importance pour le Client :
+ * SEULES EXCEPTIONS, et elles ne sont pas négociables :
+ * - /bienvenue, /connexion, /inscription — sans quoi personne ne pourrait entrer ;
+ * - les pages légales (mentions, CGV, confidentialité, RGPD) — les rendre
+ *   inatteignables serait une infraction, pas un choix commercial ;
+ * - les ressources techniques : fichiers Next.js, images, robots.txt, plan du
+ *   site, et l'API — le webhook Stripe doit rester joignable, sans quoi les
+ *   résiliations d'abonnement ne remonteraient plus.
  *
- * 1. Les partenaires Pro paient 14,90 €/mois pour être VUS. Rediriger chaque URL
- *    rendrait leurs fiches invisibles aux visiteurs de passage et aux moteurs de
- *    recherche — on leur vendrait une vitrine aux volets fermés.
- * 2. Un lien partagé sur les réseaux ou envoyé par message doit ouvrir la page
- *    annoncée, sinon plus personne ne partage.
- * 3. Un moteur de recherche ne peut pas créer de compte : tout rediriger revient
- *    à sortir le site de Google.
+ * CONSÉQUENCE CONNUE ET ASSUMÉE PAR LE CLIENT, consignée ici pour la suite :
+ * un moteur de recherche ne peut pas créer de compte. Le site n'est donc plus
+ * exploré ni indexé, et les fiches des partenaires Pro ne sont plus visibles des
+ * visiteurs de passage — alors que c'est précisément ce que ces partenaires
+ * paient 14,90 €/mois. Le Prestataire l'a signalé par écrit à trois reprises
+ * avant réalisation ; le Client a maintenu sa demande.
  *
- * Ce qui répond au « ça paraît open bar », ce n'est donc pas de fermer les pages,
- * c'est de réserver aux membres ce qui a de la valeur : joindre un partenaire,
- * enregistrer un favori, laisser un avis, proposer un lieu sur la carte.
+ * Rouvrir le site en cas de chute de fréquentation ou d'abonnements :
+ * ACCESS_GATE.active = false dans constants.ts. Aucune autre modification.
  *
- * Pour rouvrir complètement : ACCESS_GATE.active = false dans constants.ts.
+ * Le contrôle fait ici vérifie la signature du jeton sans consulter la base :
+ * c'est un filtre d'accès, pas une frontière de sécurité. Les autorisations
+ * réelles restent posées dans chaque page et chaque action serveur
+ * (requireUser / requireSeller / requireAdmin) — défense en profondeur.
  */
 
 const SESSION_COOKIE = "vlp_session";
+
+/** Chemins toujours ouverts, même sans compte. */
+const OPEN_PATHS = [
+  "/bienvenue",
+  "/connexion",
+  "/inscription",
+  "/mentions-legales",
+  "/cgv",
+  "/confidentialite",
+  "/rgpd"
+];
+
+function isOpen(pathname: string): boolean {
+  return OPEN_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"));
+}
 
 async function hasValidSession(req: NextRequest): Promise<boolean> {
   const token = req.cookies.get(SESSION_COOKIE)?.value;
@@ -45,13 +66,18 @@ async function hasValidSession(req: NextRequest): Promise<boolean> {
 
 export async function middleware(req: NextRequest) {
   if (!ACCESS_GATE.active) return NextResponse.next();
+
+  const { pathname, search } = req.nextUrl;
+  if (isOpen(pathname)) return NextResponse.next();
   if (await hasValidSession(req)) return NextResponse.next();
 
   const url = req.nextUrl.clone();
   url.pathname = "/bienvenue";
-  url.search = "";
+  url.search = `?next=${encodeURIComponent(pathname + search)}`;
   return NextResponse.redirect(url);
 }
 
-/** Uniquement l'arrivée sur le site. Aucune autre URL n'est interceptée. */
-export const config = { matcher: ["/"] };
+export const config = {
+  /** Tout, sauf les ressources techniques et les fichiers (chemins avec extension). */
+  matcher: ["/((?!_next/|api/|favicon|icon|apple-icon|opengraph-image|robots.txt|sitemap.xml|manifest.webmanifest|.*\\.).*)"]
+};
