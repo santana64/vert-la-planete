@@ -15,12 +15,27 @@ l'héberge nativement. Compter ~15 minutes.
 
 ## 2. Appliquer le schéma + données de démo (depuis votre machine, une fois)
 
+> ⚠️ `export DATABASE_URL=...` **ne suffit pas** : `src/lib/load-env.ts` charge
+> `.env.local` avec `override: true`, ce qui écrase la variable passée en ligne de
+> commande. La migration viserait alors votre base locale. Il faut modifier
+> `.env.local` le temps de l'opération :
+
 ```bash
-# Remplacer par votre URL Neon
-export DATABASE_URL="postgres://...-pooler.../neondb?sslmode=require"
+# 1. sauvegarder puis pointer .env.local vers Neon
+cp .env.local .env.local.backup
+#    …y remplacer la ligne DATABASE_URL par l'URL poolée Neon…
+
+# 2. appliquer le schéma
 npm run db:migrate     # crée les tables
-npm run db:seed        # (optionnel) données de démo FR
+npm run db:seed        # (optionnel) données de démo FR — voir l'avertissement ci-dessous
+
+# 3. remettre la configuration locale
+mv -f .env.local.backup .env.local
 ```
+
+> ⚠️ `db:seed` crée des comptes de démonstration dont le mot de passe (`password123`)
+> est écrit en clair dans le dépôt. À ne jamais exécuter sur la base d'un site
+> ouvert au public sans changer ces mots de passe.
 
 ## 3. Importer le repo sur Vercel
 
