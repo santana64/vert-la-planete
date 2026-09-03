@@ -54,7 +54,7 @@ export function OfferCards({
                   className="badge badge-eco"
                   style={{ position: "absolute", top: 14, right: 14 }}
                 >
-                  Populaire
+                  {offer.badgeLabel ?? "Populaire"}
                 </span>
               ) : null}
 

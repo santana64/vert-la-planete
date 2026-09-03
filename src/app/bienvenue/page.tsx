@@ -83,7 +83,8 @@ export default async function BienvenuePage({ searchParams }: { searchParams: Se
           </p>
           <div className="welcome-offers-grid">
             {PUBLIC_OFFERS.map((o) => (
-              <div key={o.key} className="welcome-offer">
+              <div key={o.key} className={`welcome-offer${o.highlight ? " welcome-offer--highlight" : ""}`}>
+                {o.highlight ? <span className="welcome-offer-badge">{o.badgeLabel ?? "Populaire"}</span> : null}
                 <div className="welcome-offer-name">{o.name}</div>
                 <div className="welcome-offer-price">
                   <strong>{o.priceLabel}</strong> <span>{o.periodLabel}</span>

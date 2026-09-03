@@ -102,6 +102,8 @@ export const OFFERS: {
   interval: "month" | "year" | null;
   stripeLookupKey: string | null;
   highlight: boolean;
+  /** Texte du badge affiché sur l'offre mise en avant. "Populaire" si absent. */
+  badgeLabel?: string;
   tagline: string;
   features: string[];
 }[] = [
@@ -130,7 +132,9 @@ export const OFFERS: {
     priceCents: 1490,
     interval: "month",
     stripeLookupKey: "vlp_pro_mensuel",
-    highlight: true,
+    // Mise en avant déplacée sur l'offre annuelle (demande Client du 02/09/2026) :
+    // meilleur prix pour le partenaire, meilleure valeur retenue pour l'annuaire.
+    highlight: false,
     tagline: "Pour être vu en premier et présenter tout votre catalogue.",
     features: [
       "Votre fiche boutique complète : présentation, produits, avis, contact",
@@ -149,8 +153,12 @@ export const OFFERS: {
     priceCents: 11880,
     interval: "year",
     stripeLookupKey: "vlp_pro_annuel",
-    highlight: false,
-    tagline: "Les mêmes avantages Pro, au meilleur prix.",
+    // Demande Client du 02/09/2026 : valoriser l'annuel plutôt que le mensuel,
+    // l'écart réel étant de 60 €/an (14,90 × 12 = 178,80 €, contre 118,80 €) —
+    // et non 50 € comme initialement avancé. Calculé, pas recopié à la main.
+    highlight: true,
+    badgeLabel: "Économisez 60 €/an",
+    tagline: "9,90 €/mois au lieu de 14,90 € — les mêmes avantages, 2 mois offerts.",
     features: [
       "Identique à l'offre Pro Mensuelle",
       "9,90 €/mois au lieu de 14,90 € (2 mois offerts)",

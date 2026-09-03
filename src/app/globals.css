@@ -2044,7 +2044,14 @@ a.audience-card--link:hover .audience-go{gap:11px}
 .welcome-offers{background:var(--pp);border:.5px solid var(--dw);border-radius:20px;padding:30px 30px 26px}
 .welcome-offers-lead{font-size:13.5px;line-height:1.65;color:var(--pb);font-weight:300;margin-bottom:20px}
 .welcome-offers-grid{display:grid;gap:12px;margin-bottom:18px}
-.welcome-offer{background:#fff;border:.5px solid var(--dw);border-radius:14px;padding:16px 18px}
+.welcome-offer{position:relative;background:#fff;border:.5px solid var(--dw);border-radius:14px;padding:16px 18px}
+/* Offre mise en avant (demande Client du 02/09/2026) : bordure et ombre reprennent
+   le traitement déjà utilisé sur /offres (OfferCards), pour que le même signal
+   visuel soit cohérent d'une page à l'autre. */
+.welcome-offer--highlight{border-color:var(--l);box-shadow:var(--sh-md)}
+.welcome-offer-badge{position:absolute;top:-9px;right:14px;font-size:10px;padding:4px 10px;
+  border-radius:20px;font-weight:500;letter-spacing:.03em;background:var(--fo);color:var(--s);
+  border:.5px solid var(--dw)}
 .welcome-offer-name{font-size:13px;font-weight:500;color:var(--f);letter-spacing:.01em}
 .welcome-offer-price{display:flex;align-items:baseline;gap:6px;margin:5px 0 6px}
 .welcome-offer-price strong{font-family:var(--serif);font-size:25px;font-weight:300;color:var(--fn)}
