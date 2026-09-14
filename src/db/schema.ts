@@ -125,6 +125,10 @@ export const articles = pgTable("articles", {
   category: text("category").notNull(),
   author: text("author").notNull(),
   gradient: text("gradient").notNull(),
+  // Image de couverture facultative (data URL JPEG, compressée côté navigateur
+  // avant envoi — cf. AdminArticleForm). Le dégradé reste le repli par défaut :
+  // les articles existants sans image continuent de s'afficher normalement.
+  coverImage: text("cover_image"),
   readMinutes: integer("read_minutes").notNull().default(5),
   publishedAt: timestamp("published_at", { withTimezone: true }).notNull().defaultNow()
 });

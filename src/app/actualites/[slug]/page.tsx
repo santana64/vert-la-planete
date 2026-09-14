@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FormattedText } from "@/components/FormattedText";
 import { ShareButtons } from "@/components/ShareButtons";
 import { formatDate } from "@/lib/format";
 import { getArticleBySlug } from "@/lib/queries";
@@ -27,8 +28,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article) notFound();
-
-  const paragraphs = article.body.split(/\n\n+/).filter(Boolean);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -65,17 +64,22 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         <div className="art-meta" style={{ marginBottom: 20 }}>
           {article.readMinutes} min de lecture · {article.author} · {formatDate(article.publishedAt)}
         </div>
-        <div
-          style={{ height: 260, borderRadius: 16, background: article.gradient, marginBottom: 28 }}
-        />
+        {article.coverImage ? (
+          // eslint-disable-next-line @next/next/no-img-element -- data URL en base, next/image ne l'optimiserait pas.
+          <img
+            src={article.coverImage}
+            alt=""
+            style={{ width: "100%", height: 260, borderRadius: 16, objectFit: "cover", marginBottom: 28, display: "block" }}
+          />
+        ) : (
+          <div
+            style={{ height: 260, borderRadius: 16, background: article.gradient, marginBottom: 28 }}
+          />
+        )}
         <p className="article-lead">
           {article.excerpt}
         </p>
-        {paragraphs.map((p, i) => (
-          <p key={i} className="article-body-text">
-            {p}
-          </p>
-        ))}
+        <FormattedText text={article.body} className="article-body-text" />
 
         <div style={{ marginTop: 32, paddingTop: 24, borderTop: ".5px solid rgba(0,0,0,.07)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           <Link href="/actualites" className="see-all">

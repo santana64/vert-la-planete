@@ -50,6 +50,13 @@
       "when": 1785920571002,
       "tag": "0006_hot_vector",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1789387839927,
+      "tag": "0007_slow_puma",
+      "breakpoints": true
     }
   ]
 }

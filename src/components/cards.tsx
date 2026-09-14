@@ -104,7 +104,17 @@ export function PartnerChip({ seller }: { seller: Seller }) {
 export function ArticleCard({ article, tall = false }: { article: Article; tall?: boolean }) {
   return (
     <Link href={`/actualites/${article.slug}`} className="art-card" data-reveal>
-      <div className="art-img" style={{ height: tall ? 120 : 80, background: article.gradient }} />
+      {article.coverImage ? (
+        // eslint-disable-next-line @next/next/no-img-element -- data URL en base, next/image ne l'optimiserait pas.
+        <img
+          src={article.coverImage}
+          alt=""
+          className="art-img"
+          style={{ height: tall ? 120 : 80, objectFit: "cover", width: "100%", display: "block" }}
+        />
+      ) : (
+        <div className="art-img" style={{ height: tall ? 120 : 80, background: article.gradient }} />
+      )}
       <div className="art-body">
         <span className="badge badge-eco">{article.category}</span>
         <div className="art-title">{article.title}</div>

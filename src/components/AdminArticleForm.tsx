@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { adminSaveArticle, type AdminFormState } from "@/app/actions/admin";
+import { CoverImageUpload } from "@/components/CoverImageUpload";
 import { SubmitButton } from "@/components/SubmitButton";
 import type { Article } from "@/db/schema";
 
@@ -11,6 +12,8 @@ export function AdminArticleForm({ article }: { article?: Article }) {
   return (
     <form action={formAction}>
       {article ? <input type="hidden" name="id" value={article.id} /> : null}
+
+      <CoverImageUpload initialImage={article?.coverImage} />
 
       <div className="form-group">
         <label className="form-lbl" htmlFor="a-title">Titre</label>
@@ -35,6 +38,10 @@ export function AdminArticleForm({ article }: { article?: Article }) {
 
       <div className="form-group">
         <label className="form-lbl" htmlFor="a-body">Contenu</label>
+        <p style={{ fontSize: 12, color: "var(--pb)", fontWeight: 300, marginBottom: 6 }}>
+          Laissez une ligne vide entre deux paragraphes. Un simple retour à la ligne saute
+          d&apos;une ligne sans créer de nouveau paragraphe.
+        </p>
         <textarea className="form-textarea" id="a-body" name="body" defaultValue={article?.body} placeholder="Corps de l'article…" required style={{ minHeight: 220 }} />
       </div>
 

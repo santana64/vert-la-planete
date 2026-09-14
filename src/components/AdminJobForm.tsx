@@ -44,6 +44,10 @@ export function AdminJobForm({ job }: { job?: Job }) {
 
       <div className="form-group">
         <label className="form-lbl" htmlFor="j-desc">Description</label>
+        <p style={{ fontSize: 12, color: "var(--pb)", fontWeight: 300, marginBottom: 6 }}>
+          Laissez une ligne vide entre deux paragraphes. Un simple retour à la ligne saute
+          d&apos;une ligne sans créer de nouveau paragraphe.
+        </p>
         <textarea className="form-textarea" id="j-desc" name="description" defaultValue={job?.description} placeholder="Missions, profil, conditions…" required style={{ minHeight: 200 }} />
       </div>
 

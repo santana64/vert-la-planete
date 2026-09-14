@@ -104,13 +104,26 @@ export async function adminDeleteMessage(formData: FormData): Promise<void> {
 }
 
 // ── Articles (CRUD) ──────────────────────────────────────────────────────────
+// Image de couverture : data URL JPEG, compressée en 1200×630 côté navigateur
+// (cf. CoverImageUpload) avant d'atteindre le serveur. Plafond large mais borné
+// pour ne pas laisser passer une image mal compressée dans la base.
+const MAX_COVER_IMAGE_LENGTH = 400_000; // ~290 Ko
+
+const coverImageSchema = z
+  .string()
+  .trim()
+  .refine((v) => v === "" || /^data:image\/(jpeg|png|webp);base64,/.test(v), "Image invalide")
+  .refine((v) => v.length <= MAX_COVER_IMAGE_LENGTH, "Image trop lourde — réessayez avec une photo plus petite.")
+  .optional();
+
 const articleSchema = z.object({
   title: z.string().trim().min(4, "Titre trop court"),
   excerpt: z.string().trim().min(10, "Chapô trop court").max(400),
   body: z.string().trim().min(20, "Contenu trop court"),
   category: z.string().trim().min(2, "Catégorie requise"),
   author: z.string().trim().min(2, "Auteur requis"),
-  readMinutes: z.coerce.number().int().min(1).max(60).default(5)
+  readMinutes: z.coerce.number().int().min(1).max(60).default(5),
+  coverImage: coverImageSchema
 });
 
 async function uniqueSlug(
@@ -137,15 +150,30 @@ export async function adminSaveArticle(_prev: AdminFormState, formData: FormData
     body: formData.get("body"),
     category: formData.get("category"),
     author: formData.get("author"),
-    readMinutes: formData.get("readMinutes")
+    readMinutes: formData.get("readMinutes"),
+    coverImage: formData.get("coverImage")
   });
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Formulaire invalide" };
   const data = parsed.data;
 
+  // Trois cas : une nouvelle image a été déposée → on la stocke ; « Retirer
+  // l'image » a été cliqué → on efface ; ni l'un ni l'autre → on ne touche pas
+  // à l'image existante (l'auteur n'a pas rouvert le sélecteur de fichier).
+  const removeCover = formData.get("removeCoverImage") === "1";
+  const coverImage = removeCover ? null : data.coverImage ? data.coverImage : undefined;
+
   if (editId.success) {
     await db
       .update(articles)
-      .set({ title: data.title, excerpt: data.excerpt, body: data.body, category: data.category, author: data.author, readMinutes: data.readMinutes })
+      .set({
+        title: data.title,
+        excerpt: data.excerpt,
+        body: data.body,
+        category: data.category,
+        author: data.author,
+        readMinutes: data.readMinutes,
+        ...(coverImage !== undefined ? { coverImage } : {})
+      })
       .where(eq(articles.id, editId.data));
   } else {
     const slug = await uniqueSlug(articles, data.title);
@@ -157,6 +185,7 @@ export async function adminSaveArticle(_prev: AdminFormState, formData: FormData
       category: data.category,
       author: data.author,
       readMinutes: data.readMinutes,
+      coverImage: coverImage ?? null,
       gradient: GRADIENTS[Math.floor(Math.random() * GRADIENTS.length)]
     });
   }

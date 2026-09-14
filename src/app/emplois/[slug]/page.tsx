@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FormattedText } from "@/components/FormattedText";
 import { getJobBySlug } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
@@ -24,8 +25,6 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
   const job = await getJobBySlug(slug);
   if (!job) notFound();
 
-  const paragraphs = job.description.split(/\n\n+/).filter(Boolean);
-
   return (
     <div className="page active">
       <div className="fiche-bc">
@@ -48,11 +47,7 @@ export default async function JobPage({ params }: { params: Promise<{ slug: stri
           {job.organisation} · 📍 {job.location}
         </div>
 
-        {paragraphs.map((p, i) => (
-          <p key={i} className="article-body-text">
-            {p}
-          </p>
-        ))}
+        <FormattedText text={job.description} className="article-body-text" />
 
         <div className="fiche-cta">
           {job.contactUrl ? (
