@@ -25,14 +25,17 @@ export default async function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          {/* Rendu Satori (image OG) : next/image n'existe pas ici, un <img> data-URI est la voie officielle. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            alt=""
-            src={"data:image/jpeg;base64," + logo.toString("base64")}
-            width={84}
-            height={84}
-            style={{ borderRadius: 20 }}
+          <div
+            aria-hidden="true"
+            style={{
+              width: 84,
+              height: 84,
+              borderRadius: 20,
+              flexShrink: 0,
+              backgroundImage: `url(data:image/jpeg;base64,${logo.toString("base64")})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
           />
           <div style={{ fontSize: 40, color: "#bde5cd" }}>Vert La Planète</div>
         </div>
